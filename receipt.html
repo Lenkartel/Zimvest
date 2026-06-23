@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="theme-color" content="#04342C"/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<title>Investment Confirmed · ZimVest</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --navy:#04342C;--green:#1D9E75;--green-mid:#0F6E56;
+  --sky:#E1F5EE;--sky-deep:#5DCAA5;--amber:#EF9F27;
+  --page:#f0faf6;--white:#fff;--border:#c8e8dc;
+  --ink:#04342C;--ink-soft:#3d7a66;--ink-faint:#7db5a0;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+  --r:12px;--r-lg:16px;
+  --sh:0 1px 3px rgba(4,52,44,.08),0 4px 16px rgba(4,52,44,.06);
+}
+html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--navy)}
+.screen{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+
+/* HEADER */
+.r-header{
+  background:var(--navy);padding:40px 20px 32px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.r-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% -10%,rgba(29,158,117,.22) 0%,transparent 65%);
+  pointer-events:none;
+}
+.check-ring{
+  width:68px;height:68px;border-radius:50%;
+  background:rgba(29,158,117,.18);border:2px solid rgba(29,158,117,.38);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;position:relative;z-index:1;
+}
+.check-ring svg{width:32px;height:32px;stroke:var(--sky-deep);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.r-header h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
+.r-header p{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
+.ref-tag{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:6px 18px;
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:16px;position:relative;z-index:1;
+}
+.ref-label{font-size:10px;color:rgba(255,255,255,.45);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--sky-deep);letter-spacing:1px}
+
+/* HERO INVESTOR IMAGE */
+.r-investor-img{
+  width:100%;height:160px;overflow:hidden;position:relative;
+}
+.r-investor-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.r-investor-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,var(--navy) 0%,transparent 40%,rgba(4,52,44,.3) 100%);
+}
+
+/* BODY */
+.r-body{
+  background:var(--page);flex:1;
+  border-radius:24px 24px 0 0;
+  padding:24px 16px max(32px,env(safe-area-inset-bottom));
+  margin-top:-2px;
+}
+
+/* COUNTDOWN */
+.countdown-card{
+  background:var(--navy);border-radius:var(--r-lg);
+  padding:20px;text-align:center;margin-bottom:14px;
+}
+.countdown-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:var(--sky-deep);letter-spacing:3px}
+.countdown-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:6px}
+
+/* SUMMARY CARD */
+.sum-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+  margin-bottom:14px;box-shadow:var(--sh);
+}
+.sum-top-bar{height:3px;background:linear-gradient(90deg,var(--green),var(--sky-deep))}
+.sum-hdr{padding:13px 16px 11px;border-bottom:1px solid var(--border)}
+.sum-title{font-size:13px;font-weight:800;color:var(--ink)}
+.sum-sub{font-size:11px;color:var(--ink-soft);margin-top:1px}
+.sum-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 16px;border-bottom:.5px solid var(--border);font-size:14px;
+}
+.sum-row:last-child{border-bottom:none}
+.sum-row-label{color:var(--ink-soft);font-weight:500}
+.sum-row-value{font-weight:700;color:var(--ink)}
+.sum-row-value.big{font-size:20px;font-weight:900;color:var(--green-mid)}
+.sum-row-value.amber{color:var(--amber)}
+.plan-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--sky);border:1px solid var(--border);
+  color:var(--green-mid);font-size:12px;font-weight:800;
+  padding:3px 10px;border-radius:999px;
+}
+
+/* NOTICE */
+.payout-notice{
+  background:var(--sky);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);padding:14px 16px;
+  margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;
+}
+.payout-notice svg{width:16px;height:16px;stroke:var(--green);flex-shrink:0;margin-top:1px;fill:none;stroke-width:2;stroke-linecap:round}
+.payout-notice p{font-size:12px;color:var(--ink-soft);line-height:1.5}
+.payout-notice p strong{color:var(--ink)}
+
+/* BUTTONS */
+.btn-main{
+  background:var(--green);color:#fff;border:none;width:100%;padding:15px;
+  border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 4px 16px rgba(29,158,117,.28);transition:all .15s;
+  margin-bottom:10px;
+}
+.btn-main:active{transform:scale(.98)}
+.btn-sec{
+  background:transparent;color:var(--ink-soft);border:1.5px solid var(--border);
+  width:100%;padding:13px;border-radius:var(--r-lg);
+  font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;
+}
+.powered{text-align:center;padding:16px 0 4px;font-size:9px;color:var(--ink-faint);font-weight:500;letter-spacing:.3px}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <div class="r-header">
+    <div class="check-ring">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1>Investment confirmed!</h1>
+    <p>Your EcoCash payment was received successfully</p>
+    <div class="ref-tag">
+      <span class="ref-label">Ref</span>
+      <span class="ref-num" id="refNum">ZV-000000</span>
+    </div>
+  </div>
+
+  <div class="r-investor-img">
+    <img src="assets/hero-investor.jpg" alt="Happy ZimVest investor" loading="eager"/>
+  </div>
+
+  <div class="r-body">
+
+    <div class="countdown-card">
+      <div class="countdown-label">⏱ Time until payout</div>
+      <div class="countdown-timer" id="countdown">00:00:00</div>
+      <div class="countdown-sub">Payout sent automatically to your EcoCash</div>
+    </div>
+
+    <div class="sum-card">
+      <div class="sum-top-bar"></div>
+      <div class="sum-hdr">
+        <div class="sum-title">Investment summary</div>
+        <div class="sum-sub" id="investedAt">—</div>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Plan</span>
+        <span class="sum-row-value"><span class="plan-pill" id="recPlan">—</span></span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Amount deposited</span>
+        <span class="sum-row-value" id="recDeposit">$0.00</span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Return rate</span>
+        <span class="sum-row-value amber" id="recRate">+0%</span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Profit earned</span>
+        <span class="sum-row-value" id="recProfit">+$0.00</span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Total payout</span>
+        <span class="sum-row-value big" id="recTotal">$0.00</span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">EcoCash number</span>
+        <span class="sum-row-value" id="recPhone">—</span>
+      </div>
+      <div class="sum-row">
+        <span class="sum-row-label">Payout by</span>
+        <span class="sum-row-value" id="recDate">—</span>
+      </div>
+    </div>
+
+    <div class="payout-notice">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <p>Your payout will be sent <strong>automatically</strong> to your registered EcoCash number when the countdown completes. No action needed from you.</p>
+    </div>
+
+    <button class="btn-main" onclick="shareReceipt()">📲 Share receipt</button>
+    <button class="btn-sec" onclick="location.href='index.html'">Back to ZimVest home</button>
+
+    <div class="powered">ZimVest · Secure Investment Platform · Zimbabwe</div>
+  </div>
+</div>
+
+<script>
+let plan=null;
+try{plan=JSON.parse(sessionStorage.getItem('zimvest_plan'))}catch(e){}
+
+function fmt(n){return '$'+parseFloat(n).toFixed(2)}
+
+function buildReceipt(){
+  const ref='ZV-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('refNum').textContent=ref;
+  if(plan){
+    const amt=parseFloat(plan.amount)||0;
+    const pct=parseFloat(plan.pct)||0;
+    const profit=+(amt*pct/100).toFixed(2);
+    const total=+(amt+profit).toFixed(2);
+    const now=new Date();
+    const payout=new Date(now.getTime()+plan.hours*3600000);
+    document.getElementById('recPlan').textContent=plan.name+' Plan';
+    document.getElementById('recDeposit').textContent=fmt(amt);
+    document.getElementById('recRate').textContent='+'+pct+'%';
+    document.getElementById('recProfit').textContent='+'+fmt(profit);
+    document.getElementById('recTotal').textContent=fmt(total);
+    document.getElementById('recPhone').textContent=plan.phone||sessionStorage.getItem('zimvest_phone')||'Your EcoCash number';
+    document.getElementById('recDate').textContent=payout.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
+    document.getElementById('investedAt').textContent='Invested '+now.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
+    startCountdown(plan.hours*3600);
+    sessionStorage.setItem('zimvest_receipt',JSON.stringify({ref,plan:plan.name,deposit:amt,profit,total,payout:payout.toISOString()}));
+  } else {
+    document.getElementById('recPlan').textContent='—';
+    document.getElementById('countdown').textContent='--:--:--';
+    document.getElementById('investedAt').textContent='No active plan';
+  }
+}
+
+function startCountdown(totalSecs){
+  let s=totalSecs;
+  function tick(){
+    const h=Math.floor(s/3600);
+    const m=Math.floor((s%3600)/60);
+    const sc=s%60;
+    document.getElementById('countdown').textContent=
+      String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sc).padStart(2,'0');
+    if(s>0){s--;setTimeout(tick,1000)}
+    else{document.getElementById('countdown').textContent='Payout processing…'}
+  }
+  tick();
+}
+
+function shareReceipt(){
+  const r=JSON.parse(sessionStorage.getItem('zimvest_receipt')||'{}');
+  const text=`ZimVest Investment Receipt\nRef: ${r.ref||'—'}\nPlan: ${r.plan||'—'}\nDeposited: $${r.deposit||0}\nTotal payout: $${r.total||0}\nzimvest.co.zw`;
+  if(navigator.share){
+    navigator.share({title:'ZimVest Receipt',text}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text).then(()=>alert('Receipt copied!')).catch(()=>{});
+  }
+}
+
+buildReceipt();
+</script>
+</body>
+</html>
