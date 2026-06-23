@@ -1,0 +1,11 @@
+{
+  "name": "zimvest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/kv": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.2.0"
+  }
+}
