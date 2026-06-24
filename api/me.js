@@ -1,30 +1,31 @@
-// api/me.js — ZimVest
-// Reads zimvest_session JWT cookie and returns the logged-in user.
-// Called on login.html load to detect a returning session.
-
+// api/me.js
 import { jwtVerify } from 'jose';
 
-const SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'change-me-in-vercel-env');
+const SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
-function parseCookies(header) {
-  const out = {};
-  if (!header) return out;
-  header.split(';').forEach(pair => {
-    const [k, ...v] = pair.trim().split('=');
-    out[k.trim()] = decodeURIComponent(v.join('='));
-  });
-  return out;
+function parseCookies(header = '') {
+  return Object.fromEntries(
+    header.split(';').map(p => {
+      const [k, ...v] = p.trim().split('=');
+      return [k.trim(), decodeURIComponent(v.join('='))];
+    })
+  );
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).send('Method not allowed');
-  const token = parseCookies(req.headers.cookie)['zimvest_session'];
-  if (!token) return res.status(401).json({ error: 'No session' });
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+
+  const token = parseCookies(req.headers.cookie ?? '')['zimvest_session'];
+
+  if (!token)
+    return res.status(401).json({ error: 'No session' });
+
   try {
     const { payload } = await jwtVerify(token, SECRET);
     return res.status(200).json({ phone: payload.phone, name: payload.name });
   } catch {
-    res.setHeader('Set-Cookie', 'zimvest_session=; Path=/; HttpOnly; Max-Age=0');
-    return res.status(401).json({ error: 'Session expired' });
+    // Expired or tampered — clear the stale cookie
+    res.setHeader('Set-Cookie', 'zimvest_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');
+    return res.status(401).json({ error: 'Session expired. Please sign in again.' });
   }
 }
