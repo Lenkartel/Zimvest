@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#133527"/>
+<meta name="theme-color" content="#0F0F1A"/>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
 <link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <title>Sign in · ZimVest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --c-dark:#133527;--c-brand:#22C373;--c-mid:#1A5C3A;
-  --c-sky:#E6F5EE;--c-sky-d:#A8DDBE;--c-red:#D92B3A;
-  --c-bg:#F5F9F7;--c-surface:#FFFFFF;
-  --b-lt:#D6EDE1;--b-mid:#A8DDBE;
-  --t-pri:#0A2218;--t-sec:#2D5E42;--t-dis:#9ABFAA;
+  --c-dark:#0F0F1A;--c-brand:#6366F1;--c-mid:#4F52D9;
+  --c-sky:#1E293B;--c-sky-d:#334155;--c-red:#D92B3A;
+  --c-bg:#0F0F1A;--c-surface:#16162A;
+  --b-lt:#1E293B;--b-mid:#334155;
+  --t-pri:#F8FAFC;--t-sec:#CBD5E1;--t-dis:#334155;
   --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
   --r:14px;--r-lg:20px;
-  --sh:0 2px 8px rgba(10,34,24,.07),0 6px 24px rgba(10,34,24,.05);
+  --sh:0 2px 8px rgba(99,102,241,.07),0 6px 24px rgba(99,102,241,.05);
 }
-html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--c-bg)}
+html,body{width:100%;min-height:100dvh;font-family:var(--font);background:#0F0F1A}
 .screen{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
 
 /* ── HEADER ── */
@@ -35,7 +35,7 @@ html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--
     linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
   background-size:32px 32px;pointer-events:none;
 }
-.hglow{position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(34,195,115,.18);filter:blur(70px);top:-110px;right:-60px;pointer-events:none}
+.hglow{position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(99,102,241,.18);filter:blur(70px);top:-110px;right:-60px;pointer-events:none}
 .header-inner{position:relative;z-index:1}
 .back-btn{
   display:inline-flex;align-items:center;gap:6px;
@@ -112,7 +112,7 @@ html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--
 
 /* ── CARD ── */
 .form-card{background:var(--c-surface);border:1.5px solid var(--b-lt);border-radius:var(--r-lg);overflow:hidden;margin-bottom:10px;box-shadow:var(--sh)}
-.card-top-bar{height:3px;background:linear-gradient(90deg,var(--c-brand),var(--c-sky-d))}
+.card-top-bar{height:3px;background:linear-gradient(90deg,#6366F1,#818CF8)}
 .card-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--b-lt)}
 .card-title{font-size:14px;font-weight:800;color:var(--t-pri)}
 .card-sub{font-size:11px;color:var(--t-sec);font-weight:500;margin-top:2px}
@@ -130,13 +130,13 @@ html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--
 }
 input[type=tel],input[type=text],input[type=password]{
   width:100%;height:50px;padding:0 14px;border-radius:var(--r);
-  border:1.5px solid var(--b-lt);background:var(--c-bg);
+  border:1.5px solid var(--b-lt);background:#0F0F1A;
   font-family:var(--font);font-size:15px;font-weight:500;color:var(--t-pri);
   outline:none;transition:border-color .18s,background .18s,box-shadow .18s;
   -webkit-appearance:none;
 }
 input::placeholder{color:var(--t-dis)}
-input:focus{border-color:var(--c-brand);background:var(--c-surface);box-shadow:0 0 0 3px rgba(34,195,115,.14)}
+input:focus{border-color:var(--c-brand);background:var(--c-surface);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
 input.err{border-color:var(--c-red) !important}
 .field-hint{font-size:11px;color:var(--t-dis);font-weight:500;margin-top:5px}
 .field-error{font-size:11px;color:var(--c-red);font-weight:600;margin-top:5px;display:none}
@@ -173,7 +173,7 @@ input.err{border-color:var(--c-red) !important}
   border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;
   cursor:pointer;letter-spacing:.1px;transition:all .15s;
   opacity:.35;pointer-events:none;
-  box-shadow:0 4px 18px rgba(34,195,115,.35);
+  box-shadow:0 4px 18px rgba(99,102,241,.35);
 }
 .action-btn.ready{opacity:1;pointer-events:auto}
 .action-btn.loading{opacity:.7;pointer-events:none}
