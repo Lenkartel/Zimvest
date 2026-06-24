@@ -137,6 +137,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--na
     </div>
     <h1>Investment confirmed!</h1>
     <p>Your EcoCash payment was received successfully</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;position:relative;z-index:1" id="investorName"></p>
     <div class="ref-tag">
       <span class="ref-label">Ref</span>
       <span class="ref-num" id="refNum">ZV-000000</span>
@@ -210,6 +211,11 @@ try{plan=JSON.parse(sessionStorage.getItem('zimvest_plan'))}catch(e){}
 function fmt(n){return '$'+parseFloat(n).toFixed(2)}
 
 function buildReceipt(){
+  const iname = sessionStorage.getItem('zimvest_name');
+  if (iname) {
+    const el = document.getElementById('investorName');
+    if (el) el.textContent = 'Welcome, ' + iname;
+  }
   const ref='ZV-'+Math.floor(100000+Math.random()*900000);
   document.getElementById('refNum').textContent=ref;
   if(plan){
@@ -224,7 +230,7 @@ function buildReceipt(){
     document.getElementById('recRate').textContent='+'+pct+'%';
     document.getElementById('recProfit').textContent='+'+fmt(profit);
     document.getElementById('recTotal').textContent=fmt(total);
-    document.getElementById('recPhone').textContent=plan.phone||sessionStorage.getItem('zimvest_phone')||'Your EcoCash number';
+    document.getElementById('recPhone').textContent=sessionStorage.getItem('zimvest_phone')||plan.phone||'Your EcoCash number';
     document.getElementById('recDate').textContent=payout.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
     document.getElementById('investedAt').textContent='Invested '+now.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
     startCountdown(plan.hours*3600);
