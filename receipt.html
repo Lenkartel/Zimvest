@@ -3,41 +3,42 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#04342C"/>
+<meta name="theme-color" content="#133527"/>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
 <title>Investment Confirmed · ZimVest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --navy:#04342C;--green:#1D9E75;--green-mid:#0F6E56;
-  --sky:#E1F5EE;--sky-deep:#5DCAA5;--amber:#EF9F27;
-  --page:#f0faf6;--white:#fff;--border:#c8e8dc;
-  --ink:#04342C;--ink-soft:#3d7a66;--ink-faint:#7db5a0;
+  --c-dark:#133527;--c-brand:#22C373;--c-mid:#1A5C3A;
+  --c-sky:#E6F5EE;--c-sky-d:#A8DDBE;--amber:#EF9F27;
+  --c-bg:#F5F9F7;--c-surface:#FFFFFF;--b-lt:#D6EDE1;
+  --t-pri:#0A2218;--t-sec:#2D5E42;--t-dis:#9ABFAA;
   --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
   --r:12px;--r-lg:16px;
-  --sh:0 1px 3px rgba(4,52,44,.08),0 4px 16px rgba(4,52,44,.06);
+  --sh:0 1px 3px rgba(10,34,24,.08),0 4px 16px rgba(10,34,24,.06);
 }
-html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--navy)}
+html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-dark)}
 .screen{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 
 /* HEADER */
 .r-header{
-  background:var(--navy);padding:40px 20px 32px;
+  background:var(--c-dark);padding:40px 20px 32px;
   text-align:center;position:relative;overflow:hidden;
 }
 .r-header::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% -10%,rgba(29,158,117,.22) 0%,transparent 65%);
+  background:radial-gradient(ellipse at 50% -10%,rgba(34,195,115,.22) 0%,transparent 65%);
   pointer-events:none;
 }
 .check-ring{
   width:68px;height:68px;border-radius:50%;
-  background:rgba(29,158,117,.18);border:2px solid rgba(29,158,117,.38);
+  background:rgba(34,195,115,.18);border:2px solid rgba(34,195,115,.38);
   display:flex;align-items:center;justify-content:center;
   margin:0 auto 16px;position:relative;z-index:1;
 }
-.check-ring svg{width:32px;height:32px;stroke:var(--sky-deep);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.check-ring svg{width:32px;height:32px;stroke:var(--c-sky-d);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .r-header h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
 .r-header p{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
 .ref-tag{
@@ -47,7 +48,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--na
   margin-top:16px;position:relative;z-index:1;
 }
 .ref-label{font-size:10px;color:rgba(255,255,255,.45);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--sky-deep);letter-spacing:1px}
+.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--c-sky-d);letter-spacing:1px}
 
 /* HERO INVESTOR IMAGE */
 .r-investor-img{
@@ -56,12 +57,12 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--na
 .r-investor-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .r-investor-img::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,var(--navy) 0%,transparent 40%,rgba(4,52,44,.3) 100%);
+  background:linear-gradient(to bottom,var(--c-dark) 0%,transparent 40%,rgba(10,34,24,.3) 100%);
 }
 
 /* BODY */
 .r-body{
-  background:var(--page);flex:1;
+  background:var(--c-bg);flex:1;
   border-radius:24px 24px 0 0;
   padding:24px 16px max(32px,env(safe-area-inset-bottom));
   margin-top:-2px;
@@ -69,63 +70,63 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--na
 
 /* COUNTDOWN */
 .countdown-card{
-  background:var(--navy);border-radius:var(--r-lg);
+  background:var(--c-dark);border-radius:var(--r-lg);
   padding:20px;text-align:center;margin-bottom:14px;
 }
 .countdown-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:var(--sky-deep);letter-spacing:3px}
+.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:var(--c-sky-d);letter-spacing:3px}
 .countdown-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:6px}
 
 /* SUMMARY CARD */
 .sum-card{
-  background:var(--white);border:1.5px solid var(--border);
+  background:var(--c-surface);border:1.5px solid var(--b-lt);
   border-radius:var(--r-lg);overflow:hidden;
   margin-bottom:14px;box-shadow:var(--sh);
 }
-.sum-top-bar{height:3px;background:linear-gradient(90deg,var(--green),var(--sky-deep))}
-.sum-hdr{padding:13px 16px 11px;border-bottom:1px solid var(--border)}
-.sum-title{font-size:13px;font-weight:800;color:var(--ink)}
-.sum-sub{font-size:11px;color:var(--ink-soft);margin-top:1px}
+.sum-top-bar{height:3px;background:linear-gradient(90deg,var(--c-brand),var(--c-sky-d))}
+.sum-hdr{padding:13px 16px 11px;border-bottom:1px solid var(--b-lt)}
+.sum-title{font-size:13px;font-weight:800;color:var(--t-pri)}
+.sum-sub{font-size:11px;color:var(--t-sec);margin-top:1px}
 .sum-row{
   display:flex;justify-content:space-between;align-items:center;
-  padding:13px 16px;border-bottom:.5px solid var(--border);font-size:14px;
+  padding:13px 16px;border-bottom:.5px solid var(--b-lt);font-size:14px;
 }
 .sum-row:last-child{border-bottom:none}
-.sum-row-label{color:var(--ink-soft);font-weight:500}
-.sum-row-value{font-weight:700;color:var(--ink)}
-.sum-row-value.big{font-size:20px;font-weight:900;color:var(--green-mid)}
+.sum-row-label{color:var(--t-sec);font-weight:500}
+.sum-row-value{font-weight:700;color:var(--t-pri)}
+.sum-row-value.big{font-size:20px;font-weight:900;color:var(--c-mid)}
 .sum-row-value.amber{color:var(--amber)}
 .plan-pill{
   display:inline-flex;align-items:center;gap:5px;
-  background:var(--sky);border:1px solid var(--border);
-  color:var(--green-mid);font-size:12px;font-weight:800;
+  background:var(--c-sky);border:1px solid var(--b-lt);
+  color:var(--c-mid);font-size:12px;font-weight:800;
   padding:3px 10px;border-radius:999px;
 }
 
 /* NOTICE */
 .payout-notice{
-  background:var(--sky);border:1.5px solid var(--border);
+  background:var(--c-sky);border:1.5px solid var(--b-lt);
   border-radius:var(--r-lg);padding:14px 16px;
   margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;
 }
-.payout-notice svg{width:16px;height:16px;stroke:var(--green);flex-shrink:0;margin-top:1px;fill:none;stroke-width:2;stroke-linecap:round}
-.payout-notice p{font-size:12px;color:var(--ink-soft);line-height:1.5}
-.payout-notice p strong{color:var(--ink)}
+.payout-notice svg{width:16px;height:16px;stroke:var(--c-brand);flex-shrink:0;margin-top:1px;fill:none;stroke-width:2;stroke-linecap:round}
+.payout-notice p{font-size:12px;color:var(--t-sec);line-height:1.5}
+.payout-notice p strong{color:var(--t-pri)}
 
 /* BUTTONS */
 .btn-main{
-  background:var(--green);color:#fff;border:none;width:100%;padding:15px;
+  background:var(--c-brand);color:#fff;border:none;width:100%;padding:15px;
   border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;
-  cursor:pointer;box-shadow:0 4px 16px rgba(29,158,117,.28);transition:all .15s;
+  cursor:pointer;box-shadow:0 4px 16px rgba(34,195,115,.28);transition:all .15s;
   margin-bottom:10px;
 }
 .btn-main:active{transform:scale(.98)}
 .btn-sec{
-  background:transparent;color:var(--ink-soft);border:1.5px solid var(--border);
+  background:transparent;color:var(--t-sec);border:1.5px solid var(--b-lt);
   width:100%;padding:13px;border-radius:var(--r-lg);
   font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;
 }
-.powered{text-align:center;padding:16px 0 4px;font-size:9px;color:var(--ink-faint);font-weight:500;letter-spacing:.3px}
+.powered{text-align:center;padding:16px 0 4px;font-size:9px;color:var(--t-dis);font-weight:500;letter-spacing:.3px}
 </style>
 </head>
 <body>
@@ -137,7 +138,6 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--na
     </div>
     <h1>Investment confirmed!</h1>
     <p>Your EcoCash payment was received successfully</p>
-    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;position:relative;z-index:1" id="investorName"></p>
     <div class="ref-tag">
       <span class="ref-label">Ref</span>
       <span class="ref-num" id="refNum">ZV-000000</span>
@@ -211,11 +211,6 @@ try{plan=JSON.parse(sessionStorage.getItem('zimvest_plan'))}catch(e){}
 function fmt(n){return '$'+parseFloat(n).toFixed(2)}
 
 function buildReceipt(){
-  const iname = sessionStorage.getItem('zimvest_name');
-  if (iname) {
-    const el = document.getElementById('investorName');
-    if (el) el.textContent = 'Welcome, ' + iname;
-  }
   const ref='ZV-'+Math.floor(100000+Math.random()*900000);
   document.getElementById('refNum').textContent=ref;
   if(plan){
@@ -230,7 +225,7 @@ function buildReceipt(){
     document.getElementById('recRate').textContent='+'+pct+'%';
     document.getElementById('recProfit').textContent='+'+fmt(profit);
     document.getElementById('recTotal').textContent=fmt(total);
-    document.getElementById('recPhone').textContent=sessionStorage.getItem('zimvest_phone')||plan.phone||'Your EcoCash number';
+    document.getElementById('recPhone').textContent=plan.phone||sessionStorage.getItem('zimvest_phone')||'Your EcoCash number';
     document.getElementById('recDate').textContent=payout.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
     document.getElementById('investedAt').textContent='Invested '+now.toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'});
     startCountdown(plan.hours*3600);
