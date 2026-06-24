@@ -3,419 +3,790 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#133527"/>
+<meta name="theme-color" content="#0F0F1A"/>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
-<link rel="icon" href="assets/favicon.ico" sizes="any"/>
-<title>Dashboard · ZimVest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<title>Dashboard · ZimVest</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --c-bg:#F5F9F7;--c-surface:#FFFFFF;--c-dark:#133527;--c-mid:#1A5C3A;
-  --c-brand:#22C373;--c-brand-dk:#18A35E;--c-sky:#E6F5EE;--c-sky-d:#A8DDBE;
-  --c-gold:#F0A500;--c-gold-lt:#FFF3D6;--c-red:#D92B3A;
-  --t-pri:#0A2218;--t-sec:#2D5E42;--t-ter:#5A8A70;--t-dis:#9ABFAA;
-  --b-lt:#D6EDE1;--b-mid:#A8DDBE;
-  --font:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'DM Mono','Courier New',monospace;
-  --r:14px;--r-lg:20px;--r-xl:26px;
-  --sh:0 2px 8px rgba(10,34,24,.07),0 6px 24px rgba(10,34,24,.05);
-  --sh-lg:0 8px 32px rgba(10,34,24,.12);
+  --ink:#F8FAFC;--forest:#0F0F1A;--pine:#4F52D9;--jade:#6366F1;--jade-d:#4F52D9;
+  --mint:#818CF8;--foam:#1E293B;--gold:#F5A623;--cream:#0F0F1A;--white:#16162A;
+  --muted:#94A3B8;--faint:#475569;--border:#1E293B;
+  --red:#D92B3A;--red-lt:#FFF0F1;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+  --mono:'DM Mono','Courier New',monospace;
   --ease:cubic-bezier(.25,.46,.45,.94);
 }
-html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--c-bg);color:var(--t-pri);-webkit-font-smoothing:antialiased}
-.screen{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);background:#0F0F1A;color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden}
+.screen{max-width:430px;margin:0 auto;height:100%;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden}
 
-/* ── HEADER ── */
-.hdr{background:var(--c-dark);flex-shrink:0;position:relative;overflow:hidden}
-.hdr::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 110% -10%,rgba(34,195,115,.2) 0%,transparent 55%),radial-gradient(ellipse 50% 60% at -10% 120%,rgba(240,165,0,.07) 0%,transparent 55%);pointer-events:none}
-.hdr-inner{position:relative;z-index:1;padding:calc(env(safe-area-inset-top) + 16px) 18px 22px}
-.nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:34px;height:34px;background:var(--c-brand);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(34,195,115,.4)}
-.logo-mark svg{width:18px;height:18px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.logo-name{font-size:17px;font-weight:900;color:#fff;letter-spacing:-.4px}
-.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.65);font-size:11px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.logout-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+/* ═══ HEADER ═══ */
+.hdr{
+  background:var(--forest);
+  padding:calc(env(safe-area-inset-top) + 14px) 18px 0;
+  flex-shrink:0;position:relative;overflow:hidden;z-index:10;
+}
+.hdr::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 80% at 110% -10%,rgba(99,102,241,.18) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 60% at -10% 120%,rgba(245,166,35,.07) 0%,transparent 55%);
+}
+.hdr-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-ring{width:32px;height:32px;background:var(--jade);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(99,102,241,.4)}
+.logo-ring svg{width:17px;height:17px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.logo-name{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.4px}
+.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:7px 12px;border-radius:999px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.logout-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .logout-btn:hover{background:rgba(255,255,255,.16);color:#fff}
-.greeting-small{font-size:11px;color:rgba(255,255,255,.45);font-weight:500;margin-bottom:3px}
-.greeting-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;min-height:30px}
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:var(--r);overflow:hidden;margin-top:18px}
-.stat-cell{background:rgba(255,255,255,.05);padding:12px 10px;text-align:center}
-.stat-label{font-size:9px;color:rgba(255,255,255,.4);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-.stat-value{font-family:var(--mono);font-size:15px;font-weight:700;color:#fff}
-.stat-value.gold{color:#FBBF24}
 
-/* ── BODY ── */
-.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:20px 16px calc(110px + env(safe-area-inset-bottom))}
-.body::-webkit-scrollbar{display:none}
-.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:var(--t-dis);margin-bottom:10px}
+/* avatar + greeting */
+.hdr-user{position:relative;z-index:1;display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--jade);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:16px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.15)}
+.greeting-hey{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;margin-bottom:2px}
+.greeting-name{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.4px;min-height:26px}
+.greeting-phone{font-size:11px;color:rgba(255,255,255,.35);font-weight:500;font-family:var(--mono)}
 
-/* ── PLAN CARDS ── */
+/* stat chips */
+.hdr-stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:14px;overflow:hidden;margin-bottom:0}
+.hs-cell{background:rgba(255,255,255,.04);padding:11px 8px;text-align:center}
+.hs-lbl{font-size:9px;color:rgba(255,255,255,.38);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
+.hs-val{font-family:var(--mono);font-size:14px;font-weight:700;color:#fff}
+.hs-val.jade{color:var(--jade)}
+.hs-val.gold{color:var(--gold)}
+
+/* ═══ TAB BAR ═══ */
+.tab-bar{
+  position:relative;z-index:10;
+  background:var(--forest);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-bottom:2px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+}
+.tab-btn{
+  padding:14px 8px 12px;text-align:center;cursor:pointer;
+  border:none;background:transparent;font-family:var(--font);
+  font-size:11px;font-weight:700;color:rgba(255,255,255,.4);
+  transition:color .18s;position:relative;letter-spacing:.1px;
+}
+.tab-btn.active{color:#fff}
+.tab-btn.active::after{content:'';position:absolute;bottom:-2px;left:20%;right:20%;height:2px;background:var(--jade);border-radius:2px}
+.tab-icon{display:flex;justify-content:center;margin-bottom:3px}
+.tab-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══ PANE (scrollable) ═══ */
+.pane-wrap{flex:1;overflow:hidden;position:relative}
+.pane{
+  position:absolute;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding:20px 16px calc(32px + env(safe-area-inset-bottom));
+  opacity:0;pointer-events:none;transition:opacity .18s var(--ease);
+}
+.pane::-webkit-scrollbar{display:none}
+.pane.active{opacity:1;pointer-events:auto}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fade-up{animation:fadeUp .22s var(--ease) both}
+
+/* ═══ SHARED CARD ═══ */
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-bar{height:3px}
+.card-bar-jade{background:linear-gradient(90deg,#6366F1,#818CF8)}
+.card-bar-gold{background:linear-gradient(90deg,var(--gold),#FAD87A)}
+.card-bar-blue{background:linear-gradient(90deg,#4F7FFA,#A3BFFA)}
+.card-hd{padding:14px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:800;color:var(--ink)}
+.card-sub{font-size:11px;color:var(--faint);font-weight:500;margin-top:1px}
+.card-bd{padding:16px}
+.sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--faint);margin-bottom:10px}
+
+/* ═══ PLAN CARDS ═══ */
 .plan-card{
-  background:var(--c-surface);border:2px solid var(--b-lt);
-  border-radius:var(--r-xl);overflow:hidden;
-  margin-bottom:12px;cursor:pointer;position:relative;
-  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),transform .15s;
-  -webkit-user-select:none;user-select:none;
+  background:var(--white);border:2px solid var(--border);
+  border-radius:20px;overflow:hidden;margin-bottom:12px;cursor:pointer;
+  transition:border-color .18s,box-shadow .18s,transform .15s;
+  -webkit-user-select:none;
 }
 .plan-card:active{transform:scale(.985)}
-.plan-card.selected{border-color:var(--c-brand);box-shadow:0 0 0 4px rgba(34,195,115,.12),var(--sh)}
-.plan-card.featured{border-color:var(--c-brand)}
-.plan-top-strip{height:4px;transition:opacity .2s}
-.starter-strip{background:linear-gradient(90deg,var(--c-sky-d),var(--b-mid))}
-.growth-strip{background:linear-gradient(90deg,var(--c-brand),var(--c-sky-d))}
-.elite-strip{background:linear-gradient(90deg,var(--c-gold),#FAD87A)}
-.plan-badge{
-  position:absolute;top:14px;right:14px;
-  font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;
-  letter-spacing:.3px;
-}
-.plan-badge.popular{background:var(--c-brand);color:#fff}
-.plan-badge.selected-mk{background:var(--c-brand);color:#fff;display:none}
-.plan-card.selected .plan-badge.popular{display:none}
-.plan-card.selected .plan-badge.selected-mk{display:flex;align-items:center;gap:4px}
-.plan-badge.selected-mk svg{width:10px;height:10px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.plan-inner{padding:16px 16px 18px}
-.plan-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
-.plan-emoji{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.starter-icon{background:#EAF5EE}
-.growth-icon{background:#FFF3D6}
-.elite-icon{background:#EEF0FE}
-.plan-pct-block{text-align:right}
-.plan-pct{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--t-pri);line-height:1;letter-spacing:-2px}
-.plan-pct .sup{font-size:18px;font-weight:700;vertical-align:top;margin-top:7px;display:inline-block;letter-spacing:0}
-.plan-pct-lbl{font-size:10px;color:var(--t-dis);font-weight:600;margin-top:3px}
-.plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:var(--t-ter);margin-bottom:10px}
-.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.pg-item{}
-.pg-lbl{font-size:10px;color:var(--t-dis);font-weight:600;margin-bottom:2px}
-.pg-val{font-size:13px;font-weight:700;color:var(--t-pri)}
-.plan-timer{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--c-sky);color:var(--t-sec);
-  font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;
-}
-.plan-timer svg{width:13px;height:13px;stroke:var(--c-mid);fill:none;stroke-width:2;stroke-linecap:round}
+.plan-card.selected{border-color:var(--jade);box-shadow:0 0 0 4px rgba(99,102,241,.12)}
+.plan-card.featured{border-color:rgba(99,102,241,.4)}
+.pct-strip{height:3px}
+.s-strip{background:linear-gradient(90deg,var(--mint),var(--border))}
+.g-strip{background:linear-gradient(90deg,#6366F1,#818CF8)}
+.e-strip{background:linear-gradient(90deg,var(--gold),#FAD87A)}
+.p-badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.3px}
+.p-badge-pop{background:var(--jade);color:#fff}
+.p-badge-sel{background:var(--jade);color:#fff;display:none;align-items:center;gap:4px}
+.p-badge-sel svg{width:10px;height:10px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.plan-card.selected .p-badge-pop{display:none}
+.plan-card.selected .p-badge-sel{display:inline-flex}
+.plan-inner{padding:14px 14px 16px;position:relative}
+.plan-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.plan-emoji{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.e-starter{background:#1E293B}.e-growth{background:#FFF3D6}.e-elite{background:#EEEEFF}
+.pct-block{text-align:right}
+.pct-num{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-1.5px}
+.pct-num span{font-size:16px;vertical-align:top;margin-top:6px;display:inline-block}
+.pct-lbl{font-size:9px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.p-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--faint);margin-bottom:8px}
+.p-divider{height:1px;background:var(--border);margin:8px 0}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.pg-i .pg-l{font-size:9px;color:var(--faint);font-weight:700;margin-bottom:1px}
+.pg-i .pg-v{font-size:12px;font-weight:700;color:var(--ink)}
+.p-timer{display:inline-flex;align-items:center;gap:5px;background:#1E293B;color:var(--pine);font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px}
+.p-timer svg{width:11px;height:11px;stroke:var(--pine);fill:none;stroke-width:2;stroke-linecap:round}
 
-/* ── CALC SECTION ── */
-.calc-wrap{background:var(--c-surface);border:1.5px solid var(--b-lt);border-radius:var(--r-xl);padding:18px;margin-bottom:12px;box-shadow:var(--sh);animation:fadeUp .22s var(--ease)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.calc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t-ter);margin-bottom:10px}
-.calc-input-wrap{position:relative;margin-bottom:8px}
-.calc-pfx{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:16px;font-weight:700;color:var(--t-ter)}
-.calc-input{
-  width:100%;height:52px;padding:0 16px 0 30px;
-  border-radius:var(--r);border:1.5px solid var(--b-lt);
-  font-family:var(--mono);font-size:20px;font-weight:700;color:var(--t-pri);
-  background:var(--c-bg);outline:none;-webkit-appearance:none;
-  transition:border-color .18s,background .18s,box-shadow .18s;
-}
-.calc-input:focus{border-color:var(--c-brand);background:#fff;box-shadow:0 0 0 3px rgba(34,195,115,.14)}
-.calc-input.has-err{border-color:var(--c-red);box-shadow:0 0 0 3px rgba(217,43,58,.1)}
-.calc-err{font-size:12px;color:var(--c-red);font-weight:600;margin-top:6px;display:none}
-.calc-result{background:var(--c-dark);border-radius:var(--r);padding:16px;margin-top:10px;display:none;animation:fadeUp .18s var(--ease)}
-.calc-result.visible{display:block}
-.cr-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px}
-.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
-.cr-label{color:rgba(255,255,255,.45);font-weight:500}
-.cr-val{font-family:var(--mono);font-weight:700;color:#fff}
-.cr-val.big{font-size:22px;font-weight:800;color:var(--c-brand)}
+/* ═══ CALC ═══ */
+.calc-box{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.calc-box-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--faint);margin-bottom:8px}
+.calc-pfx-wrap{position:relative;margin-bottom:8px}
+.calc-pfx{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:15px;font-weight:700;color:var(--faint)}
+.calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid var(--border);font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink);background:#0F0F1A;outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
+.calc-in:focus{border-color:var(--jade);background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.calc-in.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(217,43,58,.1)}
+.calc-err-txt{font-size:11px;color:var(--red);font-weight:700;margin-top:5px;display:none}
+.calc-res{background:var(--forest);border-radius:12px;padding:14px;margin-top:8px;display:none}
+.calc-res.show{display:block;animation:fadeUp .18s var(--ease)}
+.calc-res-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px}
+.calc-res-row .l{color:rgba(255,255,255,.45)}
+.calc-res-row .v{font-family:var(--mono);font-weight:700;color:#fff}
+.calc-res-sep{height:1px;background:rgba(255,255,255,.1);margin:6px 0}
+.calc-res-total{font-size:20px;font-weight:800;color:var(--jade)}
 
-/* ── STICKY FOOTER ── */
-.sticky-foot{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:12px 16px max(22px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--c-bg) 60%,transparent);z-index:50}
-.invest-btn{
-  width:100%;padding:17px;border-radius:var(--r-lg);
-  font-family:var(--font);font-size:15px;font-weight:800;
-  border:none;display:flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--b-mid);color:rgba(10,34,24,.4);cursor:not-allowed;
-  transition:all .2s var(--ease);
-}
-.invest-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
-.invest-btn.ready{background:var(--c-brand);color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(34,195,115,.4)}
-.invest-btn.ready:hover{background:var(--c-brand-dk);transform:translateY(-1px)}
+/* ═══ INVEST BTN ═══ */
+.invest-btn-wrap{background:linear-gradient(to top,var(--cream) 60%,transparent);padding:8px 16px calc(16px + env(safe-area-inset-bottom));margin-top:4px}
+.invest-btn{width:100%;padding:16px;border-radius:16px;font-family:var(--font);font-size:14px;font-weight:800;border:none;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--mint);color:rgba(0,0,0,.4);cursor:not-allowed;transition:all .2s var(--ease)}
+.invest-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+.invest-btn.ready{background:var(--jade);color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(99,102,241,.4)}
 .invest-btn.ready:active{transform:scale(.98)}
-.invest-sub{text-align:center;font-size:11px;color:var(--t-dis);font-weight:500;margin-top:6px}
-.powered{text-align:center;padding:10px 0 2px;font-size:9px;color:var(--t-dis);font-weight:500;letter-spacing:.4px}
-.hidden{display:none!important}
+.invest-sub{text-align:center;font-size:11px;color:var(--faint);margin-top:5px}
+
+/* ═══ HISTORY ═══ */
+.history-empty{text-align:center;padding:48px 20px}
+.history-empty svg{width:48px;height:48px;stroke:var(--mint);fill:none;stroke-width:1.5;stroke-linecap:round;margin:0 auto 14px}
+.history-empty h3{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.history-empty p{font-size:13px;color:var(--faint);line-height:1.6}
+.inv-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:.5px solid var(--border)}
+.inv-item:last-child{border-bottom:none}
+.inv-left{}
+.inv-plan{font-size:13px;font-weight:800;color:var(--ink)}
+.inv-date{font-size:11px;color:var(--faint);font-weight:500;margin-top:2px}
+.inv-right{text-align:right}
+.inv-amount{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink)}
+.inv-return{font-size:11px;font-weight:700;color:var(--jade);margin-top:2px}
+.inv-status{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;margin-top:4px}
+.status-active{background:#1E293B;color:var(--pine)}
+.status-paid{background:#F0FFF4;color:#166534}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-active .status-dot{background:var(--jade);animation:pulse-d 1.5s ease-in-out infinite}
+.status-paid .status-dot{background:#22C55E}
+@keyframes pulse-d{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* countdown mini */
+.countdown-mini{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);margin-top:3px}
+
+/* ═══ PROFILE ═══ */
+.profile-section{margin-bottom:12px}
+.p-field{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid var(--border)}
+.p-field:last-child{border-bottom:none}
+.p-field-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--faint);margin-bottom:3px}
+.p-field-val{font-size:14px;font-weight:700;color:var(--ink)}
+.p-field-val.mono{font-family:var(--mono)}
+.p-field-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px}
+.badge-active{background:#1E293B;color:var(--pine)}
+
+/* Change password form */
+.pw-form .form-row{margin-bottom:12px}
+.pw-form .f-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--faint);margin-bottom:6px}
+.pw-form .pw-wrap{position:relative;display:flex;align-items:center}
+.pw-form input[type=password],
+.pw-form input[type=text]{width:100%;height:46px;padding:0 44px 0 13px;border-radius:11px;border:1.5px solid var(--border);background:#0F0F1A;font-family:var(--font);font-size:14px;font-weight:500;color:var(--ink);outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
+.pw-form input:focus{border-color:var(--jade);background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.eye-btn{position:absolute;right:12px;background:none;border:none;cursor:pointer;color:var(--faint);display:flex;align-items:center;padding:4px;transition:color .15s}
+.eye-btn:hover{color:var(--jade)}
+.eye-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.strength-bar{height:3px;border-radius:2px;background:var(--border);margin-top:6px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.strength-lbl{font-size:10px;font-weight:700;margin-top:4px;color:var(--faint)}
+.form-err{font-size:11px;color:var(--red);font-weight:700;margin-top:4px;display:none}
+.form-ok{font-size:11px;color:var(--jade);font-weight:700;margin-top:4px;display:none}
+.submit-btn{width:100%;padding:14px;border-radius:13px;font-family:var(--font);font-size:13px;font-weight:800;border:none;background:var(--mint);color:rgba(0,0,0,.4);cursor:not-allowed;transition:all .2s;margin-top:4px}
+.submit-btn.ready{background:var(--jade);color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(99,102,241,.35)}
+.submit-btn.ready:active{transform:scale(.98)}
+.submit-btn.loading{opacity:.7;cursor:not-allowed}
+
+/* ═══ API NOTICE ═══ */
+.api-notice{border-radius:12px;padding:11px 14px;margin-bottom:10px;font-size:12px;font-weight:700;display:none;line-height:1.45}
+.api-notice.err{background:var(--red-lt);border:1.5px solid #F5C0C5;color:var(--red)}
+.api-notice.ok{background:#F0FFF4;border:1.5px solid #A7F3D0;color:#166534}
+
+.powered{text-align:center;padding:12px 0 4px;font-size:9px;color:var(--faint);font-weight:500;letter-spacing:.4px}
 </style>
 </head>
 <body>
 <div class="screen">
 
+  <!-- HEADER -->
   <div class="hdr">
-    <div class="hdr-inner">
-      <div class="nav-row">
-        <div class="logo">
-          <div class="logo-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <span class="logo-name">ZimVest</span>
-        </div>
-        <button class="logout-btn" onclick="doLogout()">
-          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Sign out
-        </button>
+    <div class="hdr-top">
+      <div class="logo">
+        <div class="logo-ring"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <span class="logo-name">ZimVest</span>
       </div>
-      <div class="greeting-small">Good day 👋</div>
-      <div class="greeting-name" id="gName">…</div>
-      <div class="stat-row">
-        <div class="stat-cell"><div class="stat-label">Min deposit</div><div class="stat-value">$100</div></div>
-        <div class="stat-cell"><div class="stat-label">Max deposit</div><div class="stat-value">$1,500</div></div>
-        <div class="stat-cell"><div class="stat-label">Best return</div><div class="stat-value gold">+40% / 24h</div></div>
+      <button class="logout-btn" onclick="doLogout()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out
+      </button>
+    </div>
+    <div class="hdr-user">
+      <div class="avatar" id="avatar">?</div>
+      <div>
+        <div class="greeting-hey">Good day 👋</div>
+        <div class="greeting-name" id="gName">Loading…</div>
+        <div class="greeting-phone" id="gPhone">—</div>
       </div>
+    </div>
+    <div class="hdr-stats">
+      <div class="hs-cell"><div class="hs-lbl">Min deposit</div><div class="hs-val">$100</div></div>
+      <div class="hs-cell"><div class="hs-lbl">Max deposit</div><div class="hs-val">$1,500</div></div>
+      <div class="hs-cell"><div class="hs-lbl">Best return</div><div class="hs-val jade">+40%</div></div>
     </div>
   </div>
 
-  <div class="body">
-    <div class="sec-label" style="margin-top:4px">Choose your investment plan</div>
-
-    <!-- STARTER -->
-    <div class="plan-card" id="pc-starter" onclick="pick('starter')">
-      <div class="plan-top-strip starter-strip"></div>
-      <div class="plan-badge selected-mk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
-      <div class="plan-inner">
-        <div class="plan-head">
-          <div class="plan-emoji starter-icon">🌱</div>
-          <div class="plan-pct-block">
-            <div class="plan-pct"><span class="sup">+</span>15<span class="sup">%</span></div>
-            <div class="plan-pct-lbl">return</div>
-          </div>
-        </div>
-        <div class="plan-name">Starter plan</div>
-        <div class="plan-grid">
-          <div class="pg-item"><div class="pg-lbl">Deposit range</div><div class="pg-val">$100 – $300</div></div>
-          <div class="pg-item"><div class="pg-lbl">Example payout</div><div class="pg-val">$200 → $230</div></div>
-        </div>
-        <div class="plan-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 72 hours</div>
-      </div>
-    </div>
-
-    <!-- GROWTH -->
-    <div class="plan-card featured" id="pc-growth" onclick="pick('growth')">
-      <div class="plan-top-strip growth-strip"></div>
-      <div class="plan-badge popular">★ Most popular</div>
-      <div class="plan-badge selected-mk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
-      <div class="plan-inner">
-        <div class="plan-head">
-          <div class="plan-emoji growth-icon">🚀</div>
-          <div class="plan-pct-block">
-            <div class="plan-pct"><span class="sup">+</span>25<span class="sup">%</span></div>
-            <div class="plan-pct-lbl">return</div>
-          </div>
-        </div>
-        <div class="plan-name">Growth plan</div>
-        <div class="plan-grid">
-          <div class="pg-item"><div class="pg-lbl">Deposit range</div><div class="pg-val">$301 – $700</div></div>
-          <div class="pg-item"><div class="pg-lbl">Example payout</div><div class="pg-val">$500 → $625</div></div>
-        </div>
-        <div class="plan-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 48 hours</div>
-      </div>
-    </div>
-
-    <!-- ELITE -->
-    <div class="plan-card" id="pc-elite" onclick="pick('elite')">
-      <div class="plan-top-strip elite-strip"></div>
-      <div class="plan-badge selected-mk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
-      <div class="plan-inner">
-        <div class="plan-head">
-          <div class="plan-emoji elite-icon">💎</div>
-          <div class="plan-pct-block">
-            <div class="plan-pct"><span class="sup">+</span>40<span class="sup">%</span></div>
-            <div class="plan-pct-lbl">return</div>
-          </div>
-        </div>
-        <div class="plan-name">Elite plan</div>
-        <div class="plan-grid">
-          <div class="pg-item"><div class="pg-lbl">Deposit range</div><div class="pg-val">$701 – $1,500</div></div>
-          <div class="pg-item"><div class="pg-lbl">Example payout</div><div class="pg-val">$1,000 → $1,400</div></div>
-        </div>
-        <div class="plan-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 24 hours</div>
-      </div>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="calc-wrap hidden" id="calcWrap">
-      <div class="calc-label" id="calcLbl">Enter deposit amount</div>
-      <div class="calc-input-wrap">
-        <span class="calc-pfx">$</span>
-        <input type="number" class="calc-input" id="calcIn"
-          placeholder="0.00" inputmode="decimal" oninput="calc()">
-      </div>
-      <div class="calc-err" id="calcErr"></div>
-      <div class="calc-result" id="calcRes">
-        <div class="cr-row"><span class="cr-label">Deposit</span><span class="cr-val" id="crDep">—</span></div>
-        <div class="cr-row"><span class="cr-label">Return rate</span><span class="cr-val" id="crRate">—</span></div>
-        <div class="cr-row"><span class="cr-label">Profit</span><span class="cr-val" id="crProfit">—</span></div>
-        <div class="cr-sep"></div>
-        <div class="cr-row"><span class="cr-label">You receive</span><span class="cr-val big" id="crTotal">—</span></div>
-        <div class="cr-row"><span class="cr-label">Payout in</span><span class="cr-val" id="crTime">—</span></div>
-      </div>
-    </div>
-
-    <div class="powered">ZimVest · Secure Investment Platform</div>
-  </div>
-
-  <div class="sticky-foot">
-    <button class="invest-btn" id="investBtn" onclick="proceed()">
-      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
-      <span id="investLabel">Select a plan above</span>
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-invest" onclick="switchTab('invest')">
+      <div class="tab-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+      Invest
     </button>
-    <div class="invest-sub" id="investSub">Tap any plan to get started</div>
+    <button class="tab-btn" id="tab-history" onclick="switchTab('history')">
+      <div class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      History
+    </button>
+    <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
+      <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      Profile
+    </button>
   </div>
 
-</div>
+  <!-- PANES -->
+  <div class="pane-wrap">
+
+    <!-- ══ INVEST PANE ══ -->
+    <div class="pane active" id="pane-invest">
+      <div class="sec-lbl" style="margin-top:4px">Choose your plan</div>
+
+      <!-- STARTER -->
+      <div class="plan-card" id="pc-s" onclick="pickPlan('starter')">
+        <div class="pct-strip s-strip"></div>
+        <div class="p-badge p-badge-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
+        <div class="plan-inner">
+          <div class="plan-head">
+            <div class="plan-emoji e-starter">🌱</div>
+            <div class="pct-block"><div class="pct-num"><span>+</span>15<span>%</span></div><div class="pct-lbl">return</div></div>
+          </div>
+          <div class="p-name">Starter plan</div>
+          <div class="p-divider"></div>
+          <div class="p-grid">
+            <div class="pg-i"><div class="pg-l">Range</div><div class="pg-v">$100 – $300</div></div>
+            <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$200 → $230</div></div>
+          </div>
+          <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 72 hours</div>
+        </div>
+      </div>
+
+      <!-- GROWTH -->
+      <div class="plan-card featured" id="pc-g" onclick="pickPlan('growth')">
+        <div class="pct-strip g-strip"></div>
+        <div class="p-badge p-badge-pop">★ Popular</div>
+        <div class="p-badge p-badge-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
+        <div class="plan-inner">
+          <div class="plan-head">
+            <div class="plan-emoji e-growth">🚀</div>
+            <div class="pct-block"><div class="pct-num"><span>+</span>25<span>%</span></div><div class="pct-lbl">return</div></div>
+          </div>
+          <div class="p-name">Growth plan</div>
+          <div class="p-divider"></div>
+          <div class="p-grid">
+            <div class="pg-i"><div class="pg-l">Range</div><div class="pg-v">$301 – $700</div></div>
+            <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$500 → $625</div></div>
+          </div>
+          <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 48 hours</div>
+        </div>
+      </div>
+
+      <!-- ELITE -->
+      <div class="plan-card" id="pc-e" onclick="pickPlan('elite')">
+        <div class="pct-strip e-strip"></div>
+        <div class="p-badge p-badge-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
+        <div class="plan-inner">
+          <div class="plan-head">
+            <div class="plan-emoji e-elite">💎</div>
+            <div class="pct-block"><div class="pct-num"><span>+</span>40<span>%</span></div><div class="pct-lbl">return</div></div>
+          </div>
+          <div class="p-name">Elite plan</div>
+          <div class="p-divider"></div>
+          <div class="p-grid">
+            <div class="pg-i"><div class="pg-l">Range</div><div class="pg-v">$701 – $1,500</div></div>
+            <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$1,000 → $1,400</div></div>
+          </div>
+          <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 24 hours</div>
+        </div>
+      </div>
+
+      <!-- CALCULATOR -->
+      <div class="calc-box" id="calcBox" style="display:none">
+        <div class="calc-box-lbl" id="calcBoxLbl">Enter deposit amount</div>
+        <div class="calc-pfx-wrap">
+          <span class="calc-pfx">$</span>
+          <input type="number" class="calc-in" id="calcIn" placeholder="0.00" inputmode="decimal" oninput="doCalc()">
+        </div>
+        <div class="calc-err-txt" id="calcErrTxt"></div>
+        <div class="calc-res" id="calcRes">
+          <div class="calc-res-row"><span class="l">Deposit</span><span class="v" id="crDep">—</span></div>
+          <div class="calc-res-row"><span class="l">Return rate</span><span class="v" id="crRate">—</span></div>
+          <div class="calc-res-row"><span class="l">Profit</span><span class="v" id="crProfit">—</span></div>
+          <div class="calc-res-sep"></div>
+          <div class="calc-res-row"><span class="l">You receive</span><span class="v calc-res-total" id="crTotal">—</span></div>
+          <div class="calc-res-row"><span class="l">Payout in</span><span class="v" id="crTime">—</span></div>
+        </div>
+      </div>
+
+      <div class="invest-btn-wrap">
+        <button class="invest-btn" id="investBtn" onclick="proceed()">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+          <span id="investLabel">Select a plan above</span>
+        </button>
+        <div class="invest-sub" id="investSub">Tap any plan to get started</div>
+      </div>
+
+      <div class="powered">ZimVest · Secured by EcoCash</div>
+    </div>
+
+    <!-- ══ HISTORY PANE ══ -->
+    <div class="pane" id="pane-history">
+      <div class="sec-lbl" style="margin-top:4px">Investment history</div>
+
+      <div class="card" id="historyCard">
+        <div class="card-bar card-bar-jade"></div>
+        <div id="historyList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="history-empty" id="historyEmpty" style="display:none">
+        <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+        <h3>No investments yet</h3>
+        <p>Your investment history will appear here once you make your first deposit via EcoCash.</p>
+      </div>
+
+      <div class="powered">ZimVest · Secured by EcoCash</div>
+    </div>
+
+    <!-- ══ PROFILE PANE ══ -->
+    <div class="pane" id="pane-profile">
+      <div class="sec-lbl" style="margin-top:4px">Your account</div>
+
+      <!-- Account info -->
+      <div class="card fade-up">
+        <div class="card-bar card-bar-jade"></div>
+        <div class="card-hd"><div><div class="card-title">Account details</div><div class="card-sub">Your registered information</div></div></div>
+        <div class="p-field">
+          <div><div class="p-field-lbl">Full name</div><div class="p-field-val" id="profName">—</div></div>
+        </div>
+        <div class="p-field">
+          <div><div class="p-field-lbl">EcoCash number</div><div class="p-field-val mono" id="profPhone">—</div></div>
+          <span class="p-field-badge badge-active">Active</span>
+        </div>
+        <div class="p-field">
+          <div><div class="p-field-lbl">Member since</div><div class="p-field-val" id="profSince">—</div></div>
+        </div>
+      </div>
+
+      <!-- Change password -->
+      <div class="card fade-up" style="animation-delay:.05s">
+        <div class="card-bar card-bar-blue"></div>
+        <div class="card-hd">
+          <div><div class="card-title">Change password</div><div class="card-sub">Update your sign-in password</div></div>
+        </div>
+        <div class="card-bd pw-form">
+          <div class="api-notice" id="pwNotice"></div>
+          <div class="form-row">
+            <div class="f-label">Current password</div>
+            <div class="pw-wrap">
+              <input type="password" id="curPw" placeholder="Enter current password" oninput="valPwForm()">
+              <button class="eye-btn" type="button" onclick="toggleEye('curPw','eyeCur')">
+                <svg id="eyeCur" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="f-label">New password</div>
+            <div class="pw-wrap">
+              <input type="password" id="newPw" placeholder="At least 6 characters" oninput="handleNewPw()">
+              <button class="eye-btn" type="button" onclick="toggleEye('newPw','eyeNew')">
+                <svg id="eyeNew" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="sBar"></div></div>
+            <div class="strength-lbl" id="sLbl"></div>
+          </div>
+          <div class="form-row">
+            <div class="f-label">Confirm new password</div>
+            <div class="pw-wrap">
+              <input type="password" id="confPw" placeholder="Re-enter new password" oninput="valPwForm()">
+              <button class="eye-btn" type="button" onclick="toggleEye('confPw','eyeConf')">
+                <svg id="eyeConf" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="form-err" id="confErr">Passwords do not match</div>
+          </div>
+          <button class="submit-btn" id="pwBtn" onclick="changePassword()">Update password</button>
+        </div>
+      </div>
+
+      <!-- Danger zone -->
+      <div class="card fade-up" style="animation-delay:.1s">
+        <div class="card-bar" style="height:3px;background:#D92B3A"></div>
+        <div class="card-bd" style="padding:14px 16px">
+          <div style="font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px">Sign out</div>
+          <div style="font-size:12px;color:var(--faint);margin-bottom:12px">You will need to sign in again to invest.</div>
+          <button onclick="doLogout()" style="width:100%;padding:12px;border-radius:12px;border:1.5px solid #D92B3A;background:transparent;color:#D92B3A;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#FFF0F1'" onmouseout="this.style.background='transparent'">Sign out of ZimVest</button>
+        </div>
+      </div>
+
+      <div class="powered">ZimVest · Secured by EcoCash</div>
+    </div>
+
+  </div><!-- /pane-wrap -->
+
+</div><!-- /screen -->
 <script>
+/* ══ Plan data ══ */
 const PLANS={
   starter:{name:'Starter',pct:15,hours:72,min:100,max:300},
   growth: {name:'Growth', pct:25,hours:48,min:301,max:700},
   elite:  {name:'Elite',  pct:40,hours:24,min:701,max:1500},
 };
-let sel=null, amt=0;
+let selPlan=null, calcAmt=0, pwSubmitting=false;
 
-/* ── Auth: read sessionStorage first (already set by auth.html), verify quietly ── */
+/* ══ Init — show name instantly, verify quietly ══ */
 (function init(){
-  // Show name immediately from sessionStorage — no wait
-  const name = sessionStorage.getItem('zimvest_name') || '';
-  const phone= sessionStorage.getItem('zimvest_phone')|| '';
-  const first = (name||phone||'Investor').split(' ')[0];
-  document.getElementById('gName').textContent = first + ' 🇿🇼';
+  const name  = sessionStorage.getItem('zimvest_name')  || '';
+  const phone = sessionStorage.getItem('zimvest_phone') || '';
+  setUserDisplay(name, phone);
 
-  // Quietly re-verify in background — only redirect on definitive 401
+  /* Quiet background verify — only hard-redirect on 401 */
   fetch('/api/me',{credentials:'include'})
-    .then(r=>{
-      if(r.status===401){
-        sessionStorage.clear();
-        location.replace('auth.html');
-      } else if(r.ok){
-        r.json().then(u=>{
-          sessionStorage.setItem('zimvest_phone',u.phone);
-          sessionStorage.setItem('zimvest_name',u.name||'');
-          const f=(u.name||u.phone||'Investor').split(' ')[0];
-          document.getElementById('gName').textContent=f+' 🇿🇼';
-        });
-      }
-      // Any other error (network, 5xx) — stay on page, don't boot user
+    .then(r => {
+      if(r.status === 401){ sessionStorage.clear(); location.replace('auth.html'); return; }
+      if(r.ok) r.json().then(u => {
+        sessionStorage.setItem('zimvest_name',  u.name  || '');
+        sessionStorage.setItem('zimvest_phone', u.phone || '');
+        setUserDisplay(u.name, u.phone);
+        loadHistory();
+      });
     })
-    .catch(()=>{}); // network failure — don't redirect
+    .catch(() => { /* network issue — stay on page */ });
+
+  loadHistory();
 })();
 
-/* ── Plan selection ── */
-function pick(key){
-  sel=key;
-  amt=0;
-  const p=PLANS[key];
+function setUserDisplay(name, phone){
+  const first = (name || phone || 'Investor').split(' ')[0];
+  document.getElementById('gName').textContent    = first + ' 🇿🇼';
+  document.getElementById('gPhone').textContent   = phone || '';
+  document.getElementById('profName').textContent  = name  || '—';
+  document.getElementById('profPhone').textContent = phone || '—';
+  document.getElementById('profSince').textContent = 'Member since 2025';
+  /* Avatar initials */
+  const initials = (name || phone || 'ZV').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('avatar').textContent = initials;
+}
 
-  Object.keys(PLANS).forEach(k=>{
-    document.getElementById('pc-'+k).classList.remove('selected');
+/* ══ Tab switching ══ */
+function switchTab(tab){
+  ['invest','history','profile'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('pane-'+t).classList.toggle('active', t===tab);
   });
-  document.getElementById('pc-'+key).classList.add('selected');
-
-  // Show calculator
-  const cw=document.getElementById('calcWrap');
-  cw.classList.remove('hidden');
-  document.getElementById('calcLbl').textContent=p.name+' plan · $'+p.min+' – $'+p.max;
-  document.getElementById('calcIn').value='';
-  document.getElementById('calcIn').min=p.min;
-  document.getElementById('calcIn').max=p.max;
-  document.getElementById('calcIn').placeholder=p.min+' – '+p.max;
-  document.getElementById('calcErr').style.display='none';
-  document.getElementById('calcErr').textContent='';
-  document.getElementById('calcIn').classList.remove('has-err');
-  document.getElementById('calcRes').classList.remove('visible');
-
-  updateBtn();
-
-  // Focus input + scroll — smooth
-  setTimeout(()=>{
-    document.getElementById('calcIn').focus();
-    cw.scrollIntoView({behavior:'smooth',block:'nearest'});
-  },80);
 }
 
-/* ── Calculator ── */
-function calc(){
-  if(!sel) return;
-  const p=PLANS[sel];
-  const v=parseFloat(document.getElementById('calcIn').value);
-  const errEl=document.getElementById('calcErr');
-  const resEl=document.getElementById('calcRes');
-  const inp=document.getElementById('calcIn');
+/* ══ Plan selection ══ */
+function pickPlan(key){
+  selPlan = key;
+  calcAmt = 0;
+  const p = PLANS[key];
 
-  errEl.style.display='none';
-  errEl.textContent='';
-  inp.classList.remove('has-err');
-  amt=0;
+  ['s','g','e'].forEach(k => document.getElementById('pc-'+k).classList.remove('selected'));
+  const map = {starter:'s', growth:'g', elite:'e'};
+  document.getElementById('pc-'+map[key]).classList.add('selected');
 
-  if(!v||isNaN(v)){resEl.classList.remove('visible');updateBtn();return;}
+  const cb = document.getElementById('calcBox');
+  cb.style.display = 'block';
+  document.getElementById('calcBoxLbl').textContent = p.name + ' — $' + p.min + ' to $' + p.max;
+  document.getElementById('calcIn').value = '';
+  document.getElementById('calcIn').min   = p.min;
+  document.getElementById('calcIn').max   = p.max;
+  document.getElementById('calcIn').placeholder = p.min + ' – ' + p.max;
+  document.getElementById('calcErrTxt').style.display = 'none';
+  document.getElementById('calcIn').classList.remove('err');
+  document.getElementById('calcRes').classList.remove('show');
 
-  if(v<p.min){
-    errEl.textContent='Minimum for '+p.name+' is $'+p.min+'. Choose Starter for $100–$300.';
-    if(p.name!=='Starter') errEl.textContent='Minimum for '+p.name+' plan is $'+p.min+'.';
-    errEl.style.display='block';
-    inp.classList.add('has-err');
-    resEl.classList.remove('visible');
-    updateBtn();return;
+  updateBtn();
+  setTimeout(()=>{ document.getElementById('calcIn').focus(); cb.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 80);
+}
+
+/* ══ Calculator ══ */
+function doCalc(){
+  if(!selPlan) return;
+  const p   = PLANS[selPlan];
+  const v   = parseFloat(document.getElementById('calcIn').value);
+  const err = document.getElementById('calcErrTxt');
+  const res = document.getElementById('calcRes');
+  const inp = document.getElementById('calcIn');
+  err.style.display = 'none';
+  inp.classList.remove('err');
+  calcAmt = 0;
+
+  if(!v || isNaN(v)){ res.classList.remove('show'); updateBtn(); return; }
+
+  if(v < p.min){
+    err.textContent = 'Minimum for '+p.name+' is $'+p.min+'.';
+    err.style.display = 'block'; inp.classList.add('err');
+    res.classList.remove('show'); updateBtn(); return;
   }
-  if(v>p.max){
-    errEl.textContent='Maximum for '+p.name+' plan is $'+p.max+'. Try Elite for up to $1,500.';
-    if(p.name==='Elite') errEl.textContent='Maximum deposit is $1,500.';
-    errEl.style.display='block';
-    inp.classList.add('has-err');
-    resEl.classList.remove('visible');
-    updateBtn();return;
+  if(v > p.max){
+    err.textContent = 'Maximum for '+p.name+' is $'+p.max+'.';
+    err.style.display = 'block'; inp.classList.add('err');
+    res.classList.remove('show'); updateBtn(); return;
   }
 
-  amt=v;
-  const profit=+(v*p.pct/100).toFixed(2);
-  const total=+(v+profit).toFixed(2);
-  document.getElementById('crDep').textContent='$'+v.toFixed(2);
-  document.getElementById('crRate').textContent='+'+p.pct+'%';
-  document.getElementById('crProfit').textContent='+$'+profit.toFixed(2);
-  document.getElementById('crTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
-  document.getElementById('crTime').textContent=p.hours+' hours';
-  resEl.classList.add('visible');
+  calcAmt = v;
+  const profit = +(v * p.pct / 100).toFixed(2);
+  const total  = +(v + profit).toFixed(2);
+  document.getElementById('crDep').textContent    = '$' + v.toFixed(2);
+  document.getElementById('crRate').textContent   = '+' + p.pct + '%';
+  document.getElementById('crProfit').textContent = '+$' + profit.toFixed(2);
+  document.getElementById('crTotal').textContent  = '$' + total.toLocaleString('en-US',{minimumFractionDigits:2});
+  document.getElementById('crTime').textContent   = p.hours + ' hours';
+  res.classList.add('show');
   updateBtn();
 }
 
-/* ── Button ── */
+/* ══ Invest button state ══ */
 function updateBtn(){
-  const btn=document.getElementById('investBtn');
-  const lbl=document.getElementById('investLabel');
-  const sub=document.getElementById('investSub');
-  const p=sel?PLANS[sel]:null;
-  if(!sel){
-    lbl.textContent='Select a plan above';
-    sub.textContent='Tap any plan to get started';
-    btn.classList.remove('ready');return;
-  }
-  if(!amt){
-    lbl.textContent='Enter deposit amount';
-    sub.textContent='Between $'+p.min+' and $'+p.max;
-    btn.classList.remove('ready');return;
-  }
-  const total=+(amt*(1+p.pct/100)).toFixed(2);
-  lbl.textContent='Invest $'+amt.toFixed(2)+' via EcoCash →';
-  sub.textContent='You will receive $'+total.toFixed(2)+' in '+p.hours+' hours';
+  const btn = document.getElementById('investBtn');
+  const lbl = document.getElementById('investLabel');
+  const sub = document.getElementById('investSub');
+  const p   = selPlan ? PLANS[selPlan] : null;
+  if(!selPlan){ lbl.textContent='Select a plan above'; sub.textContent='Tap any plan to get started'; btn.classList.remove('ready'); return; }
+  if(!calcAmt){ lbl.textContent='Enter deposit amount'; sub.textContent='$'+p.min+' – $'+p.max; btn.classList.remove('ready'); return; }
+  const total = +(calcAmt*(1+p.pct/100)).toFixed(2);
+  lbl.textContent = 'Invest $'+calcAmt.toFixed(2)+' via EcoCash →';
+  sub.textContent = 'Receive $'+total.toFixed(2)+' in '+p.hours+' hours';
   btn.classList.add('ready');
 }
 
-/* ── Proceed ── */
+/* ══ Proceed to EcoCash portal ══ */
 function proceed(){
-  if(!sel||!amt)return;
-  const p=PLANS[sel];
-  const total=+(amt*(1+p.pct/100)).toFixed(2);
-  sessionStorage.setItem('zimvest_plan',JSON.stringify({
-    name:p.name,pct:p.pct,
-    amount:amt.toFixed(2),payout:total.toFixed(2),
-    hours:p.hours,phone:sessionStorage.getItem('zimvest_phone')||'',
+  if(!selPlan || !calcAmt) return;
+  const p = PLANS[selPlan];
+  const total = +(calcAmt*(1+p.pct/100)).toFixed(2);
+  sessionStorage.setItem('zimvest_plan', JSON.stringify({
+    name:p.name, pct:p.pct,
+    amount:calcAmt.toFixed(2), payout:total.toFixed(2),
+    hours:p.hours, phone:sessionStorage.getItem('zimvest_phone')||'',
   }));
-  location.href='login.html';
+  /* Save to local history */
+  saveInvestment(p, calcAmt, total);
+  location.href = 'login.html';
 }
 
-/* ── Logout ── */
+/* ══ Investment history (localStorage) ══ */
+function saveInvestment(plan, amount, payout){
+  const hist = getHistory();
+  hist.unshift({
+    id:   Date.now(),
+    plan: plan.name,
+    pct:  plan.pct,
+    hours:plan.hours,
+    amount,
+    payout,
+    date: new Date().toISOString(),
+    status:'active',
+    maturesAt: new Date(Date.now()+plan.hours*3600000).toISOString(),
+  });
+  localStorage.setItem('zimvest_history', JSON.stringify(hist.slice(0,20)));
+}
+
+function getHistory(){
+  try{ return JSON.parse(localStorage.getItem('zimvest_history') || '[]'); } catch{ return []; }
+}
+
+function loadHistory(){
+  const hist = getHistory();
+  const card = document.getElementById('historyCard');
+  const empty = document.getElementById('historyEmpty');
+  const list  = document.getElementById('historyList');
+
+  /* Mark matured investments */
+  const now = Date.now();
+  hist.forEach(h => { if(h.status==='active' && new Date(h.maturesAt).getTime() < now) h.status='paid'; });
+  localStorage.setItem('zimvest_history', JSON.stringify(hist));
+
+  if(!hist.length){
+    card.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  card.style.display = 'block';
+  empty.style.display = 'none';
+
+  list.innerHTML = hist.map(h => {
+    const date = new Date(h.date).toLocaleDateString('en-ZW',{day:'numeric',month:'short',year:'numeric'});
+    const statusHtml = h.status==='active'
+      ? `<div class="inv-status status-active"><div class="status-dot"></div>Active</div>`
+      : `<div class="inv-status status-paid"><div class="status-dot"></div>Paid out</div>`;
+    const countdownHtml = h.status==='active'
+      ? `<div class="countdown-mini" id="cd-${h.id}">Calculating…</div>`
+      : '';
+    return `<div class="inv-item">
+      <div class="inv-left">
+        <div class="inv-plan">${h.plan} Plan</div>
+        <div class="inv-date">${date}</div>
+        ${statusHtml}
+        ${countdownHtml}
+      </div>
+      <div class="inv-right">
+        <div class="inv-amount">$${parseFloat(h.amount).toFixed(2)}</div>
+        <div class="inv-return">→ $${parseFloat(h.payout).toFixed(2)} (+${h.pct}%)</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  /* Start countdowns for active investments */
+  hist.filter(h=>h.status==='active').forEach(h=>{
+    const el = document.getElementById('cd-'+h.id);
+    if(!el) return;
+    const maturesAt = new Date(h.maturesAt).getTime();
+    const tick = () => {
+      const remaining = Math.max(0, maturesAt - Date.now());
+      const hrs = Math.floor(remaining/3600000);
+      const min = Math.floor((remaining%3600000)/60000);
+      const sec = Math.floor((remaining%60000)/1000);
+      el.textContent = `${String(hrs).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')} remaining`;
+      if(remaining > 0) setTimeout(tick, 1000);
+      else el.textContent = 'Payout processing…';
+    };
+    tick();
+  });
+}
+
+/* ══ Change password ══ */
+function handleNewPw(){
+  const pw = document.getElementById('newPw').value;
+  const score = [pw.length>=6, pw.length>=10, /[A-Z]/.test(pw), /[0-9]/.test(pw), /[^A-Za-z0-9]/.test(pw)].filter(Boolean).length;
+  const pct   = pw.length ? Math.min(100, score*20) : 0;
+  const colors = ['','#D92B3A','#F5A623','#F5A623','#22C373','#18A35E'];
+  const labels = ['','Too short','Weak','Fair','Good','Strong'];
+  const bar = document.getElementById('sBar');
+  bar.style.width = pct+'%'; bar.style.background = colors[score]||'#D92B3A';
+  document.getElementById('sLbl').textContent = pw.length ? labels[score]||'Too short' : '';
+  document.getElementById('sLbl').style.color = colors[score]||'#D92B3A';
+  valPwForm();
+}
+
+function valPwForm(){
+  const cur  = document.getElementById('curPw').value;
+  const nw   = document.getElementById('newPw').value;
+  const conf = document.getElementById('confPw').value;
+  const confErr = document.getElementById('confErr');
+  const match = nw === conf;
+  confErr.style.display = conf.length && !match ? 'block' : 'none';
+  const ok = cur.length >= 1 && nw.length >= 6 && match;
+  document.getElementById('pwBtn').classList.toggle('ready', ok);
+}
+
+function toggleEye(inputId, iconId){
+  const inp  = document.getElementById(inputId);
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  document.getElementById(iconId).innerHTML = show
+    ? `<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
+    : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+}
+
+async function changePassword(){
+  if(pwSubmitting) return;
+  const cur  = document.getElementById('curPw').value;
+  const nw   = document.getElementById('newPw').value;
+  const conf = document.getElementById('confPw').value;
+  if(nw !== conf){ document.getElementById('confErr').style.display='block'; return; }
+  if(nw.length < 6) return;
+
+  pwSubmitting = true;
+  const btn = document.getElementById('pwBtn');
+  const notice = document.getElementById('pwNotice');
+  btn.textContent = 'Updating…'; btn.classList.add('loading'); btn.classList.remove('ready');
+  notice.style.display = 'none';
+
+  const phone = sessionStorage.getItem('zimvest_phone') || '';
+  try{
+    /* Step 1: verify current password by logging in */
+    const loginRes = await fetch('/api/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      credentials:'include',
+      body: JSON.stringify({phone, password:cur}),
+    });
+    if(!loginRes.ok){
+      const d = await loginRes.json().catch(()=>({}));
+      showPwNotice('err', d.error||'Current password is incorrect.');
+      return;
+    }
+    /* Step 2: save new password */
+    const resetRes = await fetch('/api/reset-password', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({phone, password:nw}),
+    });
+    if(resetRes.ok){
+      showPwNotice('ok', 'Password updated successfully!');
+      document.getElementById('curPw').value  = '';
+      document.getElementById('newPw').value  = '';
+      document.getElementById('confPw').value = '';
+      document.getElementById('sBar').style.width = '0';
+      document.getElementById('sLbl').textContent = '';
+    } else {
+      const d = await resetRes.json().catch(()=>({}));
+      showPwNotice('err', d.error || 'Could not update password. Try again.');
+    }
+  } catch {
+    showPwNotice('err', 'Network error. Check your connection.');
+  } finally {
+    pwSubmitting = false;
+    btn.textContent = 'Update password';
+    btn.classList.remove('loading');
+    valPwForm();
+  }
+}
+
+function showPwNotice(type, msg){
+  const el = document.getElementById('pwNotice');
+  el.className = 'api-notice ' + type;
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => { el.style.display='none'; }, 4000);
+}
+
+/* ══ Logout ══ */
 async function doLogout(){
-  try{await fetch('/api/logout',{method:'POST',credentials:'include'});}catch{}
+  try{ await fetch('/api/logout',{method:'POST',credentials:'include'}); }catch{}
   sessionStorage.clear();
-  location.href='index.html';
+  location.href = 'index.html';
 }
 </script>
 </body>
