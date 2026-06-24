@@ -279,6 +279,9 @@ input.err{border-color:var(--red) !important}
           </div>
           <div class="field-hint hidden" id="pwHint">At least 6 characters</div>
           <div class="field-error" id="pwError"></div>
+          <div id="forgotLink" style="margin-top:8px;text-align:right">
+            <a href="forgot.html" style="font-size:11px;font-weight:700;color:var(--green-mid);text-decoration:none">Forgot password?</a>
+          </div>
         </div>
 
         <!-- Confirm password (register only) -->
@@ -382,6 +385,7 @@ function switchTab(t) {
 
   isReg ? show('nameField')    : hide('nameField');
   isReg ? show('confirmField') : hide('confirmField');
+  isReg ? hide('forgotLink') : show('forgotLink');
   isReg ? show('pwHint')       : hide('pwHint');
 
   $('pwLabel').textContent     = isReg ? 'Create password' : 'Password';
