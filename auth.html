@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="theme-color" content="#04342C"/>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="assets/favicon.ico" sizes="any"/>
+<title>Sign in · ZimVest</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --navy:#04342C;--green:#1D9E75;--green-mid:#0F6E56;--green-dark:#021f1a;
+  --sky:#E1F5EE;--sky-deep:#5DCAA5;--red:#d0021b;
+  --page:#f0faf6;--white:#fff;--card:#fff;
+  --border:#c8e8dc;--border-strong:#9FE1CB;
+  --ink:#04342C;--ink-soft:#3d7a66;--ink-faint:#7db5a0;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+  --r:12px;--r-lg:16px;
+  --sh:0 1px 3px rgba(4,52,44,.08),0 4px 16px rgba(4,52,44,.06);
+}
+html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--page)}
+.screen{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+/* ── HEADER ── */
+.header{background:var(--navy);padding:20px 18px 24px;flex-shrink:0;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.hglow{position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(29,158,117,.25);filter:blur(70px);top:-100px;right:-60px;pointer-events:none}
+.header-inner{position:relative;z-index:1}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;background:none;border:none;cursor:pointer;margin-bottom:20px;padding:0;font-family:var(--font)}
+.back-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.back-btn:hover{color:rgba(255,255,255,.85)}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.brand-mark{width:36px;height:36px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-mark svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.brand-name{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.3px}
+.brand-sub{font-size:10px;color:rgba(255,255,255,.5);font-weight:500;margin-top:1px}
+.plan-strip{display:none;gap:6px;flex-wrap:wrap}
+.plan-strip.visible{display:flex}
+.plan-chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:10px;font-weight:600;color:rgba(255,255,255,.85)}
+
+/* ── BODY ── */
+.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 14px calc(32px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+.body::-webkit-scrollbar{display:none}
+
+/* ── RETURNING USER BANNER ── */
+.returning-banner{background:var(--white);border:1.5px solid var(--border-strong);border-radius:var(--r-lg);padding:18px 16px;margin-bottom:12px;box-shadow:var(--sh);display:none}
+.returning-banner.visible{display:block}
+.rb-greeting{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.rb-sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px}
+.rb-actions{display:flex;gap:8px}
+.rb-continue{flex:1;background:var(--navy);color:#fff;border:none;padding:11px;border-radius:var(--r);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
+.rb-continue:hover{background:var(--green-mid)}
+.rb-switch{padding:11px 16px;border-radius:var(--r);background:transparent;border:1.5px solid var(--border);font-family:var(--font);font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+
+/* ── SKELETON LOADER (while /api/me checks) ── */
+.skeleton{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:18px 16px;margin-bottom:12px;display:none}
+.skeleton.visible{display:block}
+.skel-line{height:12px;background:var(--border);border-radius:6px;margin-bottom:10px;animation:pulse 1.4s ease-in-out infinite}
+.skel-line:last-child{width:60%;margin-bottom:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── AUTH TABS ── */
+.auth-tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:5px;margin-bottom:12px;box-shadow:var(--sh);display:none}
+.auth-tabs.visible{display:flex}
+.auth-tab{flex:1;padding:10px 8px;border-radius:10px;border:none;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s;background:transparent;color:var(--ink-soft)}
+.auth-tab.active{background:var(--navy);color:#fff}
+
+/* ── CARD ── */
+.form-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:10px;box-shadow:var(--sh);display:none}
+.form-card.visible{display:block}
+.card-top-bar{height:3px;background:linear-gradient(90deg,var(--green),var(--sky-deep))}
+.card-hdr{padding:13px 16px 11px;border-bottom:1px solid var(--border)}
+.card-title{font-size:14px;font-weight:800;color:var(--ink)}
+.card-sub{font-size:11px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.card-body{padding:16px}
+
+/* ── FIELDS ── */
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:10px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.phone-row{display:flex;gap:8px}
+.phone-prefix{background:var(--sky);border:1.5px solid var(--sky-deep);color:var(--navy);font-family:var(--mono);font-size:14px;font-weight:800;padding:0 14px;border-radius:var(--r);display:flex;align-items:center;flex-shrink:0;height:48px}
+input[type=tel],input[type=text],input[type=password]{width:100%;height:48px;padding:0 14px;border-radius:var(--r);border:1.5px solid var(--border);background:var(--page);font-family:var(--font);font-size:15px;font-weight:500;color:var(--ink);outline:none;transition:border-color .18s,background .18s,box-shadow .18s;-webkit-appearance:none}
+input::placeholder{color:var(--ink-faint)}
+input:focus{border-color:var(--green);background:var(--white);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
+input.input-error{border-color:var(--red)}
+.field-hint{font-size:11px;color:var(--ink-faint);font-weight:500;margin-top:5px}
+.field-error{font-size:11px;color:var(--red);font-weight:600;margin-top:5px;display:none}
+.pw-field{position:relative;display:flex;align-items:center}
+.pw-field input{padding-right:50px}
+.eye-btn{position:absolute;right:13px;background:none;border:none;cursor:pointer;color:var(--ink-faint);display:flex;align-items:center;padding:4px;transition:color .15s}
+.eye-btn:hover{color:var(--green)}
+
+/* ── API ERROR BANNER ── */
+.api-error{background:#fff0f0;border:1.5px solid #ffb3b3;border-radius:var(--r);padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--red);font-weight:600;display:none}
+.api-error.visible{display:block}
+
+/* ── SECURE NOTICE ── */
+.secure-notice{display:flex;align-items:flex-start;gap:8px;background:var(--sky);border:1px solid var(--border-strong);border-radius:var(--r);padding:10px 14px;margin-bottom:10px}
+.secure-notice svg{width:14px;height:14px;stroke:var(--green-mid);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.secure-notice span{font-size:11px;color:var(--ink-soft);font-weight:500;line-height:1.45}
+.powered{text-align:center;padding:6px 0 2px;font-size:9px;color:var(--ink-faint);font-weight:500;letter-spacing:.3px}
+
+/* ── STICKY FOOTER ── */
+.sticky-footer{position:sticky;bottom:0;padding:12px 14px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--page) 70%,transparent);z-index:10}
+.action-btn{background:var(--green);color:#fff;border:none;width:100%;padding:15px;border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;letter-spacing:.1px;transition:all .15s;opacity:.35;pointer-events:none;box-shadow:0 4px 16px rgba(29,158,117,.32);display:none}
+.action-btn.visible{display:block}
+.action-btn.ready{opacity:1;pointer-events:auto}
+.action-btn.loading{opacity:.7;pointer-events:none}
+.action-btn:active{transform:scale(.98)}
+.form-switch{text-align:center;font-size:12px;color:var(--ink-soft);margin-top:8px;display:none}
+.form-switch.visible{display:block}
+.form-switch a{color:var(--green-mid);font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hglow"></div>
+    <div class="header-inner">
+      <button class="back-btn" onclick="location.href='index.html'">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to ZimVest
+      </button>
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">ZimVest</div>
+          <div class="brand-sub">Secure Investment Platform</div>
+        </div>
+      </div>
+      <div class="plan-strip" id="planStrip">
+        <span class="plan-chip" id="chipPlan">—</span>
+        <span class="plan-chip" id="chipAmount">USD —</span>
+        <span class="plan-chip" id="chipReturn">—</span>
+        <span class="plan-chip" id="chipHours">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Session check skeleton -->
+    <div class="skeleton" id="skeleton">
+      <div class="skel-line"></div>
+      <div class="skel-line"></div>
+      <div class="skel-line"></div>
+    </div>
+
+    <!-- Returning user banner (shown when valid session found) -->
+    <div class="returning-banner" id="returningBanner">
+      <div class="rb-greeting" id="rbGreeting">Welcome back!</div>
+      <div class="rb-sub">You are already signed in. Continue to your investment?</div>
+      <div class="rb-actions">
+        <button class="rb-continue" id="rbContinue">Continue →</button>
+        <button class="rb-switch" id="rbSwitch">Switch account</button>
+      </div>
+    </div>
+
+    <!-- API error (sign-in / register failures) -->
+    <div class="api-error" id="apiError"></div>
+
+    <!-- Auth tabs (hidden until session check completes) -->
+    <div class="auth-tabs" id="authTabs">
+      <button class="auth-tab active" id="tabSignin"   onclick="switchTab('signin')">Sign in</button>
+      <button class="auth-tab"        id="tabRegister" onclick="switchTab('register')">Create account</button>
+    </div>
+
+    <!-- Form card -->
+    <div class="form-card" id="formCard">
+      <div class="card-top-bar"></div>
+      <div class="card-hdr">
+        <div class="card-title" id="cardTitle">Welcome back</div>
+        <div class="card-sub"   id="cardSub">Sign in with your ZimVest account to continue</div>
+      </div>
+      <div class="card-body">
+
+        <div class="field" id="nameField" style="display:none">
+          <div class="field-label">Full name</div>
+          <input type="text" id="nameInput" placeholder="e.g. Tendai Moyo" autocomplete="name" oninput="validate()">
+          <div class="field-error" id="nameError"></div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">EcoCash number</div>
+          <div class="phone-row">
+            <div class="phone-prefix">+263</div>
+            <input type="tel" id="phoneInput" inputmode="numeric" pattern="[0-9]*" placeholder="7XXXXXXXX" oninput="handlePhone(this)" autocomplete="tel">
+          </div>
+          <div class="field-hint">9-digit number starting with 7</div>
+          <div class="field-error" id="phoneError"></div>
+        </div>
+
+        <div class="field">
+          <div class="field-label" id="pwLabel">Password</div>
+          <div class="pw-field">
+            <input type="password" id="pwInput" placeholder="Enter password" autocomplete="current-password" oninput="validate()">
+            <button class="eye-btn" type="button" aria-label="Show password" onclick="toggleEye()">
+              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="field-hint" id="pwHint" style="display:none">At least 6 characters</div>
+          <div class="field-error" id="pwError"></div>
+        </div>
+
+        <div class="field" id="confirmField" style="display:none">
+          <div class="field-label">Confirm password</div>
+          <div class="pw-field">
+            <input type="password" id="confirmInput" placeholder="Re-enter password" autocomplete="new-password" oninput="validate()">
+          </div>
+          <div class="field-error" id="confirmError"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="secure-notice" id="secureNotice" style="display:none">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>After sign in you will be redirected to the secure EcoCash payment portal to complete your deposit.</span>
+    </div>
+
+    <div class="powered">ZimVest · Secure Investment Platform · Zimbabwe</div>
+  </div>
+
+  <!-- STICKY FOOTER -->
+  <div class="sticky-footer">
+    <button class="action-btn" id="mainBtn" onclick="submit()">Sign in</button>
+    <div class="form-switch" id="formSwitch">
+      No account? <a onclick="switchTab('register')">Create one free</a>
+    </div>
+  </div>
+
+</div>
+<script>
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+let tab = 'signin';
+let phoneVal = '', pwVal = '', confirmVal = '', nameVal = '';
+let submitting = false;
+
+/* ════════════════════════════════════════
+   PLAN — read from sessionStorage
+════════════════════════════════════════ */
+let plan = null;
+try { plan = JSON.parse(sessionStorage.getItem('zimvest_plan')); } catch(e) {}
+
+if (plan) {
+  document.getElementById('planStrip').classList.add('visible');
+  document.getElementById('chipPlan').textContent   = plan.name + ' Plan';
+  document.getElementById('chipAmount').textContent = 'USD ' + plan.amount;
+  document.getElementById('chipReturn').textContent = '+' + plan.pct + '% Return';
+  document.getElementById('chipHours').textContent  = plan.hours + ' hrs';
+}
+
+/* ════════════════════════════════════════
+   SESSION CHECK — /api/me on page load
+════════════════════════════════════════ */
+(async function checkSession() {
+  document.getElementById('skeleton').classList.add('visible');
+  try {
+    const r = await fetch('/api/me', { credentials: 'include' });
+    if (r.ok) {
+      const user = await r.json();
+      // Valid session — show returning user banner
+      document.getElementById('skeleton').classList.remove('visible');
+      document.getElementById('rbGreeting').textContent = 'Welcome back, ' + (user.name || user.phone) + '!';
+      document.getElementById('returningBanner').classList.add('visible');
+
+      // Store for downstream pages
+      sessionStorage.setItem('zimvest_phone', user.phone);
+      sessionStorage.setItem('zimvest_name',  user.name || '');
+
+      document.getElementById('rbContinue').onclick = () => { location.href = 'login.html'; };
+      document.getElementById('rbSwitch').onclick   = async () => {
+        await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+        sessionStorage.removeItem('zimvest_phone');
+        sessionStorage.removeItem('zimvest_name');
+        document.getElementById('returningBanner').classList.remove('visible');
+        showForm();
+      };
+    } else {
+      showForm();
+    }
+  } catch {
+    // Network error or no session — show form normally
+    showForm();
+  }
+})();
+
+function showForm() {
+  document.getElementById('skeleton').classList.remove('visible');
+  document.getElementById('authTabs').classList.add('visible');
+  document.getElementById('formCard').classList.add('visible');
+  document.getElementById('secureNotice').style.display = 'flex';
+  document.getElementById('mainBtn').classList.add('visible');
+  document.getElementById('formSwitch').classList.add('visible');
+}
+
+/* ════════════════════════════════════════
+   TAB SWITCHING
+════════════════════════════════════════ */
+function switchTab(t) {
+  tab = t;
+  const isReg = t === 'register';
+
+  document.getElementById('tabSignin').classList.toggle('active', !isReg);
+  document.getElementById('tabRegister').classList.toggle('active', isReg);
+  document.getElementById('cardTitle').textContent     = isReg ? 'Create your account' : 'Welcome back';
+  document.getElementById('cardSub').textContent       = isReg ? 'Register with your EcoCash number' : 'Sign in with your ZimVest account to continue';
+  document.getElementById('nameField').style.display   = isReg ? 'block' : 'none';
+  document.getElementById('confirmField').style.display= isReg ? 'block' : 'none';
+  document.getElementById('pwHint').style.display      = isReg ? 'block' : 'none';
+  document.getElementById('pwLabel').textContent       = isReg ? 'Create password' : 'Password';
+  document.getElementById('pwInput').autocomplete      = isReg ? 'new-password' : 'current-password';
+  document.getElementById('mainBtn').textContent       = isReg ? 'Create account' : 'Sign in';
+  document.getElementById('formSwitch').innerHTML      = isReg
+    ? 'Already have an account? <a onclick="switchTab(\'signin\')">Sign in</a>'
+    : 'No account? <a onclick="switchTab(\'register\')">Create one free</a>';
+
+  clearErrors();
+  validate();
+}
+
+/* ════════════════════════════════════════
+   INPUT HANDLERS
+════════════════════════════════════════ */
+function handlePhone(el) {
+  let v = el.value.replace(/\D/g, '');
+  if (v.startsWith('263')) v = v.slice(3);
+  if (v.startsWith('0'))   v = v.slice(1);
+  if (v.length > 0 && v[0] !== '7') v = '7' + v.slice(1);
+  v = v.slice(0, 9);
+  el.value   = v;
+  phoneVal   = '+263' + v;
+  validate();
+}
+
+function toggleEye() {
+  const pw   = document.getElementById('pwInput');
+  const show = pw.type === 'password';
+  pw.type = show ? 'text' : 'password';
+  document.getElementById('eyeIcon').innerHTML = show
+    ? `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
+    : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+}
+
+/* ════════════════════════════════════════
+   VALIDATION
+════════════════════════════════════════ */
+function validate() {
+  pwVal      = document.getElementById('pwInput').value;
+  confirmVal = document.getElementById('confirmInput')?.value ?? '';
+  nameVal    = document.getElementById('nameInput')?.value.trim() ?? '';
+
+  const phoneOk = phoneVal.length === 13;
+  const pwOk    = tab === 'register' ? pwVal.length >= 6 : pwVal.length >= 1;
+  const extraOk = tab === 'register' ? (nameVal.length > 1 && confirmVal === pwVal) : true;
+
+  document.getElementById('mainBtn').classList.toggle('ready', phoneOk && pwOk && extraOk);
+}
+
+function clearErrors() {
+  ['nameError','phoneError','pwError','confirmError'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.style.display = 'none'; }
+  });
+  const ae = document.getElementById('apiError');
+  ae.textContent = '';
+  ae.classList.remove('visible');
+}
+
+function showFieldError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent   = msg;
+  el.style.display = 'block';
+}
+
+function showApiError(msg) {
+  const el = document.getElementById('apiError');
+  el.textContent = msg;
+  el.classList.add('visible');
+}
+
+/* ════════════════════════════════════════
+   SUBMIT
+════════════════════════════════════════ */
+async function submit() {
+  if (submitting) return;
+  clearErrors();
+
+  // Client-side checks before hitting the API
+  if (tab === 'register') {
+    if (nameVal.length < 2)       { showFieldError('nameError',    'Please enter your full name.');        return; }
+    if (pwVal.length < 6)         { showFieldError('pwError',      'Password must be at least 6 chars.');  return; }
+    if (pwVal !== confirmVal)     { showFieldError('confirmError', 'Passwords do not match.');             return; }
+  }
+
+  submitting = true;
+  const btn  = document.getElementById('mainBtn');
+  const orig = btn.textContent;
+  btn.textContent = 'Please wait…';
+  btn.classList.add('loading');
+  btn.classList.remove('ready');
+
+  const endpoint = tab === 'register' ? '/api/register' : '/api/login';
+  const body     = tab === 'register'
+    ? { phone: phoneVal, password: pwVal, name: nameVal }
+    : { phone: phoneVal, password: pwVal };
+
+  try {
+    const r    = await fetch(endpoint, {
+      method:      'POST',
+      headers:     { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body:        JSON.stringify(body),
+    });
+    const data = await r.json();
+
+    if (r.ok) {
+      // Store for downstream pages
+      sessionStorage.setItem('zimvest_phone', data.phone);
+      sessionStorage.setItem('zimvest_name',  data.name || '');
+      location.href = 'login.html';
+    } else {
+      // Map server error to the right field
+      const msg = data.error || 'Something went wrong. Please try again.';
+      if      (msg.toLowerCase().includes('number'))   showFieldError('phoneError', msg);
+      else if (msg.toLowerCase().includes('password')) showFieldError('pwError',    msg);
+      else if (msg.toLowerCase().includes('name'))     showFieldError('nameError',  msg);
+      else                                              showApiError(msg);
+
+      submitting = false;
+      btn.textContent = orig;
+      btn.classList.remove('loading');
+      validate();
+    }
+  } catch {
+    showApiError('Network error. Check your connection and try again.');
+    submitting = false;
+    btn.textContent = orig;
+    btn.classList.remove('loading');
+    validate();
+  }
+}
+</script>
+</body>
+</html>
