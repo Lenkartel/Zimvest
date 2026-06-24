@@ -238,8 +238,8 @@ footer{background:var(--g900);padding:64px 0 28px}
       <a href="#calculator">Calculator</a>
     </div>
     <div class="nav-cta">
-      <a href="login.html" class="btn btn--outline btn--sm">Sign in</a>
-      <a href="login.html" class="btn btn--primary btn--sm" id="nav-cta">Invest now →</a>
+      <a href="auth.html" class="btn btn--outline btn--sm">Sign in</a>
+      <a href="auth.html" class="btn btn--primary btn--sm" id="nav-cta">Invest now →</a>
     </div>
   </div>
 </nav>
@@ -256,7 +256,7 @@ footer{background:var(--g900);padding:64px 0 28px}
         <h1>Earn up to<br><em>40% returns</em><br>in 24 hours</h1>
         <p class="lead lead--light" style="max-width:420px">Invest from $100 via EcoCash. No bank account needed. Payouts sent automatically to your wallet.</p>
         <div class="hero-actions">
-          <a href="login.html" class="btn btn--primary btn--lg" id="hero-cta">
+          <a href="auth.html" class="btn btn--primary btn--lg" id="hero-cta">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
             Invest via EcoCash
           </a>
@@ -533,7 +533,7 @@ footer{background:var(--g900);padding:64px 0 28px}
           <span class="pb-pill">🔄 Automatic payout</span>
         </div>
       </div>
-      <a href="login.html" class="btn btn--primary btn--lg" id="portal-cta">Start investing →</a>
+      <a href="auth.html" class="btn btn--primary btn--lg" id="portal-cta">Start investing →</a>
     </div>
   </div>
 </section>
@@ -592,8 +592,8 @@ footer{background:var(--g900);padding:64px 0 28px}
       </div>
       <div class="footer-col">
         <h4>Account</h4>
-        <a href="login.html">Sign in</a>
-        <a href="login.html">Register</a>
+        <a href="auth.html">Sign in</a>
+        <a href="auth.html">Register</a>
         <a href="receipt.html">My receipt</a>
       </div>
       <div class="footer-col">
@@ -629,7 +629,7 @@ function invest(key){
     name:p.name,pct:p.pct,amount:p.min.toFixed(2),
     payout:(p.min*(1+p.pct/100)).toFixed(2),hours:p.hours
   }));
-  location.href='login.html';
+  location.href='auth.html';
 }
 
 function goInvest(key,amt){
@@ -639,7 +639,7 @@ function goInvest(key,amt){
     name:p.name,pct:p.pct,amount:a.toFixed(2),
     payout:(a*(1+p.pct/100)).toFixed(2),hours:p.hours
   }));
-  location.href='login.html';
+  location.href='auth.html';
 }
 
 ['nav-cta','hero-cta','portal-cta'].forEach(id=>{
