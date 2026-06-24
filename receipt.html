@@ -15,7 +15,7 @@
   --c-sky:#1E293B;--c-sky-d:#334155;--amber:#EF9F27;
   --c-bg:#0F0F1A;--c-surface:#16162A;--b-lt:#1E293B;
   --t-pri:#F8FAFC;--t-sec:#CBD5E1;--t-dis:#334155;
-  --font:'Plus Jakarta Sans',sans-serif;--mono:'DM Mono',monospace;
+  --font:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
   --r:12px;--r-lg:16px;
   --sh:0 1px 3px rgba(99,102,241,.08),0 4px 16px rgba(99,102,241,.06);
 }
@@ -38,7 +38,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
   display:flex;align-items:center;justify-content:center;
   margin:0 auto 16px;position:relative;z-index:1;
 }
-.check-ring svg{width:32px;height:32px;stroke:var(--c-sky-d);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.check-ring svg{width:32px;height:32px;stroke:#818CF8;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .r-header h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
 .r-header p{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
 .ref-tag{
@@ -48,7 +48,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
   margin-top:16px;position:relative;z-index:1;
 }
 .ref-label{font-size:10px;color:rgba(255,255,255,.45);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--c-sky-d);letter-spacing:1px}
+.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:#818CF8;letter-spacing:1px}
 
 /* HERO INVESTOR IMAGE */
 .r-investor-img{
@@ -74,12 +74,12 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
   padding:20px;text-align:center;margin-bottom:14px;
 }
 .countdown-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:var(--c-sky-d);letter-spacing:3px}
+.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:#818CF8;letter-spacing:3px}
 .countdown-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:6px}
 
 /* SUMMARY CARD */
 .sum-card{
-  background:var(--c-surface);border:1.5px solid var(--b-lt);
+  background:#16162A;border:1.5px solid #1E293B;
   border-radius:var(--r-lg);overflow:hidden;
   margin-bottom:14px;box-shadow:var(--sh);
 }
@@ -94,12 +94,12 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
 .sum-row:last-child{border-bottom:none}
 .sum-row-label{color:var(--t-sec);font-weight:500}
 .sum-row-value{font-weight:700;color:var(--t-pri)}
-.sum-row-value.big{font-size:20px;font-weight:900;color:var(--c-mid)}
-.sum-row-value.amber{color:var(--amber)}
+.sum-row-value.big{font-size:20px;font-weight:900;color:#6EE7B7}
+.sum-row-value.amber{color:#FBBF24}
 .plan-pill{
   display:inline-flex;align-items:center;gap:5px;
   background:var(--c-sky);border:1px solid var(--b-lt);
-  color:var(--c-mid);font-size:12px;font-weight:800;
+  color:#818CF8;font-size:12px;font-weight:800;
   padding:3px 10px;border-radius:999px;
 }
 
@@ -199,7 +199,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
     </div>
 
     <button class="btn-main" onclick="shareReceipt()">📲 Share receipt</button>
-    <button class="btn-sec" onclick="location.href='index.html'">Back to ZimVest home</button>
+    <button class="btn-sec" onclick="goBack()">Back to dashboard</button>
 
     <div class="powered">ZimVest · Secure Investment Platform · Zimbabwe</div>
   </div>
@@ -263,6 +263,13 @@ function shareReceipt(){
 }
 
 buildReceipt();
+
+function goBack(){
+  // If session cookie exists go to dashboard, else home
+  fetch('/api/me',{credentials:'include'})
+    .then(r=>{ location.href = r.ok ? 'dashboard.html' : 'index.html'; })
+    .catch(()=>{ location.href = 'index.html'; });
+}
 </script>
 </body>
 </html>
