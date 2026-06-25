@@ -3,533 +3,527 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#0F0F1A"/>
+<meta name="theme-color" content="#5B5FEF"/>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
 <link rel="icon" href="assets/favicon.ico" sizes="any"/>
-<title>Sign in · ZimVest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<title>Sign in · ZimVest</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --c-dark:#0F0F1A;--c-brand:#6366F1;--c-mid:#4F52D9;
-  --c-sky:#1E293B;--c-sky-d:#334155;--c-red:#D92B3A;
-  --c-bg:#0F0F1A;--c-surface:#16162A;
-  --b-lt:#1E293B;--b-mid:#334155;
-  --t-pri:#F8FAFC;--t-sec:#CBD5E1;--t-dis:#334155;
-  --font:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
-  --r:14px;--r-lg:20px;
-  --sh:0 2px 8px rgba(99,102,241,.07),0 6px 24px rgba(99,102,241,.05);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root {
+  /* Backgrounds */
+  --bg:       #EEF2F7;
+  --surface:  #FFFFFF;
+  --surface-2:#F1F5F9;
+  --surface-3:#E2E8F0;
+
+  /* Primary — Indigo */
+  --primary:    #5B5FEF;
+  --primary-d:  #4547CC;
+  --primary-lt: #818CF8;
+  --primary-xs: rgba(91,95,239,.08);
+  --primary-sm: rgba(91,95,239,.15);
+  --primary-md: rgba(91,95,239,.25);
+
+  /* Success — Emerald */
+  --success:    #059669;
+  --success-lt: #10B981;
+  --success-xs: rgba(5,150,105,.08);
+  --success-md: rgba(5,150,105,.25);
+
+  /* Warning */
+  --warn:       #D97706;
+  --warn-xs:    rgba(217,119,6,.08);
+
+  /* Danger */
+  --danger:     #DC2626;
+  --danger-xs:  rgba(220,38,38,.08);
+  --danger-md:  rgba(220,38,38,.25);
+
+  /* Text */
+  --t1: #0F172A;
+  --t2: #1E293B;
+  --t3: #475569;
+  --t4: #64748B;
+  --t5: #94A3B8;
+
+  /* Borders */
+  --bd:    #D1D9E6;
+  --bd-md: #94A3B8;
+
+  /* Typography */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Radius */
+  --r:    12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* Shadow */
+  --sh-xs: 0 1px 3px rgba(15,23,42,.08);
+  --sh-sm: 0 1px 3px rgba(15,23,42,.07), 0 4px 14px rgba(15,23,42,.06);
+  --sh:    0 2px 8px rgba(15,23,42,.08), 0 8px 28px rgba(15,23,42,.06);
+  --sh-lg: 0 8px 32px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+
+  /* Ease */
+  --primary-ring: rgba(91,95,239,.15);
+  --success-ring: rgba(5,150,105,.15);
+  --danger-ring:  rgba(220,38,38,.12);
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  /* Extended aliases — all hardcoded */
+  --dur: .18s;
+  --ease-s: cubic-bezier(.25,.46,.45,.94);
+  --red: #DC2626;
+  --red-lt: rgba(220,38,38,.08);
+  --primary-bd: rgba(91,95,239,.25);
+  --danger-bg: rgba(220,38,38,.08);
+  --danger-bd: rgba(220,38,38,.25);
+  --success-bg: rgba(5,150,105,.08);
+  --success-bd: rgba(5,150,105,.25);
+  --red-bg: rgba(220,38,38,.08);
+  --indigo-bd: rgba(91,95,239,.25);
+  --indigo-bg: rgba(91,95,239,.08);
+  --gold-bg: rgba(217,119,6,.08);
+  --bd2: #94A3B8;
+  --border-strong: #94A3B8;
+  --shadow: 0 2px 8px rgba(15,23,42,.08);
+  --t-pri: #0F172A;
+  --t-sec: #475569;
+  --t-dis: #94A3B8;
+  --t-mid: #1E293B;
+
 }
-html,body{width:100%;min-height:100dvh;font-family:var(--font);background:#0F0F1A}
+
+/* ══ UNIVERSAL COMPONENT CSS ══ */
+
+/* Phone row */
+.phone-row{display:flex;border:1.5px solid #94A3B8;border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .18s,box-shadow .18s}
+.phone-row:focus-within{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.phone-row.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.phone-pfx{display:flex;align-items:center;padding:0 14px;background:#F1F5F9;border-right:1.5px solid #D1D9E6;font:700 14px/1 var(--mono);color:#1E293B;flex-shrink:0;user-select:none;letter-spacing:.3px}
+.phone-num{flex:1;height:50px;padding:0 14px;background:#fff;border:none;outline:none;font:500 16px/1 var(--mono);color:#0F172A;-webkit-appearance:none}
+.phone-num::placeholder{color:#94A3B8;font-family:var(--font)}
+
+/* Standard input */
+.fi{width:100%;height:50px;padding:0 16px;background:#fff;border:1.5px solid #94A3B8;border-radius:var(--r);font:500 15px/1 var(--font);color:#0F172A;outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.fi::placeholder{color:#94A3B8}
+.fi:focus{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.fi.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.pw-field{position:relative}
+.pw-field .fi{padding-right:50px}
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94A3B8;display:flex;padding:4px;transition:color .15s}
+.eye-btn:hover{color:#5B5FEF}
+.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Buttons */
+.btn-p{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);border:none;cursor:pointer;background:#5B5FEF;color:#fff;box-shadow:0 4px 14px rgba(91,95,239,.35);transition:all .18s var(--ease)}
+.btn-p:hover{background:#4547CC;transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,95,239,.4)}
+.btn-p:active{transform:scale(.97)}
+.btn-p svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-g{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);cursor:pointer;background:#fff;color:#334155;border:1.5px solid #D1D9E6;transition:all .18s var(--ease)}
+.btn-g:hover{background:#F1F5F9;border-color:#94A3B8}
+.btn-g svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-lg{padding:17px 32px;font-size:15px;border-radius:var(--r-xl)}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:10px}
+.btn-full{width:100%}
+
+/* Sticky CTA */
+.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:#D1D9E6;color:#94A3B8;transition:all .2s var(--ease);letter-spacing:.05px}
+.cta.on{background:#5B5FEF;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(91,95,239,.35)}
+.cta.on:hover{background:#4547CC;transform:translateY(-1px)}
+.cta.on:active{transform:scale(.98)}
+.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
+
+/* Strength bar */
+.strength-wrap{margin-top:7px}
+.strength-bar{height:4px;background:#E2E8F0;border-radius:2px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.strength-lbl{font-size:10px;font-weight:700;margin-top:5px}
+
+/* Error / notice */
+.api-err{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);border-radius:var(--r-lg);padding:12px 14px;font-size:12px;color:#DC2626;font-weight:600;line-height:1.45;display:none;margin-bottom:10px}
+.notice-ok{display:flex;align-items:flex-start;gap:9px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:var(--r-lg);padding:12px 14px}
+.notice-ok svg{width:14px;height:14px;stroke:#059669;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.notice-ok span{font-size:12px;color:#1E293B;font-weight:500;line-height:1.5}
+
+/* Skeleton */
+.skel-card{background:#fff;border:1px solid #D1D9E6;border-radius:var(--r-xl);padding:20px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.skel-line{height:11px;background:#E2E8F0;border-radius:6px;margin-bottom:10px;animation:skel 1.5s ease-in-out infinite}
+.skel-line.s{width:55%}.skel-line:last-child{margin:0}
+@keyframes skel{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Misc */
+.hidden{display:none!important}
+.powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
+
+html,body{width:100%;min-height:100dvh;font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
 .screen{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
 
-/* ── HEADER ── */
-.header{
-  background:var(--c-dark);padding:24px 18px 28px;
-  flex-shrink:0;position:relative;overflow:hidden;
-}
-.header::before{
-  content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-  background-size:32px 32px;pointer-events:none;
-}
-.hglow{position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(99,102,241,.18);filter:blur(70px);top:-110px;right:-60px;pointer-events:none}
-.header-inner{position:relative;z-index:1}
-.back-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  color:rgba(255,255,255,.55);font-size:12px;font-weight:600;
-  background:none;border:none;cursor:pointer;padding:0;
-  font-family:var(--font);margin-bottom:22px;
-  transition:color .15s;
-}
-.back-btn:hover{color:rgba(255,255,255,.85)}
-.back-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+/* HEADER */
+.hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:calc(env(safe-area-inset-top)+18px) 20px 26px;flex-shrink:0;position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.hdr-inner{position:relative;z-index:1}
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:none;border-radius:999px;padding:7px 13px;cursor:pointer;color:rgba(255,255,255,.85);font:600 12px/1 var(--font);transition:background .15s;margin-bottom:20px}
+.back-btn:hover{background:rgba(255,255,255,.25)}
+.back-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .brand{display:flex;align-items:center;gap:11px}
-.brand-mark{
-  width:38px;height:38px;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
-  border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.brand-mark svg{width:20px;height:20px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.brand-text-name{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.3px;line-height:1.1}
-.brand-text-sub{font-size:10px;color:rgba(255,255,255,.48);font-weight:500;margin-top:2px;letter-spacing:.2px}
+.brand-mark{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-mark svg{width:21px;height:21px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.brand-name{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.brand-tag{font-size:11px;color:rgba(255,255,255,.65);font-weight:500;margin-top:2px}
 
-/* ── BODY ── */
-.body{
-  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  padding:20px 14px calc(32px + env(safe-area-inset-bottom));
-  overscroll-behavior:contain;
-}
+/* FLOW BAR */
+.flow-bar{display:flex;align-items:center;margin-top:20px;position:relative;z-index:1}
+.fb-step{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.fb-circle{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 11px/1 var(--font)}
+.fb-active .fb-circle{background:#fff;color:var(--primary)}
+.fb-inactive .fb-circle{background:rgba(255,255,255,.2);color:rgba(255,255,255,.6)}
+.fb-done .fb-circle{background:rgba(255,255,255,.25);color:#fff}
+.fb-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.fb-active .fb-label{color:#fff}
+.fb-inactive .fb-label,.fb-done .fb-label{color:rgba(255,255,255,.5)}
+.fb-line{flex:1;height:1.5px;background:rgba(255,255,255,.2);margin-bottom:13px}
+
+/* BODY */
+.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:20px 16px calc(96px + env(safe-area-inset-bottom));background:var(--bg)}
 .body::-webkit-scrollbar{display:none}
 
-/* ── SKELETON ── */
-.skeleton{background:#16162A;border:1.5px solid #1E293B;border-radius:var(--r-lg);padding:20px 16px;margin-bottom:12px;box-shadow:var(--sh)}
-.skel-line{height:11px;background:var(--b-lt);border-radius:6px;margin-bottom:10px;animation:pulse 1.4s ease-in-out infinite}
-.skel-line.short{width:55%}
-.skel-line:last-child{margin-bottom:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+/* SKELETON */
+.skel-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);padding:20px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.skel-line{height:11px;background:var(--surface-3);border-radius:6px;margin-bottom:10px;animation:skel 1.4s ease-in-out infinite}
+.skel-line.s{width:55%}.skel-line:last-child{margin:0}
+@keyframes skel{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── RETURNING USER BANNER ── */
-.returning-banner{
-  background:var(--c-surface);border:1.5px solid #334155;
-  border-radius:var(--r-lg);padding:18px 16px;margin-bottom:12px;box-shadow:var(--sh);
-}
-.rb-avatar{
-  width:44px;height:44px;border-radius:50%;background:var(--c-brand);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:800;color:#fff;margin-bottom:12px;
-  font-family:var(--mono);
-}
-.rb-greeting{font-size:15px;font-weight:800;color:var(--t-pri);margin-bottom:3px}
-.rb-sub{font-size:12px;color:var(--t-sec);margin-bottom:14px;line-height:1.5}
-.rb-actions{display:flex;gap:8px}
-.rb-btn-primary{
-  flex:1;background:var(--c-dark);color:#fff;border:none;padding:12px;
-  border-radius:var(--r);font-family:var(--font);font-size:13px;font-weight:700;
-  cursor:pointer;transition:background .15s;
-}
-.rb-btn-primary:hover{background:var(--c-mid)}
-.rb-btn-secondary{
-  padding:12px 16px;border-radius:var(--r);background:transparent;
-  border:1.5px solid var(--b-lt);font-family:var(--font);
-  font-size:13px;font-weight:700;color:var(--t-sec);cursor:pointer;
-}
+/* RETURNING BANNER */
+.rb{background:var(--surface);border:1.5px solid var(--primary-bd);border-radius:var(--r-xl);padding:18px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.rb-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.rb-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--success-lt));display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--mono);color:#fff;flex-shrink:0}
+.rb-name{font-size:14px;font-weight:700;color:var(--t1)}
+.rb-hint{font-size:11px;color:var(--t3);margin-top:2px}
+.rb-btns{display:flex;gap:8px}
+.rb-primary{flex:1;padding:12px;border-radius:var(--r-lg);border:none;cursor:pointer;background:var(--primary);color:#fff;font:700 13px/1 var(--font);transition:background .15s}
+.rb-primary:hover{background:var(--primary-d)}
+.rb-secondary{padding:12px 16px;border-radius:var(--r-lg);border:1.5px solid var(--bd-md);background:transparent;color:var(--t3);font:700 13px/1 var(--font);cursor:pointer}
 
-/* ── AUTH TABS ── */
-.auth-tabs{
-  display:flex;gap:4px;background:var(--c-surface);
-  border:1.5px solid var(--b-lt);border-radius:var(--r-lg);
-  padding:5px;margin-bottom:12px;box-shadow:var(--sh);
-}
-.auth-tab{
-  flex:1;padding:10px 8px;border-radius:10px;border:none;
-  font-family:var(--font);font-size:13px;font-weight:700;
-  cursor:pointer;transition:all .18s;background:transparent;color:var(--t-sec);
-}
-.auth-tab.active{background:var(--c-dark);color:#fff}
+/* TABS */
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1.5px solid var(--bd);border-radius:var(--r-xl);padding:4px;gap:4px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.tab{padding:11px 8px;border-radius:var(--r-lg);border:none;background:transparent;color:var(--t4);font:700 13px/1 var(--font);cursor:pointer;transition:all .18s}
+.tab.on{background:var(--primary);color:#fff;box-shadow:0 2px 8px var(--primary-ring)}
 
-/* ── CARD ── */
-.form-card{background:#16162A;border:1.5px solid #1E293B;border-radius:var(--r-lg);overflow:hidden;margin-bottom:10px;box-shadow:var(--sh)}
-.card-top-bar{height:3px;background:linear-gradient(90deg,#6366F1,#818CF8)}
-.card-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--b-lt)}
-.card-title{font-size:14px;font-weight:800;color:var(--t-pri)}
-.card-sub{font-size:11px;color:var(--t-sec);font-weight:500;margin-top:2px}
-.card-body{padding:16px}
+/* FORM CARD */
+.fc{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.fc-bar{height:3px;background:linear-gradient(90deg,var(--primary),var(--primary-lt))}
+.fc-hdr{padding:16px 18px 13px;border-bottom:1px solid var(--bd)}
+.fc-title{font-size:15px;font-weight:700;color:var(--t1)}
+.fc-sub{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.45}
+.fc-body{padding:18px;display:flex;flex-direction:column;gap:15px}
 
-/* ── FIELDS ── */
-.field{margin-bottom:14px}
-.field:last-child{margin-bottom:0}
-.field-label{font-size:10px;font-weight:700;color:var(--t-sec);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.phone-row{display:flex;gap:8px}
-.phone-prefix{
-  background:var(--c-sky);border:1.5px solid var(--c-sky-d);
-  color:var(--c-dark);font-family:var(--mono);font-size:14px;font-weight:800;
-  padding:0 14px;border-radius:var(--r);display:flex;align-items:center;flex-shrink:0;height:48px;
-}
-input[type=tel],input[type=text],input[type=password]{
-  width:100%;height:50px;padding:0 14px;border-radius:var(--r);
-  border:1.5px solid var(--b-lt);background:#0F0F1A;
-  font-family:var(--font);font-size:15px;font-weight:500;color:#F8FAFC;
-  outline:none;transition:border-color .18s,background .18s,box-shadow .18s;
-  -webkit-appearance:none;
-}
-input::placeholder{color:#475569}
-input:focus{border-color:var(--c-brand);background:var(--c-surface);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
-input.err{border-color:var(--c-red) !important}
-.field-hint{font-size:11px;color:var(--t-dis);font-weight:500;margin-top:5px}
-.field-error{font-size:11px;color:var(--c-red);font-weight:600;margin-top:5px;display:none}
-.pw-wrap{position:relative;display:flex;align-items:center}
-.pw-wrap input{padding-right:50px}
-.eye-btn{position:absolute;right:13px;background:none;border:none;cursor:pointer;color:var(--t-dis);display:flex;align-items:center;padding:4px;transition:color .15s}
-.eye-btn:hover{color:var(--c-brand)}
+/* FIELD */
+.field{display:flex;flex-direction:column;gap:6px}
+.f-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t3)}
+.f-hint{font-size:11px;color:var(--t4);line-height:1.45}
+.f-err{font-size:11px;font-weight:600;color:var(--danger);display:none}
 
-/* ── API ERROR ── */
-.api-error{
-  background:#fff0f0;border:1.5px solid #ffc1c1;border-radius:var(--r);
-  padding:11px 14px;margin-bottom:10px;
-  font-size:12px;color:var(--c-red);font-weight:600;line-height:1.45;display:none;
-}
+/* PHONE ROW */
+.phone-row{display:flex;border:1.5px solid var(--bd-md);border-radius:var(--r);overflow:hidden;background:var(--surface);transition:border-color .18s,box-shadow .18s}
+.phone-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
+.phone-row.err{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-bg)}
+.phone-pfx{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border-right:1.5px solid var(--bd);font:700 14px/1 var(--mono);color:var(--t2);flex-shrink:0;user-select:none;letter-spacing:.3px}
+.phone-num{flex:1;height:50px;padding:0 14px;background:var(--surface);border:none;outline:none;font:500 16px/1 var(--mono);color:var(--t1);-webkit-appearance:none}
+.phone-num::placeholder{color:var(--t5);font-family:var(--font)}
 
-/* ── SECURE NOTICE ── */
-.secure-notice{
-  display:flex;align-items:flex-start;gap:9px;
-  background:#1E293B40;border:1px solid #334155;
-  border-radius:var(--r);padding:11px 14px;margin-bottom:10px;
-}
-.secure-notice svg{width:14px;height:14px;stroke:var(--c-mid);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
-.secure-notice span{font-size:11px;color:var(--t-sec);font-weight:500;line-height:1.5}
-.powered{text-align:center;padding:8px 0 2px;font-size:9px;color:var(--t-dis);font-weight:500;letter-spacing:.3px}
+/* TEXT / PASSWORD */
+.fi{width:100%;height:50px;padding:0 16px;background:var(--surface);border:1.5px solid var(--bd-md);border-radius:var(--r);font:500 15px/1 var(--font);color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.fi::placeholder{color:var(--t5)}
+.fi:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
+.fi.err{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-bg)}
+.pw-field{position:relative}
+.pw-field .fi{padding-right:50px}
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--t4);display:flex;padding:4px;transition:color .15s}
+.eye-btn:hover{color:var(--primary)}
+.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── STICKY FOOTER ── */
-.sticky-footer{
-  position:sticky;bottom:0;
-  padding:12px 14px max(20px,env(safe-area-inset-bottom));
-  background:linear-gradient(to top,var(--c-bg) 70%,transparent);z-index:10;
-}
-.action-btn{
-  background:var(--c-brand);color:#fff;border:none;width:100%;padding:15px;
-  border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;
-  cursor:pointer;letter-spacing:.1px;transition:all .15s;
-  opacity:.35;pointer-events:none;
-  box-shadow:0 4px 18px rgba(99,102,241,.35);
-}
-.action-btn.ready{opacity:1;pointer-events:auto}
-.action-btn.loading{opacity:.7;pointer-events:none}
-.action-btn:active{transform:scale(.98)}
-.form-switch{text-align:center;font-size:12px;color:var(--t-sec);margin-top:9px}
-.form-switch a{color:#818CF8;font-weight:700;cursor:pointer}
+/* STRENGTH */
+.strength-wrap{margin-top:6px}
+.strength-bar{height:4px;background:var(--bd);border-radius:2px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.strength-lbl{font-size:10px;font-weight:700;margin-top:4px}
 
-/* ── HIDDEN STATES ── */
-.hidden{display:none !important}
+/* FORGOT LINK */
+.forgot-link{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;text-align:right;display:block}
+.forgot-link:hover{color:var(--primary-d)}
+
+/* API ERROR */
+.api-err{background:var(--danger-bg);border:1px solid var(--danger-bd);border-radius:var(--r-lg);padding:11px 14px;font-size:12px;color:var(--danger);font-weight:600;line-height:1.45;display:none}
+
+/* NOTICE */
+.notice{display:flex;align-items:flex-start;gap:9px;background:var(--success-bg);border:1px solid var(--success-bd);border-radius:var(--r-lg);padding:12px 14px}
+.notice svg{width:14px;height:14px;stroke:var(--success);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.notice span{font-size:11px;color:var(--t2);font-weight:500;line-height:1.5}
+
+/* TRUST BADGES */
+.trust{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;padding:8px 0}
+.trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);font-weight:500}
+.trust-item svg{width:13px;height:13px;stroke:var(--success);fill:none;stroke-width:2;stroke-linecap:round}
+
+/* FOOTER */
+.sticky-foot{position:sticky;bottom:0;z-index:10;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent)}
+.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:var(--bd-md);color:var(--t4);transition:all .2s var(--ease)}
+.cta.on{background:var(--primary);color:#fff;cursor:pointer;box-shadow:0 4px 18px var(--primary-ring)}
+.cta.on:hover{background:var(--primary-d);transform:translateY(-1px)}
+.cta.on:active{transform:scale(.98)}
+.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
+.f-switch{text-align:center;font-size:12px;color:var(--t3);margin-top:10px}
+.f-switch a{color:var(--primary);font-weight:700;cursor:pointer}
+.powered{text-align:center;padding:10px 0 2px;font-size:9px;color:var(--t5);letter-spacing:.5px;text-transform:uppercase}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="screen">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="hglow"></div>
-    <div class="header-inner">
-      <button class="back-btn" onclick="history.back()">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </button>
-      <div class="brand">
-        <div class="brand-mark">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div>
-          <div class="brand-text-name">ZimVest</div>
-          <div class="brand-text-sub">Secure Investment Platform</div>
-        </div>
-      </div>
+<div class="hdr">
+  <div class="hdr-inner">
+    <button class="back-btn" onclick="history.back()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+    </button>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div><div class="brand-name">ZimVest</div><div class="brand-tag">Secure Investment Platform</div></div>
+    </div>
+    <div class="flow-bar">
+      <div class="fb-step fb-active"><div class="fb-circle">1</div><div class="fb-label">Sign in</div></div>
+      <div class="fb-line"></div>
+      <div class="fb-step fb-inactive"><div class="fb-circle">2</div><div class="fb-label">Choose plan</div></div>
+      <div class="fb-line"></div>
+      <div class="fb-step fb-inactive"><div class="fb-circle">3</div><div class="fb-label">Pay &amp; earn</div></div>
     </div>
   </div>
-
-  <!-- BODY -->
-  <div class="body">
-
-    <!-- Session check skeleton -->
-    <div id="skeleton" class="skeleton">
-      <div class="skel-line"></div>
-      <div class="skel-line"></div>
-      <div class="skel-line short"></div>
-    </div>
-
-    <!-- Returning user -->
-    <div id="returningBanner" class="returning-banner hidden">
-      <div class="rb-avatar" id="rbInitials">?</div>
-      <div class="rb-greeting" id="rbGreeting">Welcome back!</div>
-      <div class="rb-sub">You are already signed in. Continue to your dashboard?</div>
-      <div class="rb-actions">
-        <button class="rb-btn-primary" id="rbContinue">Continue to dashboard →</button>
-        <button class="rb-btn-secondary" id="rbSwitch">Switch</button>
-      </div>
-    </div>
-
-    <!-- API error -->
-    <div id="apiError" class="api-error"></div>
-
-    <!-- Auth tabs -->
-    <div id="authTabs" class="auth-tabs hidden">
-      <button class="auth-tab active" id="tabSignin"   onclick="switchTab('signin')">Sign in</button>
-      <button class="auth-tab"        id="tabRegister" onclick="switchTab('register')">Create account</button>
-    </div>
-
-    <!-- Form -->
-    <div id="formCard" class="form-card hidden">
-      <div class="card-top-bar"></div>
-      <div class="card-hdr">
-        <div class="card-title" id="cardTitle">Welcome back</div>
-        <div class="card-sub"   id="cardSub">Sign in with your ZimVest account</div>
-      </div>
-      <div class="card-body">
-
-        <!-- Name (register only) -->
-        <div class="field hidden" id="nameField">
-          <div class="field-label">Full name</div>
-          <input type="text" id="nameInput" placeholder="e.g. Tendai Moyo" autocomplete="name" oninput="validate()">
-          <div class="field-error" id="nameError"></div>
-        </div>
-
-        <!-- Phone -->
-        <div class="field">
-          <div class="field-label">EcoCash number</div>
-          <div class="phone-row">
-            <div class="phone-prefix">+263</div>
-            <input type="tel" id="phoneInput" inputmode="numeric" pattern="[0-9]*"
-              placeholder="7XXXXXXXX" oninput="handlePhone(this)" autocomplete="tel">
-          </div>
-          <div class="field-hint">9-digit number starting with 7</div>
-          <div class="field-error" id="phoneError"></div>
-        </div>
-
-        <!-- Password -->
-        <div class="field">
-          <div class="field-label" id="pwLabel">Password</div>
-          <div class="pw-wrap">
-            <input type="password" id="pwInput" placeholder="Enter password"
-              autocomplete="current-password" oninput="validate()">
-            <button class="eye-btn" type="button" aria-label="Show password" onclick="toggleEye()">
-              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-              </svg>
-            </button>
-          </div>
-          <div class="field-hint hidden" id="pwHint">At least 6 characters</div>
-          <div class="field-error" id="pwError"></div>
-          <div id="forgotLink" style="margin-top:8px;text-align:right">
-            <a href="forgot.html" style="font-size:11px;font-weight:700;color:#818CF8;text-decoration:none">Forgot password?</a>
-          </div>
-        </div>
-
-        <!-- Confirm password (register only) -->
-        <div class="field hidden" id="confirmField">
-          <div class="field-label">Confirm password</div>
-          <div class="pw-wrap">
-            <input type="password" id="confirmInput" placeholder="Re-enter password"
-              autocomplete="new-password" oninput="validate()">
-          </div>
-          <div class="field-error" id="confirmError"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Secure notice -->
-    <div id="secureNotice" class="secure-notice hidden">
-      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>After signing in you will be able to choose an investment plan and pay securely via the EcoCash portal.</span>
-    </div>
-
-    <div class="powered">ZimVest · Secure Investment Platform · Zimbabwe</div>
-  </div>
-
-  <!-- STICKY FOOTER -->
-  <div class="sticky-footer" id="stickyFooter" style="display:none">
-    <button class="action-btn" id="mainBtn" onclick="submit()">Sign in</button>
-    <div class="form-switch" id="formSwitch">
-      No account? <a onclick="switchTab('register')">Create one free</a>
-    </div>
-  </div>
-
 </div>
+
+<div class="body">
+  <div id="skel" class="skel-card">
+    <div class="skel-line"></div><div class="skel-line"></div><div class="skel-line s"></div>
+  </div>
+
+  <div id="rb" class="rb hidden">
+    <div class="rb-top">
+      <div class="rb-av" id="rbAv">?</div>
+      <div><div class="rb-name" id="rbName">—</div><div class="rb-hint">Already signed in — continue?</div></div>
+    </div>
+    <div class="rb-btns">
+      <button class="rb-primary" id="rbGo">Continue to dashboard →</button>
+      <button class="rb-secondary" id="rbSwitch">Switch account</button>
+    </div>
+  </div>
+
+  <div id="apiErr" class="api-err"></div>
+
+  <div id="tabs" class="tabs hidden">
+    <button class="tab on" id="tSi" onclick="setTab('si')">Sign in</button>
+    <button class="tab"    id="tRg" onclick="setTab('rg')">Create account</button>
+  </div>
+
+  <div id="fc" class="fc hidden">
+    <div class="fc-bar"></div>
+    <div class="fc-hdr">
+      <div class="fc-title" id="fcTitle">Welcome back</div>
+      <div class="fc-sub"   id="fcSub">Sign in to your ZimVest account to continue</div>
+    </div>
+    <div class="fc-body">
+
+      <div class="field hidden" id="fName">
+        <label class="f-label" for="iName">Full name</label>
+        <input class="fi" type="text" id="iName" placeholder="e.g. Tendai Moyo" autocomplete="name" oninput="val()">
+        <div class="f-err" id="eName"></div>
+      </div>
+
+      <div class="field">
+        <label class="f-label" for="iPhone">EcoCash number</label>
+        <div class="phone-row" id="phoneRow">
+          <div class="phone-pfx">+263</div>
+          <input class="phone-num" type="tel" id="iPhone"
+            inputmode="numeric" pattern="[0-9]*" maxlength="9"
+            placeholder="7XXXXXXXX" autocomplete="tel"
+            oninput="handlePhone(this)" onblur="blurPhone()">
+        </div>
+        <div class="f-hint">9 digits starting with 7 — your payout is sent to this number</div>
+        <div class="f-err" id="ePhone"></div>
+      </div>
+
+      <div class="field">
+        <label class="f-label" id="lPw" for="iPw">Password</label>
+        <div class="pw-field">
+          <input class="fi" type="password" id="iPw" placeholder="Enter password" autocomplete="current-password" oninput="handlePw()">
+          <button class="eye-btn" type="button" onclick="toggleEye('iPw','eyI')" aria-label="Show password">
+            <svg id="eyI" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="strength-wrap hidden" id="swrap">
+          <div class="strength-bar"><div class="strength-fill" id="sbar"></div></div>
+          <div class="strength-lbl" id="slbl"></div>
+        </div>
+        <div class="f-err" id="ePw"></div>
+      </div>
+
+      <div class="field hidden" id="fConf">
+        <label class="f-label" for="iConf">Confirm password</label>
+        <div class="pw-field">
+          <input class="fi" type="password" id="iConf" placeholder="Re-enter password" autocomplete="new-password" oninput="val()">
+          <button class="eye-btn" type="button" onclick="toggleEye('iConf','eyC')" aria-label="Show password">
+            <svg id="eyC" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="f-err" id="eConf"></div>
+      </div>
+
+      <a href="forgot.html" class="forgot-link" id="fForgot">Forgot password?</a>
+    </div>
+  </div>
+
+  <div id="secureNotice" class="notice hidden">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span>After signing in you'll choose an investment plan, then complete payment through the official EcoCash secure portal.</span>
+  </div>
+
+  <div id="trustBadges" class="trust hidden">
+    <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>256-bit SSL</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>EcoCash official</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Free to join</div>
+  </div>
+
+  <div class="powered">ZimVest · Secured by EcoCash · Zimbabwe</div>
+</div>
+
+<div class="sticky-foot" id="sFoot" style="display:none">
+  <button class="cta" id="cta" onclick="submit()">Sign in</button>
+  <div class="f-switch" id="fSwitch">No account? <a onclick="setTab('rg')">Create one free</a></div>
+</div>
+</div>
+
 <script>
-/* ── State ── */
-let tab = 'signin', submitting = false;
-let phoneVal = '', pwVal = '', confirmVal = '', nameVal = '';
+const $ = id => document.getElementById(id);
+const show = id => { const e=$(id); if(e){e.classList.remove('hidden');e.style.display='';} };
+const hide = id => { const e=$(id); if(e) e.classList.add('hidden'); };
+let mode='si', phone='', pw='', conf='', name='', busy=false;
 
-/* ── Helpers ── */
-const $  = id => document.getElementById(id);
-const show = id => { const el=$(id); if(el){ el.classList.remove('hidden'); el.style.display=''; } };
-const hide = id => { const el=$(id); if(el){ el.classList.add('hidden'); } };
-
-/* ── Session check on load ── */
-(async function checkSession() {
-  try {
-    const r = await fetch('/api/me', { credentials: 'include' });
-
-    if (r.ok) {
-      const user = await r.json();
-
-      // Store for downstream pages
-      sessionStorage.setItem('zimvest_phone', user.phone);
-      sessionStorage.setItem('zimvest_name',  user.name || '');
-
-      // Show returning user banner
-      hide('skeleton');
-      const initials = (user.name || user.phone)
-        .split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-      $('rbInitials').textContent = initials;
-      $('rbGreeting').textContent = 'Welcome back, ' + (user.name || user.phone) + '!';
-      show('returningBanner');
-
-      $('rbContinue').onclick = () => { location.href = 'dashboard.html'; };
-      $('rbSwitch').onclick   = async () => {
-        hide('returningBanner');
-        await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-        sessionStorage.clear();
-        showForm();
+(async ()=>{
+  try{
+    const r=await fetch('/api/me',{credentials:'include'});
+    if(r.ok){
+      const u=await r.json();
+      sessionStorage.setItem('zimvest_phone',u.phone);
+      sessionStorage.setItem('zimvest_name',u.name||'');
+      hide('skel');
+      const init=(u.name||u.phone||'ZV').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      $('rbAv').textContent=init;
+      $('rbName').textContent='Welcome back, '+(u.name||u.phone)+'!';
+      show('rb');
+      $('rbGo').onclick=()=>location.href='dashboard.html';
+      $('rbSwitch').onclick=async()=>{
+        hide('rb');
+        await fetch('/api/logout',{method:'POST',credentials:'include'});
+        sessionStorage.clear(); showForm();
       };
-
-    } else {
-      showForm();
-    }
-  } catch {
-    // Network issue or no session — show form
-    showForm();
-  }
+    } else showForm();
+  } catch { showForm(); }
 })();
 
-function showForm() {
-  hide('skeleton');
-  show('authTabs');
-  show('formCard');
-  show('secureNotice');
-  $('stickyFooter').style.display = '';
+function showForm(){
+  hide('skel'); show('tabs'); show('fc');
+  show('secureNotice'); show('trustBadges'); $('sFoot').style.display=''; val();
 }
 
-/* ── Tab switch ── */
-function switchTab(t) {
-  tab = t;
-  const isReg = t === 'register';
-
-  $('tabSignin').classList.toggle('active', !isReg);
-  $('tabRegister').classList.toggle('active', isReg);
-
-  $('cardTitle').textContent = isReg ? 'Create your account' : 'Welcome back';
-  $('cardSub').textContent   = isReg
-    ? 'Register with your EcoCash number — it\'s free'
-    : 'Sign in with your ZimVest account';
-
-  isReg ? show('nameField')    : hide('nameField');
-  isReg ? show('confirmField') : hide('confirmField');
-  isReg ? hide('forgotLink') : show('forgotLink');
-  isReg ? show('pwHint')       : hide('pwHint');
-
-  $('pwLabel').textContent     = isReg ? 'Create password' : 'Password';
-  $('pwInput').autocomplete    = isReg ? 'new-password' : 'current-password';
-  $('mainBtn').textContent     = isReg ? 'Create account' : 'Sign in';
-  $('formSwitch').innerHTML    = isReg
-    ? 'Already have an account? <a onclick="switchTab(\'signin\')">Sign in</a>'
-    : 'No account? <a onclick="switchTab(\'register\')">Create one free</a>';
-
-  clearErrors();
-  validate();
+function setTab(t){
+  mode=t; const r=t==='rg';
+  $('tSi').classList.toggle('on',!r); $('tRg').classList.toggle('on',r);
+  $('fcTitle').textContent=r?'Create your account':'Welcome back';
+  $('fcSub').textContent=r?'Register free — takes under a minute':'Sign in to your ZimVest account to continue';
+  r?show('fName'):hide('fName');
+  r?show('fConf'):hide('fConf');
+  r?show('swrap'):hide('swrap');
+  r?hide('fForgot'):show('fForgot');
+  $('lPw').textContent=r?'Create password':'Password';
+  $('iPw').autocomplete=r?'new-password':'current-password';
+  $('cta').textContent=r?'Create account':'Sign in';
+  $('fSwitch').innerHTML=r?'Already have an account? <a onclick="setTab(\'si\')">Sign in</a>':'No account? <a onclick="setTab(\'rg\')">Create one free</a>';
+  clearErrs(); val();
 }
 
-/* ── Phone input ── */
-function handlePhone(el) {
-  let v = el.value.replace(/\D/g, '');
-  if (v.startsWith('263')) v = v.slice(3);
-  if (v.startsWith('0'))   v = v.slice(1);
-  if (v.length > 0 && v[0] !== '7') v = '7' + v.slice(1);
-  v       = v.slice(0, 9);
-  el.value = v;
-  phoneVal = '+263' + v;
-  validate();
+function handlePhone(el){
+  let v=el.value.replace(/\D/g,'');
+  if(v.startsWith('263'))v=v.slice(3);
+  if(v.startsWith('0'))v=v.slice(1);
+  if(v.length>0&&v[0]!=='7')v='7'+v.slice(1);
+  v=v.slice(0,9); el.value=v; phone='+263'+v;
+  $('phoneRow').classList.toggle('err',v.length>0&&v.length<9); val();
+}
+function blurPhone(){
+  const v=$('iPhone').value;
+  if(v.length>0&&v.length<9){ $('phoneRow').classList.add('err'); showErr('ePhone','Enter 9 digits starting with 7'); }
+  else { $('phoneRow').classList.remove('err'); hideErr('ePhone'); }
 }
 
-/* ── Password eye toggle ── */
-function toggleEye() {
-  const pw   = $('pwInput');
-  const show = pw.type === 'password';
-  pw.type = show ? 'text' : 'password';
-  $('eyeIcon').innerHTML = show
-    ? `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
-    : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-}
-
-/* ── Validation ── */
-function validate() {
-  pwVal      = $('pwInput').value;
-  confirmVal = $('confirmInput')?.value ?? '';
-  nameVal    = $('nameInput')?.value.trim() ?? '';
-
-  const phoneOk = phoneVal.length === 13;
-  const pwOk    = tab === 'register' ? pwVal.length >= 6 : pwVal.length >= 1;
-  const extraOk = tab === 'register'
-    ? nameVal.length > 1 && confirmVal === pwVal
-    : true;
-
-  $('mainBtn').classList.toggle('ready', phoneOk && pwOk && extraOk);
-}
-
-/* ── Error display ── */
-function clearErrors() {
-  ['nameError','phoneError','pwError','confirmError'].forEach(id => {
-    const el = $(id);
-    if (!el) return;
-    el.textContent   = '';
-    el.style.display = 'none';
-    el.previousElementSibling?.classList?.remove('err');
-  });
-  const ae = $('apiError');
-  ae.textContent   = '';
-  ae.style.display = 'none';
-}
-
-function fieldError(id, msg) {
-  const el = $(id);
-  if (!el) return;
-  el.textContent   = msg;
-  el.style.display = 'block';
-}
-
-function apiError(msg) {
-  const el = $('apiError');
-  el.textContent   = msg;
-  el.style.display = 'block';
-}
-
-/* ── Submit ── */
-async function submit() {
-  if (submitting) return;
-  clearErrors();
-
-  // Client-side pre-checks
-  if (tab === 'register') {
-    if (nameVal.length < 2)   return fieldError('nameError',    'Please enter your full name.');
-    if (pwVal.length < 6)     return fieldError('pwError',      'Password must be at least 6 characters.');
-    if (pwVal !== confirmVal) return fieldError('confirmError', 'Passwords do not match.');
+function handlePw(){
+  pw=$('iPw').value;
+  if(mode==='rg'){
+    const s=pwScore(pw),pct=pw.length?Math.min(100,s*20):0;
+    const cols=['','#DC2626','#D97706','#D97706','#059669','#047857'];
+    const lbls=['','Too short','Weak','Fair','Good','Strong'];
+    const b=$('sbar'); b.style.width=pct+'%'; b.style.background=cols[s]||'#DC2626';
+    const l=$('slbl'); l.textContent=pw.length?lbls[s]:''; l.style.color=cols[s]||'#DC2626';
   }
+  val();
+}
+function pwScore(p){let s=0;if(p.length>=6)s++;if(p.length>=10)s++;if(/[A-Z]/.test(p))s++;if(/[0-9]/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s;}
 
-  // Lock UI
-  submitting = true;
-  const btn  = $('mainBtn');
-  const orig = btn.textContent;
-  btn.textContent = 'Please wait…';
-  btn.classList.add('loading');
-  btn.classList.remove('ready');
+function toggleEye(inputId,iconId){
+  const el=$(inputId),show=el.type==='password'; el.type=show?'text':'password';
+  $(iconId).innerHTML=show
+    ?`<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
+    :`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+}
 
-  const endpoint = tab === 'register' ? '/api/register' : '/api/login';
-  const payload  = tab === 'register'
-    ? { phone: phoneVal, password: pwVal, name: nameVal }
-    : { phone: phoneVal, password: pwVal };
+function val(){
+  pw=$('iPw').value; conf=$('iConf')?$('iConf').value:''; name=$('iName')?$('iName').value.trim():'';
+  const ok=phone.length===13&&(mode==='rg'?pw.length>=6&&name.length>=2&&conf===pw:pw.length>0);
+  $('cta').classList.toggle('on',ok);
+}
+function showErr(id,msg){const e=$(id);if(e){e.textContent=msg;e.style.display='block';}}
+function hideErr(id){const e=$(id);if(e){e.textContent='';e.style.display='none';}}
+function clearErrs(){['eName','ePhone','ePw','eConf'].forEach(hideErr);$('phoneRow').classList.remove('err');const ae=$('apiErr');ae.textContent='';ae.style.display='none';}
 
-  try {
-    const r    = await fetch(endpoint, {
-      method:      'POST',
-      headers:     { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body:        JSON.stringify(payload),
-    });
-    const data = await r.json().catch(() => ({}));
-
-    if (r.ok) {
-      sessionStorage.setItem('zimvest_phone', data.phone || phoneVal);
-      sessionStorage.setItem('zimvest_name',  data.name  || nameVal);
-      // After auth → go to dashboard to pick a plan
-      location.href = 'dashboard.html';
-    } else {
-      const msg = data.error || 'Something went wrong. Please try again.';
-      const lc  = msg.toLowerCase();
-      if      (lc.includes('number') || lc.includes('account') || lc.includes('registered'))
-        fieldError('phoneError', msg);
-      else if (lc.includes('password') || lc.includes('incorrect'))
-        fieldError('pwError', msg);
-      else if (lc.includes('name'))
-        fieldError('nameError', msg);
-      else if (lc.includes('storage') || lc.includes('unavailable'))
-        apiError('Our servers are temporarily unavailable. Please try again shortly.');
-      else
-        apiError(msg);
-
-      // Unlock
-      submitting        = false;
-      btn.textContent   = orig;
-      btn.classList.remove('loading');
-      validate();
+async function submit(){
+  if(busy)return; clearErrs();
+  if(mode==='rg'){
+    if(name.length<2){showErr('eName','Enter your full name.');return;}
+    if(pw.length<6){showErr('ePw','Password must be at least 6 characters.');return;}
+    if(pw!==$('iConf').value){showErr('eConf','Passwords do not match.');return;}
+  }
+  if(phone.length!==13){$('phoneRow').classList.add('err');showErr('ePhone','Enter a valid 9-digit EcoCash number.');return;}
+  busy=true;
+  const btn=$('cta'),orig=btn.textContent;
+  btn.textContent='Please wait…';btn.classList.add('loading');btn.classList.remove('on');
+  const ep=mode==='rg'?'/api/register':'/api/login';
+  const body=mode==='rg'?{phone,password:pw,name}:{phone,password:pw};
+  try{
+    const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(body)});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok){sessionStorage.setItem('zimvest_phone',d.phone||phone);sessionStorage.setItem('zimvest_name',d.name||name);location.href='dashboard.html';}
+    else{
+      const msg=d.error||'Something went wrong. Please try again.';
+      const lc=msg.toLowerCase();
+      if(lc.includes('number')||lc.includes('account')||lc.includes('registered'))showErr('ePhone',msg);
+      else if(lc.includes('password')||lc.includes('incorrect'))showErr('ePw',msg);
+      else if(lc.includes('name'))showErr('eName',msg);
+      else if(lc.includes('storage')||lc.includes('unavailable')){const ae=$('apiErr');ae.textContent='Servers temporarily unavailable. Please try again shortly.';ae.style.display='block';}
+      else{const ae=$('apiErr');ae.textContent=msg;ae.style.display='block';}
     }
-  } catch {
-    apiError('Network error. Check your connection and try again.');
-    submitting        = false;
-    btn.textContent   = orig;
-    btn.classList.remove('loading');
-    validate();
-  }
+  }catch{const ae=$('apiErr');ae.textContent='Network error. Check your connection.';ae.style.display='block';}
+  finally{busy=false;btn.textContent=orig;btn.classList.remove('loading');val();}
 }
 </script>
 </body>
