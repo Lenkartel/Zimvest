@@ -98,20 +98,21 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 
 /* ── PLAN CARDS ── */
 .plans-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
-.plan-card{background:var(--sf);border:2px solid var(--bd);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;-webkit-user-select:none;position:relative}
+.plan-card{background:var(--sf);border:2px solid var(--bd);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;-webkit-user-select:none}
 .plan-card:active{opacity:.92}
 .plan-card.featured{border-color:#C7D2FE}
 .plan-card.selected{border-color:var(--in);box-shadow:0 0 0 4px rgba(91,95,239,.12),0 4px 20px rgba(91,95,239,.15)}
 .pct-strip{height:3px}
 .s-strip{background:linear-gradient(90deg,#94A3B8,#CBD5E1)}
 .g-strip{background:linear-gradient(90deg,var(--in),var(--inl))}
-/* Badge: only ONE badge at a time — popular OR selected, never both overlapping */
-.p-badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.2px;display:flex;align-items:center;gap:4px}
-.p-badge svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.p-pop{background:var(--in);color:#fff}
-.p-sel{background:var(--em);color:#fff;display:none}
+/* ── PLAN BADGES — bottom of card, in flow, never overlapping ── */
+.p-badge-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;min-height:24px}
+.p-pop{display:inline-flex;align-items:center;gap:5px;background:var(--in);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.2px}
+.p-pop svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.p-sel{display:none;align-items:center;gap:5px;background:var(--em);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.2px}
+.p-sel svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .plan-card.selected .p-pop{display:none}
-.plan-card.selected .p-sel{display:flex}
+.plan-card.selected .p-sel{display:inline-flex}
 .plan-inner{padding:14px 14px 16px}
 .plan-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .plan-emoji{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -277,7 +278,6 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
         <!-- STARTER -->
         <div class="plan-card" id="pc-s" onclick="pickPlan('starter')">
           <div class="pct-strip s-strip"></div>
-          <div class="p-badge p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
           <div class="plan-inner">
             <div class="plan-head">
               <div class="plan-emoji e-starter">🌱</div>
@@ -290,14 +290,15 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
               <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$200 → $240</div></div>
             </div>
             <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 72 hours</div>
+            <div class="p-badge-row">
+              <span class="p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</span>
+            </div>
           </div>
         </div>
 
         <!-- GROWTH -->
         <div class="plan-card featured" id="pc-g" onclick="pickPlan('growth')">
           <div class="pct-strip g-strip"></div>
-          <div class="p-badge p-pop">★ Popular</div>
-          <div class="p-badge p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</div>
           <div class="plan-inner">
             <div class="plan-head">
               <div class="plan-emoji e-growth">🚀</div>
@@ -310,6 +311,10 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
               <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$700 → $945</div></div>
             </div>
             <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 48 hours</div>
+            <div class="p-badge-row">
+              <span class="p-pop">★ Popular</span>
+              <span class="p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</span>
+            </div>
           </div>
         </div>
 
