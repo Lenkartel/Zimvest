@@ -157,8 +157,14 @@
 .hidden{display:none!important}
 .powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
 
-html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);background:#EEF2F7;color:#0F172A;-webkit-font-smoothing:antialiased;overflow:hidden}
-.screen{max-width:430px;margin:0 auto;height:100%;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+/* Mobile: fill screen edge-to-edge */
+/* Desktop: centered panel with subtle frame */
+@media(min-width:600px){
+  body{display:flex;align-items:flex-start;justify-content:center;padding:0}
+  }
+@media(min-width:1024px){
+  .screen{max-width:430px}
+}
 
 /* ═══ HEADER ═══ */
 .hdr{
@@ -245,14 +251,14 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 
 /* ═══ PLAN CARDS ═══ */
 .plan-card{
-  background:#fff;border:1.5px solid #D1D9E6;
-  border-radius:20px;overflow:hidden;margin-bottom:12px;cursor:pointer;
-  transition:border-color .18s,box-shadow .18s,transform .15s;
+  background:#fff;border:2.5px solid #D1D9E6;
+  border-radius:20px;overflow:hidden;margin-bottom:16px;cursor:pointer;
+  transition:border-color .2s,box-shadow .2s;
   -webkit-user-select:none;
 }
-.plan-card:active{transform:scale(.985)}
-.plan-card.selected{border-color:#5B5FEF;box-shadow:0 0 0 4px rgba(99,102,241,.12)}
-.plan-card.featured{border-color:var(--primary-bd)}
+.plan-card:active{opacity:.92}
+.plan-card.selected{border-color:#5B5FEF;box-shadow:0 2px 20px rgba(91,95,239,.18)}
+.plan-card.featured{border-color:#C7D2FE}
 .pct-strip{height:3px}
 .s-strip{background:linear-gradient(90deg,#818CF8,#D1D9E6)}
 .g-strip{background:linear-gradient(90deg,#6366F1,#818CF8)}
@@ -284,7 +290,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 .calc-box-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748B;margin-bottom:8px}
 .calc-pfx-wrap{position:relative;margin-bottom:8px}
 .calc-pfx{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:15px;font-weight:700;color:#64748B}
-.calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid var(--bd-md);font-family:var(--mono);font-size:18px;font-weight:700;color:#0F172A;background:var(--surface);outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
+.calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid #94A3B8;font-family:var(--mono);font-size:18px;font-weight:700;color:#0F172A;background:#fff;outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
 .calc-in:focus{border-color:#5B5FEF;background:var(--surface);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
 .calc-in.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(217,43,58,.1)}
 .calc-err-txt{font-size:11px;color:var(--red);font-weight:700;margin-top:5px;display:none}
@@ -364,10 +370,37 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 .api-notice.ok{background:#F0FFF4;border:1.5px solid #A7F3D0;color:#166534}
 
 .powered{text-align:center;padding:12px 0 4px;font-size:9px;color:#64748B;font-weight:500;letter-spacing:.4px}
+
+/* ══ LAYOUT ══ */
+html,body{width:100%;height:100%;height:100dvh;font-family:var(--font,'Inter',system-ui,sans-serif);color:#0F172A;-webkit-font-smoothing:antialiased;overflow:hidden;background:#EEF2F7}
+.app-shell,.screen{width:100%;height:100%;height:100dvh;display:flex;flex-direction:column;background:#EEF2F7;overflow:hidden;position:relative}
+/* Tablet: centred phone panel */
+@media(min-width:600px) and (max-width:1023px){
+  body{background:#0F172A;display:flex;align-items:flex-start;justify-content:center}
+  .app-shell,.screen{max-width:480px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 24px 80px rgba(0,0,0,.55)}
+}
+/* Desktop: full width, plan cards side by side */
+@media(min-width:1024px){
+  body{background:#EEF2F7}
+  .app-shell,.screen{max-width:100%}
+  .hdr{padding:20px 40px 0}
+  .hdr-top,.hdr-user,.hdr-stats{max-width:1200px;margin-left:auto;margin-right:auto;width:100%}
+  .hdr-stats{margin-bottom:0}
+  .tab-bar{padding:0 40px}
+  .pane{padding:24px 40px calc(24px + env(safe-area-inset-bottom))}
+  /* Plans side by side on desktop */
+  .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .plan-card{margin-bottom:0}
+  /* Calc and invest button in a right panel */
+  .invest-section{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .invest-col-left{}
+  .invest-col-right{position:sticky;top:0}
+}
+
 </style>
 </head>
-<body>
-<div class="screen">
+<body class="app-body">
+<div class="app-shell">
 
   <!-- HEADER -->
   <div class="hdr">
@@ -426,6 +459,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
         </div>
       </div>
 
+      <div class="plans-grid">
       <!-- STARTER -->
       <div class="plan-card" id="pc-s" onclick="pickPlan('starter')">
         <div class="pct-strip s-strip"></div>
@@ -442,8 +476,8 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
             <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$200 → $240</div></div>
           </div>
           <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 72 hours</div>
-        </div>
-      </div>
+        </div><!-- /plan-inner -->
+      </div><!-- /plan-card starter -->
 
       <!-- GROWTH -->
       <div class="plan-card featured" id="pc-g" onclick="pickPlan('growth')">
@@ -467,12 +501,14 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 
 
 
+      <div class="invest-section">
+      <div class="invest-col-left">
       <!-- CALCULATOR -->
       <div class="calc-box" id="calcBox" style="display:none">
         <div class="calc-box-lbl" id="calcBoxLbl">Enter deposit amount</div>
         <div class="calc-pfx-wrap">
           <span class="calc-pfx">$</span>
-          <input type="number" class="calc-in" id="calcIn" placeholder="0.00" inputmode="decimal" style="color:#F8FAFC" oninput="doCalc()">
+          <input type="number" class="calc-in" id="calcIn" placeholder="100 – 500" inputmode="decimal" min="100" max="1500" oninput="doCalc()">
         </div>
         <div class="calc-err-txt" id="calcErrTxt"></div>
         <div class="calc-res" id="calcRes">
@@ -485,7 +521,9 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
         </div>
       </div>
 
-      <div class="invest-btn-wrap">
+      </div><!-- /invest-col-left -->
+      <div class="invest-col-right">
+      <div class="invest-btn-wrap" style="background:none;padding:0;margin-top:0">
         <button class="invest-btn" id="investBtn" onclick="proceed()">
           <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
           <span id="investLabel">Select a plan above</span>
@@ -493,10 +531,8 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
         <div class="invest-sub" id="investSub">Tap any plan to get started</div>
       </div>
 
-      <div class="powered">ZimVest · Secured by EcoCash</div>
-    </div>
-
-    <!-- ══ HISTORY PANE ══ -->
+      <div class="invest-col-right">
+      <div class="invest-btn-wrap" style="background:none;padding:0;margin-top:0">
     <div class="pane" id="pane-history">
       <div class="sec-lbl" style="margin-top:4px">Investment history</div>
       <div style="font-size:12px;color:#475569;margin-bottom:12px;line-height:1.5">Your investments are recorded here. Active investments show a live countdown — your payout is sent automatically when it reaches zero.</div>
