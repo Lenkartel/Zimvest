@@ -652,7 +652,7 @@ function pickPlan(key){
   calcAmt = 0;
   const p = PLANS[key];
 
-  ['s','g','e'].forEach(k => document.getElementById('pc-'+k).classList.remove('selected'));
+  ['s','g'].forEach(k => { const el=document.getElementById('pc-'+k); if(el) el.classList.remove('selected'); });
   const map = {starter:'s', growth:'g'};
   document.getElementById('pc-'+map[key]).classList.add('selected');
 
@@ -715,7 +715,7 @@ function updateBtn(){
   const sub = document.getElementById('investSub');
   const p   = selPlan ? PLANS[selPlan] : null;
   if(!selPlan){ lbl.textContent='Select a plan above'; sub.textContent='Tap any plan to get started'; btn.classList.remove('ready'); return; }
-  if(!calcAmt){ lbl.textContent='Enter deposit amount'; sub.textContent='$'+p.min+' – $'+p.max; btn.classList.remove('ready'); return; }
+  if(!calcAmt){ lbl.textContent='Enter deposit amount'; sub.textContent='$'+p.min+' to $'+p.max; btn.classList.remove('ready'); return; }
   const total = +(calcAmt*(1+p.pct/100)).toFixed(2);
   lbl.textContent = 'Invest $'+calcAmt.toFixed(2)+' via EcoCash →';
   sub.textContent = 'Receive $'+total.toFixed(2)+' in '+p.hours+' hours';
