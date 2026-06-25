@@ -312,6 +312,18 @@ footer{background:#0F172A;padding:64px 0 28px}
   .eco-banner{padding:24px 16px}
   .stats-inner{padding:0}
 }
+
+/* ── FAQ ACCORDION ── */
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--bd);border-radius:20px;overflow:hidden;box-shadow:var(--sh-sm);background:var(--surface)}
+.faq-item{border-bottom:1px solid var(--bd)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:none;border:none;cursor:pointer;text-align:left;font:600 15px/1.4 var(--font);color:var(--t1);transition:background .15s}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q.open{background:var(--surface-2)}
+.faq-icon{width:18px;height:18px;stroke:var(--t4);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .25s var(--ease)}
+.faq-q.open .faq-icon{transform:rotate(180deg);stroke:var(--indigo)}
+.faq-a{font-size:14px;color:var(--t3);line-height:1.75;max-height:0;overflow:hidden;padding:0 22px;transition:max-height .35s var(--ease),padding .35s var(--ease)}
+.faq-a.open{max-height:200px;padding:0 22px 18px}
 </style>
 </head>
 <body>
@@ -330,8 +342,8 @@ footer{background:#0F172A;padding:64px 0 28px}
         <a href="#calc">Calculator</a>
       </div>
       <div class="nav-right">
-        <a href="auth.html" class="nav-btn-si">Sign in</a>
-        <a href="auth.html" class="nav-btn-gs">Get started →</a>
+        <a href="auth.html?tab=si" class="nav-btn-si">Sign in</a>
+        <a href="auth.html?tab=rg" class="nav-btn-gs">Get started →</a>
       </div>
     </div>
   </nav>
@@ -347,7 +359,7 @@ footer{background:#0F172A;padding:64px 0 28px}
         </h1>
         <p class="hero-sub">Invest from $100 via EcoCash. Earn up to 35% returns in 48 hours. No bank account needed.</p>
         <div class="hero-btns">
-          <a href="auth.html" class="btn btn-primary btn-lg"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Start investing free</a>
+          <a href="auth.html?tab=rg" class="btn btn-primary btn-lg"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Start investing free</a>
           <a href="#plans" class="btn btn-hl btn-lg">View plans</a>
         </div>
         <div class="hero-social">
@@ -433,7 +445,7 @@ footer{background:#0F172A;padding:64px 0 28px}
             <div class="plan-row"><span class="plan-row-lbl">$500 in</span><span class="plan-row-val">$600 out</span></div>
           </div>
           <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 72 hours</div>
-          <a href="auth.html" class="btn btn-ghost btn-full" style="margin-top:18px">Get started →</a>
+          <a href="auth.html" class="btn btn-ghost btn-full" style="margin-top:18px?tab=rg">Get started →</a>
         </div>
       </div>
       <div class="plan-card featured plan-relative">
@@ -451,7 +463,7 @@ footer{background:#0F172A;padding:64px 0 28px}
             <div class="plan-row"><span class="plan-row-lbl">$1,500 in</span><span class="plan-row-val">$2,025 out</span></div>
           </div>
           <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 48 hours</div>
-          <a href="auth.html" class="btn btn-primary btn-full" style="margin-top:18px">Get started →</a>
+          <a href="auth.html" class="btn btn-primary btn-full" style="margin-top:18px?tab=rg">Get started →</a>
         </div>
       </div>
     </div>
@@ -494,7 +506,7 @@ footer{background:#0F172A;padding:64px 0 28px}
       <div class="cr-row"><span class="cr-lbl">Via EcoCash in</span><span class="cr-val" id="cTime">—</span></div>
     </div>
     <div class="calc-err" id="calcErr"></div>
-    <a href="auth.html" class="btn btn-primary btn-full btn-lg" style="margin-top:20px">Sign in to invest →</a>
+    <a href="auth.html?tab=rg" class="btn btn-primary btn-full btn-lg" style="margin-top:20px">Create account &amp; invest →</a>
   </div>
 </section>
 
@@ -545,7 +557,7 @@ footer{background:#0F172A;padding:64px 0 28px}
           <span class="eco-pill">🔄 Auto payout</span>
         </div>
       </div>
-      <a href="auth.html" class="btn btn-primary btn-lg">Start investing →</a>
+      <a href="auth.html?tab=rg" class="btn btn-primary btn-lg">Start investing free →</a>
     </div>
   </div>
 </section>
@@ -568,30 +580,55 @@ footer{background:#0F172A;padding:64px 0 28px}
   <div class="wrap">
     <div class="eyebrow">Common questions</div>
     <h2 class="headline" style="margin-bottom:48px;max-width:520px">Everything you need to know before investing</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px">
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">Is my money safe?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">All payments go through EcoCash's official encrypted gateway. ZimVest never holds or touches your EcoCash PIN. Your deposit is tracked from payment to payout with a reference number.</div>
+    <div class="faq-list" style="max-width:720px">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Is my money safe?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">All payments go through EcoCash's official encrypted gateway. ZimVest never holds or sees your EcoCash PIN. Your deposit is tracked from payment confirmation to payout with a unique reference number.</div>
       </div>
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">How is my payout sent?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">Automatically to your registered EcoCash number. You receive a confirmation SMS from EcoCash when funds arrive. No action needed from your side.</div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>How and when is my payout sent?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Automatically to your registered EcoCash number when the plan timer ends — 72 hours for Starter, 48 hours for Growth. You receive a confirmation SMS from EcoCash. No action needed from you.</div>
       </div>
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">Can I invest multiple times?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">Yes. Once a plan matures and you receive your payout, you can reinvest immediately. Many investors reinvest their profits to compound their returns over time.</div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Can I invest multiple times?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Yes. Once a plan matures and you receive your payout, you can reinvest immediately. Many investors reinvest profits to compound their returns. All investments are tracked in your dashboard history.</div>
       </div>
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">What if I need help?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">Our support team responds within 2 hours via WhatsApp. You can also email us. All investment records are visible in your dashboard at any time.</div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Do I need a bank account?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">No. ZimVest runs entirely on EcoCash. If you have an active Econet EcoCash line, you can invest. No bank account, no paperwork, no waiting at a branch.</div>
       </div>
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">Do I need a bank account?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">No. ZimVest runs entirely on EcoCash. If you have an active EcoCash line, you can invest. No bank account, no paperwork, no waiting.</div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What is the minimum amount?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">$100 USD for the Starter plan (+20% in 72hrs). Growth starts at $501 (+35% in 48hrs). Creating your ZimVest account is completely free — no fees of any kind.</div>
       </div>
-      <div style="background:var(--bg);border-radius:18px;padding:24px">
-        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px">What is the minimum to start?</div>
-        <div style="font-size:14px;color:var(--t3);line-height:1.7">$100 USD for the Starter plan. Growth starts at $501. Both plans have zero registration fees — creating your account is completely free.</div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What if I need support?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Our team responds within 2 hours via WhatsApp (+263 71 234 5678) or email (support@zimvest.co.zw). All your investment records are always visible in your dashboard.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>How does ZimVest generate these returns?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Returns come from a mix of forex trading (~45%), crypto arbitrage (~30%), money market instruments (~15%), and agricultural commodities (~10%). See the "How we earn" section above for the full breakdown.</div>
       </div>
     </div>
   </div>
@@ -636,7 +673,7 @@ footer{background:#0F172A;padding:64px 0 28px}
         </div>
       </div>
       <div class="footer-col"><h4>Platform</h4><a href="#plans">Investment plans</a><a href="#calc">Calculator</a><a href="#earnings">How we earn</a><a href="#how">How it works</a></div>
-      <div class="footer-col"><h4>Account</h4><a href="auth.html">Sign in</a><a href="auth.html">Register free</a><a href="dashboard.html">Dashboard</a><a href="forgot.html">Reset password</a></div>
+      <div class="footer-col"><h4>Account</h4><a href="auth.html?tab=si">Sign in</a><a href="auth.html?tab=rg">Register free</a><a href="dashboard.html">Dashboard</a><a href="forgot.html">Reset password</a></div>
       <div class="footer-col"><h4>Support</h4><a href="https://wa.me/263712345678" target="_blank" rel="noopener">WhatsApp us</a><a href="mailto:support@zimvest.co.zw">Email support</a><a href="#">FAQ</a><a href="#">Terms &amp; Privacy</a></div>
     </div>
     <div class="footer-bottom">
@@ -713,6 +750,15 @@ function cCalc(){
 function clearPlanTabs(){document.querySelectorAll('.cpt').forEach(el=>el.classList.remove('active'));}
 /* Tab clicks just re-run calc — amount is the source of truth */
 function cTab(k){cCalc();}
+
+function toggleFaq(btn){
+  const a = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-q.open').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open');});
+  // Open clicked if it was closed
+  if(!isOpen){btn.classList.add('open');a.classList.add('open');}
+}
 </script>
 </body>
 </html>
