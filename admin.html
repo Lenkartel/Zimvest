@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#5B5FEF"/>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<title>Admin · ZimVest</title>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  /* Backgrounds */
+  --bg:       #EEF2F7;
+  --surface:  #FFFFFF;
+  --surface-2:#F1F5F9;
+  --surface-3:#E2E8F0;
+
+  /* Primary — Indigo */
+  --primary:    #5B5FEF;
+  --primary-d:  #4547CC;
+  --primary-lt: #818CF8;
+  --primary-xs: rgba(91,95,239,.08);
+  --primary-sm: rgba(91,95,239,.15);
+  --primary-md: rgba(91,95,239,.25);
+
+  /* Success — Emerald */
+  --success:    #059669;
+  --success-lt: #10B981;
+  --success-xs: rgba(5,150,105,.08);
+  --success-md: rgba(5,150,105,.25);
+
+  /* Warning */
+  --warn:       #D97706;
+  --warn-xs:    rgba(217,119,6,.08);
+
+  /* Danger */
+  --danger:     #DC2626;
+  --danger-xs:  rgba(220,38,38,.08);
+  --danger-md:  rgba(220,38,38,.25);
+
+  /* Text */
+  --t1: #0F172A;
+  --t2: #1E293B;
+  --t3: #475569;
+  --t4: #64748B;
+  --t5: #94A3B8;
+
+  /* Borders */
+  --bd:    #D1D9E6;
+  --bd-md: #94A3B8;
+
+  /* Typography */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Radius */
+  --r:    12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* Shadow */
+  --sh-xs: 0 1px 3px rgba(15,23,42,.08);
+  --sh-sm: 0 1px 3px rgba(15,23,42,.07), 0 4px 14px rgba(15,23,42,.06);
+  --sh:    0 2px 8px rgba(15,23,42,.08), 0 8px 28px rgba(15,23,42,.06);
+  --sh-lg: 0 8px 32px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+
+  /* Ease */
+  --primary-ring: rgba(91,95,239,.15);
+  --success-ring: rgba(5,150,105,.15);
+  --danger-ring:  rgba(220,38,38,.12);
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  /* Extended aliases — all hardcoded */
+  --dur: .18s;
+  --ease-s: cubic-bezier(.25,.46,.45,.94);
+  --red: #DC2626;
+  --red-lt: rgba(220,38,38,.08);
+  --primary-bd: rgba(91,95,239,.25);
+  --danger-bg: rgba(220,38,38,.08);
+  --danger-bd: rgba(220,38,38,.25);
+  --success-bg: rgba(5,150,105,.08);
+  --success-bd: rgba(5,150,105,.25);
+  --red-bg: rgba(220,38,38,.08);
+  --indigo-bd: rgba(91,95,239,.25);
+  --indigo-bg: rgba(91,95,239,.08);
+  --gold-bg: rgba(217,119,6,.08);
+  --bd2: #94A3B8;
+  --border-strong: #94A3B8;
+  --shadow: 0 2px 8px rgba(15,23,42,.08);
+  --t-pri: #0F172A;
+  --t-sec: #475569;
+  --t-dis: #94A3B8;
+  --t-mid: #1E293B;
+
+}
+
+/* ══ UNIVERSAL COMPONENT CSS ══ */
+
+/* Phone row */
+.phone-row{display:flex;border:1.5px solid #94A3B8;border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .18s,box-shadow .18s}
+.phone-row:focus-within{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.phone-row.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.phone-pfx{display:flex;align-items:center;padding:0 14px;background:#EEF2F7;border-right:1.5px solid #D1D9E6;font:700 14px/1 var(--mono);color:#1E293B;flex-shrink:0;user-select:none;letter-spacing:.3px}
+.phone-num{flex:1;height:50px;padding:0 14px;background:#fff;border:none;outline:none;font:500 16px/1 var(--mono);color:#0F172A;-webkit-appearance:none}
+.phone-num::placeholder{color:#94A3B8;font-family:var(--font)}
+
+/* Standard input */
+.fi{width:100%;height:50px;padding:0 16px;background:#fff;border:1.5px solid #94A3B8;border-radius:var(--r);font:500 15px/1 var(--font);color:#0F172A;outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.fi::placeholder{color:#94A3B8}
+.fi:focus{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.fi.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.pw-field{position:relative}
+.pw-field .fi{padding-right:50px}
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94A3B8;display:flex;padding:4px;transition:color .15s}
+.eye-btn:hover{color:#5B5FEF}
+.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Buttons */
+.btn-p{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);border:none;cursor:pointer;background:#5B5FEF;color:#fff;box-shadow:0 4px 14px rgba(91,95,239,.35);transition:all .18s var(--ease)}
+.btn-p:hover{background:#4547CC;transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,95,239,.4)}
+.btn-p:active{transform:scale(.97)}
+.btn-p svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-g{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);cursor:pointer;background:#fff;color:#334155;border:1.5px solid #D1D9E6;transition:all .18s var(--ease)}
+.btn-g:hover{background:#EEF2F7;border-color:#94A3B8}
+.btn-g svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-lg{padding:17px 32px;font-size:15px;border-radius:var(--r-xl)}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:10px}
+.btn-full{width:100%}
+
+/* Sticky CTA */
+.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:#D1D9E6;color:#94A3B8;transition:all .2s var(--ease);letter-spacing:.05px}
+.cta.on{background:#5B5FEF;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(91,95,239,.35)}
+.cta.on:hover{background:#4547CC;transform:translateY(-1px)}
+.cta.on:active{transform:scale(.98)}
+.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
+
+/* Strength bar */
+.strength-wrap{margin-top:7px}
+.strength-bar{height:4px;background:#E2E8F0;border-radius:2px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.strength-lbl{font-size:10px;font-weight:700;margin-top:5px}
+
+/* Error / notice */
+.api-err{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);border-radius:var(--r-lg);padding:12px 14px;font-size:12px;color:#DC2626;font-weight:600;line-height:1.45;display:none;margin-bottom:10px}
+.notice-ok{display:flex;align-items:flex-start;gap:9px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:var(--r-lg);padding:12px 14px}
+.notice-ok svg{width:14px;height:14px;stroke:#059669;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.notice-ok span{font-size:12px;color:#1E293B;font-weight:500;line-height:1.5}
+
+/* Skeleton */
+.skel-card{background:#fff;border:1px solid #D1D9E6;border-radius:var(--r-xl);padding:20px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.skel-line{height:11px;background:#E2E8F0;border-radius:6px;margin-bottom:10px;animation:skel 1.5s ease-in-out infinite}
+.skel-line.s{width:55%}.skel-line:last-child{margin:0}
+@keyframes skel{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Misc */
+.hidden{display:none!important}
+.powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
+
+html, body { width:100%; min-height:100vh; font-family:var(--font); background:#EEF2F7; color:var(--t1); -webkit-font-smoothing:antialiased; }
+
+/* ── LOGIN SCREEN ── */
+.login-wrap {
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.login-card {
+  width:100%; max-width:380px;
+  background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg);
+  overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,.4);
+}
+.lc-bar { height:3px; background:linear-gradient(90deg,#5B5FEF,#818CF8,#059669); }
+.lc-body { padding:32px; }
+.lc-logo { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+.lc-mark {
+  width:38px; height:38px; border-radius:11px;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+}
+.lc-mark svg { width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; }
+.lc-name { font-size:18px; font-weight:800; color:var(--t1); letter-spacing:-.4px; }
+.lc-name span { color:#818CF8; }
+.lc-sub { font-size:12px; color:var(--t3); margin-top:2px; }
+.lc-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.9px; color:var(--t3); margin-bottom:6px; display:block; }
+.lc-input {
+  width:100%; height:46px; padding:0 14px;
+  background:#F1F5F9; border:1.5px solid #94A3B8; border-radius:var(--r);
+  font:500 14px/1 var(--font); color:var(--t1); outline:none;
+  transition:border-color .18s,box-shadow .18s; -webkit-appearance:none;
+}
+.lc-input::placeholder { color:var(--t4); }
+.lc-input:focus { border-color:#5B5FEF; box-shadow:0 0 0 3px var(--indigo-bg); }
+.lc-field { margin-bottom:16px; }
+.lc-err { font-size:12px; color:#FCA5A5; font-weight:600; margin-top:8px; display:none; }
+.lc-btn {
+  width:100%; padding:14px; border-radius:var(--r-lg); border:none;
+  background:#5B5FEF; color:#fff; font:700 14px/1 var(--font);
+  cursor:pointer; margin-top:4px; transition:background .15s,transform .15s;
+  box-shadow:0 4px 16px var(--indigo-bg);
+}
+.lc-btn:hover { background:#4547CC; transform:translateY(-1px); }
+.lc-btn:active { transform:scale(.98); }
+.lc-note { font-size:11px; color:var(--t4); text-align:center; margin-top:16px; line-height:1.5; }
+
+/* ── ADMIN PANEL ── */
+.panel { min-height:100vh; display:none; flex-direction:column; }
+.panel.visible { display:flex; }
+
+/* Top bar */
+.topbar {
+  background:#FFFFFF; border-bottom:1px solid var(--bd);
+  padding:0 28px; height:60px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+}
+.tb-logo { display:flex; align-items:center; gap:9px; }
+.tb-mark {
+  width:30px; height:30px; border-radius:8px;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+}
+.tb-mark svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; }
+.tb-name { font-size:15px; font-weight:800; color:var(--t1); letter-spacing:-.3px; }
+.tb-name span { color:#818CF8; }
+.tb-badge {
+  background:var(--gold-bg); border:1px solid rgba(245,158,11,.3);
+  color:#B45309; font-size:10px; font-weight:700;
+  padding:3px 8px; border-radius:6px; letter-spacing:.5px; text-transform:uppercase;
+}
+.tb-right { display:flex; align-items:center; gap:12px; }
+.tb-time { font-size:12px; color:var(--t3); font-family:var(--mono); }
+.tb-logout {
+  display:flex; align-items:center; gap:5px;
+  background:rgba(239,68,68,.1); border:1px solid var(--red-bd);
+  color:#FCA5A5; font-size:12px; font-weight:600;
+  padding:7px 12px; border-radius:999px; cursor:pointer; border:none;
+  font-family:var(--font); transition:all .15s;
+}
+.tb-logout:hover { background:rgba(239,68,68,.2); }
+.tb-logout svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
+
+/* Main content */
+.main { flex:1; padding:28px; max-width:1200px; margin:0 auto; width:100%; }
+
+/* Stats grid */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+@media(max-width:900px) { .stats-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:500px) { .stats-grid { grid-template-columns:1fr; } }
+.stat-card {
+  background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg);
+  padding:20px 22px; position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.stat-card:nth-child(1)::before { background:linear-gradient(90deg,#5B5FEF,#818CF8); }
+.stat-card:nth-child(2)::before { background:linear-gradient(90deg,#059669,#10B981); }
+.stat-card:nth-child(3)::before { background:linear-gradient(90deg,#D97706,#B45309); }
+.stat-card:nth-child(4)::before { background:linear-gradient(90deg,#3B82F6,#93C5FD); }
+.stat-icon { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.stat-card:nth-child(1) .stat-icon { background:var(--indigo-bg); }
+.stat-card:nth-child(2) .stat-icon { background:var(--em-bg); }
+.stat-card:nth-child(3) .stat-icon { background:var(--gold-bg); }
+.stat-card:nth-child(4) .stat-icon { background:rgba(59,130,246,.12); }
+.stat-icon svg { width:18px; height:18px; fill:none; stroke-width:2; stroke-linecap:round; }
+.stat-card:nth-child(1) .stat-icon svg { stroke:#818CF8; }
+.stat-card:nth-child(2) .stat-icon svg { stroke:#10B981; }
+.stat-card:nth-child(3) .stat-icon svg { stroke:#B45309; }
+.stat-card:nth-child(4) .stat-icon svg { stroke:#93C5FD; }
+.stat-val { font:700 28px/1 var(--mono); color:var(--t1); margin-bottom:4px; }
+.stat-lbl { font-size:12px; color:var(--t3); font-weight:500; }
+
+/* Table card */
+.table-card { background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg); overflow:hidden; }
+.table-hdr {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding:18px 20px; border-bottom:1px solid var(--bd);
+}
+.table-hdr-left h2 { font-size:16px; font-weight:700; color:var(--t1); }
+.table-hdr-left p  { font-size:12px; color:var(--t3); margin-top:3px; }
+.table-hdr-right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:14px; height:14px; stroke:var(--t3); fill:none; stroke-width:2; stroke-linecap:round; }
+.search-input {
+  height:38px; padding:0 14px 0 34px; width:220px;
+  background:#F1F5F9; border:1px solid var(--bd2); border-radius:var(--r);
+  font:500 13px/1 var(--font); color:var(--t1); outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+.search-input::placeholder { color:var(--t4); }
+.search-input:focus { border-color:#5B5FEF; box-shadow:0 0 0 2px var(--indigo-bg); }
+.export-btn {
+  display:flex; align-items:center; gap:6px;
+  height:38px; padding:0 14px; border-radius:var(--r); border:none;
+  background:var(--em-bg); color:#10B981; font:600 13px/1 var(--font);
+  cursor:pointer; border:1px solid var(--em-bd); transition:background .15s;
+}
+.export-btn:hover { background:rgba(16,185,129,.2); }
+.export-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
+.refresh-btn {
+  display:flex; align-items:center; gap:6px;
+  height:38px; padding:0 14px; border-radius:var(--r); border:none;
+  background:var(--indigo-bg); color:#818CF8; font:600 13px/1 var(--font);
+  cursor:pointer; border:1px solid var(--indigo-bd); transition:all .15s;
+}
+.refresh-btn:hover { background:rgba(99,102,241,.2); }
+.refresh-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
+.refresh-btn.spinning svg { animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Table */
+.tbl-wrap { overflow-x:auto; }
+.tbl-wrap::-webkit-scrollbar { height:4px; }
+.tbl-wrap::-webkit-scrollbar-track { background:var(--bd); }
+.tbl-wrap::-webkit-scrollbar-thumb { background:var(--bd2); border-radius:2px; }
+table { width:100%; border-collapse:collapse; min-width:620px; }
+thead th {
+  padding:12px 16px; text-align:left;
+  font-size:10px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.9px; color:var(--t3);
+  background:#F1F5F9; border-bottom:1px solid var(--bd);
+  white-space:nowrap;
+}
+tbody tr { border-bottom:1px solid var(--bd); transition:background .15s; }
+tbody tr:last-child { border-bottom:none; }
+tbody tr:hover { background:#F1F5F9; }
+tbody td { padding:14px 16px; font-size:13px; color:var(--t1); vertical-align:middle; }
+.td-mono { font-family:var(--mono); font-size:13px; color:var(--t1); }
+.td-phone { font-family:var(--mono); font-size:13px; color:#818CF8; }
+.td-name { font-weight:600; color:var(--t1); }
+.td-date { font-family:var(--mono); font-size:12px; color:var(--t2); white-space:nowrap; }
+.td-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 9px; border-radius:999px; font-size:10px; font-weight:700;
+  background:var(--em-bg); color:#10B981; border:1px solid var(--em-bd);
+}
+.td-badge::before { content:''; width:5px; height:5px; border-radius:50%; background:#059669; display:block; }
+.td-avatar {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+  font:700 11px/1 var(--mono); color:#fff;
+}
+.td-user { display:flex; align-items:center; gap:10px; }
+.td-idx { font-family:var(--mono); font-size:11px; color:var(--t4); }
+
+/* Empty / loading states */
+.tbl-empty { padding:48px 20px; text-align:center; }
+.tbl-empty svg { width:40px; height:40px; stroke:var(--bd2); fill:none; stroke-width:1.5; stroke-linecap:round; margin:0 auto 12px; }
+.tbl-empty p { font-size:14px; color:var(--t3); }
+.tbl-loading { display:flex; align-items:center; justify-content:center; gap:10px; padding:40px; }
+.tbl-loading svg { width:20px; height:20px; stroke:#818CF8; fill:none; stroke-width:2; stroke-linecap:round; animation:spin .8s linear infinite; }
+.tbl-loading p { font-size:13px; color:var(--t2); }
+
+/* Footer */
+.tbl-foot { padding:14px 20px; border-top:1px solid var(--bd); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.tbl-count { font-size:12px; color:var(--t3); }
+.tbl-count strong { color:var(--t1); }
+.powered { text-align:center; padding:20px 0 8px; font-size:10px; color:var(--t4); letter-spacing:.4px; }
+
+/* Error banner */
+.err-banner {
+  background:var(--red-bg); border:1px solid var(--red-bd);
+  border-radius:var(--r-lg); padding:14px 18px;
+  font-size:13px; color:#FCA5A5; margin-bottom:20px; display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginWrap" class="login-wrap">
+  <div class="login-card">
+    <div class="lc-bar"></div>
+    <div class="lc-body">
+      <div class="lc-logo">
+        <div class="lc-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div>
+          <div class="lc-name">Zim<span>Vest</span></div>
+          <div class="lc-sub">Admin panel</div>
+        </div>
+      </div>
+      <div class="lc-field">
+        <label class="lc-label" for="adminSecret">Admin secret key</label>
+        <input class="lc-input" type="password" id="adminSecret" placeholder="Enter your admin key"
+          autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div id="loginErr" class="lc-err"></div>
+      <button class="lc-btn" onclick="doLogin()">Access admin panel →</button>
+      <p class="lc-note">This panel is restricted to ZimVest administrators.<br>Set <code style="color:#818CF8">ADMIN_SECRET</code> in Vercel env vars.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="panel" class="panel">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="tb-logo">
+      <div class="tb-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span class="tb-name">Zim<span>Vest</span></span>
+      <span class="tb-badge">Admin</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-time" id="tbTime">—</span>
+      <button class="tb-logout" onclick="doLogout()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out
+      </button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="stat-val" id="sTotal">—</div>
+        <div class="stat-lbl">Total registered users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+        <div class="stat-val" id="sToday">—</div>
+        <div class="stat-lbl">Registered today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="stat-val" id="sWeek">—</div>
+        <div class="stat-lbl">This week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="stat-val" id="sMonth">—</div>
+        <div class="stat-lbl">This month</div>
+      </div>
+    </div>
+
+    <!-- Error banner -->
+    <div id="errBanner" class="err-banner"></div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-hdr">
+        <div class="table-hdr-left">
+          <h2>Registered clients</h2>
+          <p>All users registered on ZimVest</p>
+        </div>
+        <div class="table-hdr-right">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="search-input" type="text" id="searchInput" placeholder="Search by name or number…" oninput="applySearch()">
+          </div>
+          <button class="refresh-btn" id="refreshBtn" onclick="loadUsers()">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Refresh
+          </button>
+          <button class="export-btn" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>EcoCash number</th>
+              <th>Status</th>
+              <th>Registered</th>
+              <th>Last updated</th>
+            </tr>
+          </thead>
+          <tbody id="tBody">
+            <tr>
+              <td colspan="6">
+                <div class="tbl-loading">
+                  <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  <p>Loading clients…</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tbl-foot">
+        <div class="tbl-count" id="tCount">Loading…</div>
+        <div style="font-size:11px;color:var(--t4)">Data from Vercel KV · Refresh to update</div>
+      </div>
+    </div>
+
+    <div class="powered">ZimVest Admin Panel · Confidential · Not for distribution</div>
+  </div>
+</div>
+
+<script>
+let secret = '';
+let allUsers = [];
+const $ = id => document.getElementById(id);
+
+/* ── Login ── */
+function doLogin(){
+  const s = $('adminSecret').value.trim();
+  if(!s){ const e=$('loginErr'); e.textContent='Enter the admin secret key.'; e.style.display='block'; return; }
+  secret = s;
+  $('loginErr').style.display='none';
+  $('loginWrap').style.display='none';
+  $('panel').classList.add('visible');
+  sessionStorage.setItem('zv_admin',s);
+  loadUsers();
+  startClock();
+}
+
+function doLogout(){
+  sessionStorage.removeItem('zv_admin');
+  secret=''; allUsers=[];
+  $('panel').classList.remove('visible');
+  $('loginWrap').style.display='flex';
+  $('adminSecret').value='';
+}
+
+/* ── Auto-restore session ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved = sessionStorage.getItem('zv_admin');
+  if(saved){ secret=saved; $('adminSecret').value=saved; doLogin(); }
+});
+
+/* ── Clock ── */
+function startClock(){
+  const tick=()=>{ $('tbTime').textContent = new Date().toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'medium'}); };
+  tick(); setInterval(tick,1000);
+}
+
+/* ── Load users ── */
+async function loadUsers(){
+  if(!secret) return;
+  const btn = $('refreshBtn');
+  btn.classList.add('spinning');
+  $('errBanner').style.display='none';
+  $('tBody').innerHTML=`<tr><td colspan="6"><div class="tbl-loading"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><p>Loading clients…</p></div></td></tr>`;
+
+  try{
+    const r = await fetch('/api/admin-users',{ headers:{'x-admin-secret':secret} });
+    if(r.status===401){ $('errBanner').textContent='Invalid admin secret. Access denied.'; $('errBanner').style.display='block'; renderEmpty(); return; }
+    if(!r.ok){ const d=await r.json().catch(()=>({error:'Server error'})); throw new Error(d.error); }
+    const data = await r.json();
+    allUsers = data.users || [];
+    calcStats(allUsers);
+    renderTable(allUsers);
+  } catch(e){
+    $('errBanner').textContent='Failed to load users: '+(e.message||'Network error'); $('errBanner').style.display='block';
+    renderEmpty();
+  } finally {
+    btn.classList.remove('spinning');
+  }
+}
+
+/* ── Stats ── */
+function calcStats(users){
+  const now = new Date();
+  const today = now.toDateString();
+  const weekAgo = new Date(now-7*86400000);
+  const monthAgo = new Date(now.getFullYear(),now.getMonth(),1);
+  $('sTotal').textContent = users.length;
+  $('sToday').textContent = users.filter(u=>u.createdAt && new Date(u.createdAt).toDateString()===today).length;
+  $('sWeek').textContent  = users.filter(u=>u.createdAt && new Date(u.createdAt)>=weekAgo).length;
+  $('sMonth').textContent = users.filter(u=>u.createdAt && new Date(u.createdAt)>=monthAgo).length;
+}
+
+/* ── Render table ── */
+function renderTable(users){
+  if(!users.length){ renderEmpty(); return; }
+  $('tCount').innerHTML = `Showing <strong>${users.length}</strong> of <strong>${allUsers.length}</strong> clients`;
+  $('tBody').innerHTML = users.map((u,i)=>{
+    const init=(u.name||u.phone||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const created = u.createdAt ? new Date(u.createdAt).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    const updated = u.updatedAt ? new Date(u.updatedAt).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    return `<tr>
+      <td><span class="td-idx">${i+1}</span></td>
+      <td>
+        <div class="td-user">
+          <div class="td-avatar">${init}</div>
+          <span class="td-name">${esc(u.name)}</span>
+        </div>
+      </td>
+      <td><span class="td-phone">${esc(u.phone)}</span></td>
+      <td><span class="td-badge">Active</span></td>
+      <td class="td-date">${created}</td>
+      <td class="td-date">${updated}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderEmpty(){
+  $('tBody').innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>No clients found</p></div></td></tr>`;
+  $('tCount').innerHTML = 'No results';
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Search ── */
+function applySearch(){
+  const q = $('searchInput').value.toLowerCase().trim();
+  if(!q){ renderTable(allUsers); return; }
+  const filtered = allUsers.filter(u=>
+    (u.name||'').toLowerCase().includes(q) ||
+    (u.phone||'').includes(q)
+  );
+  renderTable(filtered);
+}
+
+/* ── Export CSV ── */
+function exportCSV(){
+  if(!allUsers.length) return;
+  const rows = [['#','Name','Phone','Status','Registered','Last updated']];
+  allUsers.forEach((u,i)=>{
+    rows.push([
+      i+1,
+      `"${(u.name||'').replace(/"/g,'""')}"`,
+      u.phone||'',
+      'Active',
+      u.createdAt ? new Date(u.createdAt).toLocaleString('en-ZW') : '',
+      u.updatedAt ? new Date(u.updatedAt).toLocaleString('en-ZW') : '',
+    ]);
+  });
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=`zimvest-clients-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
