@@ -371,7 +371,7 @@ footer{background:#0F172A;padding:64px 0 28px}
             </div>
             <div class="hero-calc-in-wrap">
               <span class="hero-calc-pfx">$</span>
-              <input type="number" class="hero-calc-in" id="heroAmt" placeholder="Enter amount" oninput="hCalc()">
+              <input type="number" class="hero-calc-in" id="heroAmt" placeholder="$100–$1,500" oninput="hCalc()">
             </div>
             <div class="hero-result" id="heroResult">
               <div class="hr-left"><p>You receive</p><strong id="hTotal">—</strong></div>
@@ -455,7 +455,7 @@ footer{background:#0F172A;padding:64px 0 28px}
     <p class="body-copy">Enter any amount and see precisely what you receive.</p>
   </div>
   <div class="calc-card">
-    <label class="calc-lbl">1. Select plan</label>
+    <label class="calc-lbl">Plan — auto-selected by amount</label>
     <div class="calc-plan-tabs">
       <div class="cpt active" id="cpt-starter" onclick="cTab('starter')">
         <div class="cpt-name">Starter</div>
@@ -471,7 +471,7 @@ footer{background:#0F172A;padding:64px 0 28px}
     <label class="calc-lbl">2. Enter deposit amount</label>
     <div class="calc-in-wrap">
       <span class="calc-pfx">$</span>
-      <input type="number" class="calc-in" id="calcAmt" placeholder="100 – 1500" oninput="cCalc()">
+      <input type="number" class="calc-in" id="calcAmt" placeholder="$100–$500 = Starter · $501–$1,500 = Growth" oninput="cCalc()">
     </div>
     <div class="calc-result" id="calcResult">
       <div class="cr-row"><span class="cr-lbl">Deposit</span><span class="cr-val" id="cDep">—</span></div>
@@ -582,43 +582,67 @@ const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.targe
 document.querySelectorAll('img[loading=lazy]').forEach(img=>io.observe(img));
 
 const PLANS={
-  starter:{pct:20,hours:72,min:100,max:500},
-  growth: {pct:35,hours:48,min:501,max:1500},
+  starter:{name:'Starter',pct:20,hours:72,min:100,max:500},
+  growth: {name:'Growth', pct:35,hours:48,min:501,max:1500},
 };
-let heroPlan='starter', calcPlan='starter';
 
-function hTab(el){document.querySelectorAll('.pt').forEach(t=>t.classList.remove('active'));el.classList.add('active');heroPlan=el.dataset.plan;hCalc();}
+/* Auto-detect plan from amount — single source of truth */
+function planFromAmt(v){
+  if(v>=100&&v<=500)  return PLANS.starter;
+  if(v>=501&&v<=1500) return PLANS.growth;
+  return null;
+}
+
+/* ── HERO CALCULATOR (card on right of hero) ── */
 function hCalc(){
-  const v=parseFloat(document.getElementById('heroAmt').value),p=PLANS[heroPlan],r=document.getElementById('heroResult');
+  const v=parseFloat(document.getElementById('heroAmt').value);
+  const r=document.getElementById('heroResult');
   if(!v||v<100||v>1500){r.classList.remove('show');return;}
+  const p=planFromAmt(v);
+  /* Auto-highlight the correct plan tab */
+  document.querySelectorAll('.pt').forEach(t=>{
+    t.classList.toggle('active', t.dataset.plan===( v<=500?'starter':'growth' ));
+  });
   const profit=+(v*p.pct/100).toFixed(2),total=+(v+profit).toFixed(2);
   document.getElementById('hTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
-  document.getElementById('hTime').textContent=p.hours+' hour payout';
-  document.getElementById('hProfit').textContent='+$'+profit.toFixed(2)+' profit';
+  document.getElementById('hTime').textContent=p.hours+' hr payout · '+p.name;
+  document.getElementById('hProfit').textContent='+$'+profit.toFixed(2)+' ('+p.pct+'% return)';
   r.classList.add('show');
 }
+/* Keep tab clicks working for illustration, but re-run hCalc so amount wins */
+function hTab(el){hCalc();}
 
-function cTab(k){
-  calcPlan=k;
-  document.querySelectorAll('.cpt').forEach(el=>el.classList.remove('active'));
-  document.getElementById('cpt-'+k).classList.add('active');
-  cCalc();
-}
+/* ── MAIN CALCULATOR ── */
 function cCalc(){
-  const v=parseFloat(document.getElementById('calcAmt').value),p=PLANS[calcPlan];
+  const v=parseFloat(document.getElementById('calcAmt').value);
   const err=document.getElementById('calcErr'),res=document.getElementById('calcResult');
   err.style.display='none';
-  if(!v){res.classList.remove('show');return;}
-  if(v<100){err.textContent='Minimum $100.';err.style.display='block';res.classList.remove('show');return;}
-  if(v>1500){err.textContent='Maximum $1,500.';err.style.display='block';res.classList.remove('show');return;}
+  if(!v){res.classList.remove('show');clearPlanTabs();return;}
+  if(v<100){
+    err.textContent='Minimum deposit is $100 (Starter plan).';
+    err.style.display='block';res.classList.remove('show');clearPlanTabs();return;
+  }
+  if(v>1500){
+    err.textContent='Maximum deposit is $1,500 (Growth plan).';
+    err.style.display='block';res.classList.remove('show');clearPlanTabs();return;
+  }
+  const p=planFromAmt(v);
+  /* Auto-highlight the matching plan tab */
+  document.querySelectorAll('.cpt').forEach(el=>{
+    const isMatch=(v<=500&&el.id==='cpt-starter')||(v>500&&el.id==='cpt-growth');
+    el.classList.toggle('active',isMatch);
+  });
   const profit=+(v*p.pct/100).toFixed(2),total=+(v+profit).toFixed(2);
   document.getElementById('cDep').textContent='$'+v.toFixed(2);
-  document.getElementById('cRate').textContent='+'+p.pct+'%';
+  document.getElementById('cRate').textContent='+'+p.pct+'% ('+p.name+' plan)';
   document.getElementById('cProfit').textContent='+$'+profit.toFixed(2);
   document.getElementById('cTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
   document.getElementById('cTime').textContent=p.hours+' hours';
   res.classList.add('show');
 }
+function clearPlanTabs(){document.querySelectorAll('.cpt').forEach(el=>el.classList.remove('active'));}
+/* Tab clicks just re-run calc — amount is the source of truth */
+function cTab(k){cCalc();}
 </script>
 </body>
 </html>
