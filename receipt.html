@@ -3,28 +3,166 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="theme-color" content="#0F0F1A"/>
+<meta name="theme-color" content="#5B5FEF"/>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
 <title>Investment Confirmed · ZimVest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --c-dark:#0F0F1A;--c-brand:#6366F1;--c-mid:#4F52D9;
-  --c-sky:#1E293B;--c-sky-d:#334155;--amber:#EF9F27;
-  --c-bg:#0F0F1A;--c-surface:#16162A;--b-lt:#1E293B;
-  --t-pri:#F8FAFC;--t-sec:#CBD5E1;--t-dis:#334155;
-  --font:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
-  --r:12px;--r-lg:16px;
-  --sh:0 1px 3px rgba(99,102,241,.08),0 4px 16px rgba(99,102,241,.06);
+:root {
+  /* Backgrounds */
+  --bg:       #EEF2F7;
+  --surface:  #FFFFFF;
+  --surface-2:#F1F5F9;
+  --surface-3:#E2E8F0;
+
+  /* Primary — Indigo */
+  --primary:    #5B5FEF;
+  --primary-d:  #4547CC;
+  --primary-lt: #818CF8;
+  --primary-xs: rgba(91,95,239,.08);
+  --primary-sm: rgba(91,95,239,.15);
+  --primary-md: rgba(91,95,239,.25);
+
+  /* Success — Emerald */
+  --success:    #059669;
+  --success-lt: #10B981;
+  --success-xs: rgba(5,150,105,.08);
+  --success-md: rgba(5,150,105,.25);
+
+  /* Warning */
+  --warn:       #D97706;
+  --warn-xs:    rgba(217,119,6,.08);
+
+  /* Danger */
+  --danger:     #DC2626;
+  --danger-xs:  rgba(220,38,38,.08);
+  --danger-md:  rgba(220,38,38,.25);
+
+  /* Text */
+  --t1: #0F172A;
+  --t2: #1E293B;
+  --t3: #475569;
+  --t4: #64748B;
+  --t5: #94A3B8;
+
+  /* Borders */
+  --bd:    #D1D9E6;
+  --bd-md: #94A3B8;
+
+  /* Typography */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Radius */
+  --r:    12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  /* Shadow */
+  --sh-xs: 0 1px 3px rgba(15,23,42,.08);
+  --sh-sm: 0 1px 3px rgba(15,23,42,.07), 0 4px 14px rgba(15,23,42,.06);
+  --sh:    0 2px 8px rgba(15,23,42,.08), 0 8px 28px rgba(15,23,42,.06);
+  --sh-lg: 0 8px 32px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+
+  /* Ease */
+  --primary-ring: rgba(91,95,239,.15);
+  --success-ring: rgba(5,150,105,.15);
+  --danger-ring:  rgba(220,38,38,.12);
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  /* Extended aliases — all hardcoded */
+  --dur: .18s;
+  --ease-s: cubic-bezier(.25,.46,.45,.94);
+  --red: #DC2626;
+  --red-lt: rgba(220,38,38,.08);
+  --primary-bd: rgba(91,95,239,.25);
+  --danger-bg: rgba(220,38,38,.08);
+  --danger-bd: rgba(220,38,38,.25);
+  --success-bg: rgba(5,150,105,.08);
+  --success-bd: rgba(5,150,105,.25);
+  --red-bg: rgba(220,38,38,.08);
+  --indigo-bd: rgba(91,95,239,.25);
+  --indigo-bg: rgba(91,95,239,.08);
+  --gold-bg: rgba(217,119,6,.08);
+  --bd2: #94A3B8;
+  --border-strong: #94A3B8;
+  --shadow: 0 2px 8px rgba(15,23,42,.08);
+  --t-pri: #0F172A;
+  --t-sec: #475569;
+  --t-dis: #94A3B8;
+  --t-mid: #1E293B;
+
 }
-html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-dark)}
+
+/* ══ UNIVERSAL COMPONENT CSS ══ */
+
+/* Phone row */
+.phone-row{display:flex;border:1.5px solid #94A3B8;border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .18s,box-shadow .18s}
+.phone-row:focus-within{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.phone-row.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.phone-pfx{display:flex;align-items:center;padding:0 14px;background:#F1F5F9;border-right:1.5px solid #D1D9E6;font:700 14px/1 var(--mono);color:#1E293B;flex-shrink:0;user-select:none;letter-spacing:.3px}
+.phone-num{flex:1;height:50px;padding:0 14px;background:#fff;border:none;outline:none;font:500 16px/1 var(--mono);color:#0F172A;-webkit-appearance:none}
+.phone-num::placeholder{color:#94A3B8;font-family:var(--font)}
+
+/* Standard input */
+.fi{width:100%;height:50px;padding:0 16px;background:#fff;border:1.5px solid #94A3B8;border-radius:var(--r);font:500 15px/1 var(--font);color:#0F172A;outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.fi::placeholder{color:#94A3B8}
+.fi:focus{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
+.fi.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+.pw-field{position:relative}
+.pw-field .fi{padding-right:50px}
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94A3B8;display:flex;padding:4px;transition:color .15s}
+.eye-btn:hover{color:#5B5FEF}
+.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Buttons */
+.btn-p{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);border:none;cursor:pointer;background:#5B5FEF;color:#fff;box-shadow:0 4px 14px rgba(91,95,239,.35);transition:all .18s var(--ease)}
+.btn-p:hover{background:#4547CC;transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,95,239,.4)}
+.btn-p:active{transform:scale(.97)}
+.btn-p svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-g{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);cursor:pointer;background:#fff;color:#334155;border:1.5px solid #D1D9E6;transition:all .18s var(--ease)}
+.btn-g:hover{background:#F1F5F9;border-color:#94A3B8}
+.btn-g svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.btn-lg{padding:17px 32px;font-size:15px;border-radius:var(--r-xl)}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:10px}
+.btn-full{width:100%}
+
+/* Sticky CTA */
+.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:#D1D9E6;color:#94A3B8;transition:all .2s var(--ease);letter-spacing:.05px}
+.cta.on{background:#5B5FEF;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(91,95,239,.35)}
+.cta.on:hover{background:#4547CC;transform:translateY(-1px)}
+.cta.on:active{transform:scale(.98)}
+.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
+
+/* Strength bar */
+.strength-wrap{margin-top:7px}
+.strength-bar{height:4px;background:#E2E8F0;border-radius:2px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.strength-lbl{font-size:10px;font-weight:700;margin-top:5px}
+
+/* Error / notice */
+.api-err{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);border-radius:var(--r-lg);padding:12px 14px;font-size:12px;color:#DC2626;font-weight:600;line-height:1.45;display:none;margin-bottom:10px}
+.notice-ok{display:flex;align-items:flex-start;gap:9px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:var(--r-lg);padding:12px 14px}
+.notice-ok svg{width:14px;height:14px;stroke:#059669;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.notice-ok span{font-size:12px;color:#1E293B;font-weight:500;line-height:1.5}
+
+/* Skeleton */
+.skel-card{background:#fff;border:1px solid #D1D9E6;border-radius:var(--r-xl);padding:20px;margin-bottom:12px;box-shadow:var(--sh-sm)}
+.skel-line{height:11px;background:#E2E8F0;border-radius:6px;margin-bottom:10px;animation:skel 1.5s ease-in-out infinite}
+.skel-line.s{width:55%}.skel-line:last-child{margin:0}
+@keyframes skel{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Misc */
+.hidden{display:none!important}
+.powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
+
+html,body{width:100%;min-height:100%;font-family:var(--font);background:#EEF2F7;color:#0F172A}
 .screen{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 
 /* HEADER */
 .r-header{
-  background:var(--c-dark);padding:40px 20px 32px;
+  background:linear-gradient(160deg,#6366F1 0%,#4F52D9 100%);padding:40px 20px 32px;
   text-align:center;position:relative;overflow:hidden;
 }
 .r-header::before{
@@ -38,7 +176,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
   display:flex;align-items:center;justify-content:center;
   margin:0 auto 16px;position:relative;z-index:1;
 }
-.check-ring svg{width:32px;height:32px;stroke:#818CF8;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.check-ring svg{width:32px;height:32px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .r-header h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
 .r-header p{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
 .ref-tag{
@@ -48,7 +186,7 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
   margin-top:16px;position:relative;z-index:1;
 }
 .ref-label{font-size:10px;color:rgba(255,255,255,.45);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:#818CF8;letter-spacing:1px}
+.ref-num{font-family:var(--mono);font-size:13px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:1px}
 
 /* HERO INVESTOR IMAGE */
 .r-investor-img{
@@ -57,12 +195,12 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
 .r-investor-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .r-investor-img::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,var(--c-dark) 0%,transparent 40%,rgba(99,102,241,.3) 100%);
+  background:linear-gradient(to bottom,#5B5FEF 0%,transparent 40%,rgba(99,102,241,.3) 100%);
 }
 
 /* BODY */
 .r-body{
-  background:#0F0F1A;flex:1;
+  background:#F8FAFB;flex:1;
   border-radius:24px 24px 0 0;
   padding:24px 16px max(32px,env(safe-area-inset-bottom));
   margin-top:-2px;
@@ -70,59 +208,59 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
 
 /* COUNTDOWN */
 .countdown-card{
-  background:var(--c-dark);border-radius:var(--r-lg);
+  background:linear-gradient(135deg,#6366F1 0%,#4F52D9 100%);border-radius:var(--r-lg);
   padding:20px;text-align:center;margin-bottom:14px;
 }
 .countdown-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:#818CF8;letter-spacing:3px}
+.countdown-timer{font-family:var(--mono);font-size:36px;font-weight:900;color:#fff;letter-spacing:3px}
 .countdown-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:6px}
 
 /* SUMMARY CARD */
 .sum-card{
-  background:#16162A;border:1.5px solid #1E293B;
+  background:#FFFFFF;border:1px solid #D1D9E6;
   border-radius:var(--r-lg);overflow:hidden;
   margin-bottom:14px;box-shadow:var(--sh);
 }
 .sum-top-bar{height:3px;background:linear-gradient(90deg,#6366F1,#818CF8)}
-.sum-hdr{padding:13px 16px 11px;border-bottom:1px solid var(--b-lt)}
+.sum-hdr{padding:13px 16px 11px;border-bottom:1px solid #D1D9E6}
 .sum-title{font-size:13px;font-weight:800;color:var(--t-pri)}
 .sum-sub{font-size:11px;color:var(--t-sec);margin-top:1px}
 .sum-row{
   display:flex;justify-content:space-between;align-items:center;
-  padding:13px 16px;border-bottom:.5px solid var(--b-lt);font-size:14px;
+  padding:13px 16px;border-bottom:.5px solid #D1D9E6;font-size:14px;
 }
 .sum-row:last-child{border-bottom:none}
-.sum-row-label{color:var(--t-sec);font-weight:500}
-.sum-row-value{font-weight:700;color:var(--t-pri)}
+.sum-row-label{color:#475569;font-weight:500}
+.sum-row-value{font-weight:700;color:#0F172A}
 .sum-row-value.big{font-size:20px;font-weight:900;color:#6EE7B7}
 .sum-row-value.amber{color:#FBBF24}
 .plan-pill{
   display:inline-flex;align-items:center;gap:5px;
-  background:var(--c-sky);border:1px solid var(--b-lt);
-  color:#818CF8;font-size:12px;font-weight:800;
+  background:#EEF1FF;border:1px solid #D1D9E6;
+  color:#5B5FEF;font-size:12px;font-weight:800;
   padding:3px 10px;border-radius:999px;
 }
 
 /* NOTICE */
 .payout-notice{
-  background:var(--c-sky);border:1.5px solid var(--b-lt);
+  background:rgba(16,185,129,.06);border:1.5px solid #D1D9E6;
   border-radius:var(--r-lg);padding:14px 16px;
   margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;
 }
-.payout-notice svg{width:16px;height:16px;stroke:var(--c-brand);flex-shrink:0;margin-top:1px;fill:none;stroke-width:2;stroke-linecap:round}
+.payout-notice svg{width:16px;height:16px;stroke:#5B5FEF;flex-shrink:0;margin-top:1px;fill:none;stroke-width:2;stroke-linecap:round}
 .payout-notice p{font-size:12px;color:var(--t-sec);line-height:1.5}
 .payout-notice p strong{color:var(--t-pri)}
 
 /* BUTTONS */
 .btn-main{
-  background:var(--c-brand);color:#fff;border:none;width:100%;padding:15px;
+  background:#5B5FEF;color:#fff;border:none;width:100%;padding:15px;
   border-radius:var(--r-lg);font-family:var(--font);font-size:14px;font-weight:800;
   cursor:pointer;box-shadow:0 4px 16px rgba(99,102,241,.28);transition:all .15s;
   margin-bottom:10px;
 }
 .btn-main:active{transform:scale(.98)}
 .btn-sec{
-  background:transparent;color:var(--t-sec);border:1.5px solid var(--b-lt);
+  background:transparent;color:#334155;border:1.5px solid #D1D9E6;
   width:100%;padding:13px;border-radius:var(--r-lg);
   font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;
 }
@@ -198,7 +336,20 @@ html,body{width:100%;min-height:100%;font-family:var(--font);background:var(--c-
       <p>Your payout will be sent <strong>automatically</strong> to your registered EcoCash number when the countdown completes. No action needed from you.</p>
     </div>
 
-    <button class="btn-main" onclick="shareReceipt()">📲 Share receipt</button>
+    
+    <!-- What happens next -->
+    <div style="background:var(--em-bg);border:1px solid var(--em-bd);border-radius:16px;padding:16px;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:700;color:#10B981;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        What happens next
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#1E293B"><div style="width:20px;height:20px;border-radius:50%;background:#059669;color:#fff;font:700 10px/20px var(--font);display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>Your payment has been received and your investment is now active.</div>
+        <div style="display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#1E293B"><div style="width:20px;height:20px;border-radius:50%;background:#059669;color:#fff;font:700 10px/20px var(--font);display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>The countdown above shows the time remaining until your payout is processed.</div>
+        <div style="display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#1E293B"><div style="width:20px;height:20px;border-radius:50%;background:#059669;color:#fff;font:700 10px/20px var(--font);display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>Your full payout is sent <strong>automatically</strong> to your EcoCash number — no action needed from you.</div>
+      </div>
+    </div>
+<button class="btn-main" onclick="shareReceipt()">📲 Share receipt</button>
     <button class="btn-sec" onclick="goBack()">Back to dashboard</button>
 
     <div class="powered">ZimVest · Secure Investment Platform · Zimbabwe</div>
