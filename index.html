@@ -61,7 +61,7 @@ section{padding:96px 0}
 .btn-full{width:100%;justify-content:center}
 
 /* ── NAV ── */
-.nav{position:sticky;top:0;z-index:100;height:66px;display:flex;align-items:center;background:rgba(238,242,247,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+.nav{position:sticky;top:0;z-index:100;height:60px;display:flex;align-items:center;background:rgba(238,242,247,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);width:100%}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1080px;margin:0 auto;padding:0 28px}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-mark{width:36px;height:36px;border-radius:10px;background:var(--indigo);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px var(--indigo-ring)}
@@ -287,13 +287,17 @@ footer{background:#0F172A;padding:64px 0 28px}
 }
 @media(max-width:560px){
   section{padding:64px 0}
+  .wrap{padding:0 16px}  /* edge-to-edge on phone */
+  .nav-inner{padding:0 16px}
   .steps-grid,.stats-inner{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .hero{min-height:auto;padding:80px 0 0}
   .hero-btns{flex-direction:column}
   .btn-lg{width:100%}
   .calc-plan-tabs{grid-template-columns:1fr}
-  .calc-card{padding:24px}
+  .calc-card{padding:20px 16px}
+  .eco-banner{padding:24px 16px}
+  .stats-inner{padding:0}
 }
 </style>
 </head>
