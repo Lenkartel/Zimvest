@@ -157,8 +157,33 @@
 .hidden{display:none!important}
 .powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
 
-html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);background:#EEF2F7;color:#0F172A;-webkit-font-smoothing:antialiased;overflow:hidden}
-.screen{max-width:430px;margin:0 auto;height:100%;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+html,body{
+  width:100%;min-height:100%;min-height:100dvh;
+  font-family:var(--font);color:#0F172A;
+  -webkit-font-smoothing:antialiased;
+  background:#0F172A; /* desktop bg — dark sidebar look */
+  overflow:hidden;
+}
+/* Mobile: fill screen edge-to-edge */
+.screen{
+  width:100%;height:100%;height:100dvh;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  background:#EEF2F7;
+}
+/* Desktop: centered panel with subtle frame */
+@media(min-width:600px){
+  body{display:flex;align-items:flex-start;justify-content:center;padding:0}
+  .screen{
+    max-width:480px;
+    height:100vh;height:100dvh;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06),0 24px 80px rgba(0,0,0,.5);
+  }
+}
+@media(min-width:1024px){
+  body{background:#0F172A;align-items:center}
+  .screen{max-width:430px}
+}
 
 /* ═══ HEADER ═══ */
 .hdr{
@@ -245,14 +270,14 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 
 /* ═══ PLAN CARDS ═══ */
 .plan-card{
-  background:#fff;border:1.5px solid #D1D9E6;
-  border-radius:20px;overflow:hidden;margin-bottom:12px;cursor:pointer;
-  transition:border-color .18s,box-shadow .18s,transform .15s;
+  background:#fff;border:2.5px solid #D1D9E6;
+  border-radius:20px;overflow:hidden;margin-bottom:16px;cursor:pointer;
+  transition:border-color .2s,box-shadow .2s;
   -webkit-user-select:none;
 }
-.plan-card:active{transform:scale(.985)}
-.plan-card.selected{border-color:#5B5FEF;box-shadow:0 0 0 4px rgba(99,102,241,.12)}
-.plan-card.featured{border-color:var(--primary-bd)}
+.plan-card:active{opacity:.92}
+.plan-card.selected{border-color:#5B5FEF;box-shadow:0 2px 20px rgba(91,95,239,.18)}
+.plan-card.featured{border-color:#C7D2FE}
 .pct-strip{height:3px}
 .s-strip{background:linear-gradient(90deg,#818CF8,#D1D9E6)}
 .g-strip{background:linear-gradient(90deg,#6366F1,#818CF8)}
@@ -284,7 +309,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
 .calc-box-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748B;margin-bottom:8px}
 .calc-pfx-wrap{position:relative;margin-bottom:8px}
 .calc-pfx{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:15px;font-weight:700;color:#64748B}
-.calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid var(--bd-md);font-family:var(--mono);font-size:18px;font-weight:700;color:#0F172A;background:var(--surface);outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
+.calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid #94A3B8;font-family:var(--mono);font-size:18px;font-weight:700;color:#0F172A;background:#fff;outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s,box-shadow .18s}
 .calc-in:focus{border-color:#5B5FEF;background:var(--surface);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
 .calc-in.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(217,43,58,.1)}
 .calc-err-txt{font-size:11px;color:var(--red);font-weight:700;margin-top:5px;display:none}
@@ -442,8 +467,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
             <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$200 → $240</div></div>
           </div>
           <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 72 hours</div>
-        </div>
-      </div>
+              </div>
 
       <!-- GROWTH -->
       <div class="plan-card featured" id="pc-g" onclick="pickPlan('growth')">
@@ -472,7 +496,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);backgroun
         <div class="calc-box-lbl" id="calcBoxLbl">Enter deposit amount</div>
         <div class="calc-pfx-wrap">
           <span class="calc-pfx">$</span>
-          <input type="number" class="calc-in" id="calcIn" placeholder="0.00" inputmode="decimal" style="color:#F8FAFC" oninput="doCalc()">
+          <input type="number" class="calc-in" id="calcIn" placeholder="0.00" inputmode="decimal" oninput="doCalc()">
         </div>
         <div class="calc-err-txt" id="calcErrTxt"></div>
         <div class="calc-res" id="calcRes">
