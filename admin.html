@@ -380,6 +380,36 @@ tbody td { padding:14px 16px; font-size:13px; color:var(--t1); vertical-align:mi
   .search-input{width:110px}
   .stat-val{font-size:22px}
 }
+
+/* Investment history section */
+.section-title{font-size:14px;font-weight:700;color:var(--t1);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.inv-table-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm);margin-bottom:24px}
+.inv-filter-row{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.inv-filter-btn{padding:6px 14px;border-radius:999px;font:600 12px/1 var(--font);border:1px solid var(--bd);background:transparent;color:var(--t3);cursor:pointer;transition:all .15s}
+.inv-filter-btn.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.inv-filter-btn:hover:not(.active){background:var(--bg)}
+.inv-tbl-wrap{overflow-x:auto}
+.inv-tbl-wrap table{width:100%;border-collapse:collapse}
+.inv-tbl-wrap th{background:var(--bg);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);padding:10px 14px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--bd)}
+.inv-tbl-wrap td{padding:12px 14px;border-bottom:1px solid var(--bd);font-size:13px;color:var(--t2);vertical-align:middle}
+.inv-tbl-wrap tbody tr:last-child td{border-bottom:none}
+.inv-tbl-wrap tbody tr:hover{background:var(--bg)}
+.inv-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px}
+.sb-active{background:rgba(91,95,239,.1);color:#4547CC}
+.sb-paid{background:rgba(5,150,105,.1);color:#059669}
+.sb-rejected{background:rgba(220,38,38,.1);color:#DC2626}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.reject-btn{padding:5px 12px;border-radius:8px;font:600 11px/1 var(--font);border:1px solid rgba(220,38,38,.3);background:rgba(220,38,38,.06);color:#DC2626;cursor:pointer;transition:all .15s;white-space:nowrap}
+.reject-btn:hover{background:rgba(220,38,38,.15);border-color:#DC2626}
+.reject-btn:disabled{opacity:.4;cursor:not-allowed}
+.restore-btn{padding:5px 12px;border-radius:8px;font:600 11px/1 var(--font);border:1px solid rgba(5,150,105,.3);background:rgba(5,150,105,.06);color:#059669;cursor:pointer;transition:all .15s;white-space:nowrap}
+.restore-btn:hover{background:rgba(5,150,105,.15)}
+.inv-empty{text-align:center;padding:36px 20px;color:var(--t4);font-size:13px}
+.inv-summary{display:flex;gap:16px;padding:12px 16px;background:var(--bg);border-top:1px solid var(--bd);flex-wrap:wrap}
+.inv-sum-item{font-size:12px;color:var(--t3)}
+.inv-sum-item strong{color:var(--t1);font-weight:700}
+@media(max-width:600px){.inv-filter-row{gap:6px}.inv-filter-btn{padding:5px 10px;font-size:11px}}
+
 </style>
 </head>
 <body>
@@ -511,6 +541,39 @@ tbody td { padding:14px 16px; font-size:13px; color:var(--t1); vertical-align:mi
       </div>
     </div>
 
+
+    <!-- Investment History Panel -->
+    <div class="section-title">📊 Investment history &amp; payment control</div>
+    <div class="inv-table-card">
+      <div class="inv-filter-row">
+        <button class="inv-filter-btn active" onclick="filterInv('all',this)">All</button>
+        <button class="inv-filter-btn" onclick="filterInv('active',this)">Active</button>
+        <button class="inv-filter-btn" onclick="filterInv('paid',this)">Paid out</button>
+        <button class="inv-filter-btn" onclick="filterInv('rejected',this)">Rejected</button>
+        <button class="inv-filter-btn" style="margin-left:auto" onclick="loadInvestments()">⟳ Refresh</button>
+      </div>
+      <div class="inv-tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Plan</th>
+              <th>Deposit</th>
+              <th>Payout</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="invBody">
+            <tr><td colspan="8"><div class="inv-empty">Loading investments…</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="inv-summary" id="invSummary"></div>
+    </div>
+
     <div class="powered">ZimVest Admin Panel · Confidential · Not for distribution</div>
   </div>
 </div>
@@ -530,6 +593,7 @@ function doLogin(){
   $('panel').classList.add('visible');
   sessionStorage.setItem('zv_admin',s);
   loadUsers();
+  loadInvestments();
   startClock();
 }
 
@@ -652,6 +716,132 @@ function exportCSV(){
   a.href=url; a.download=`zimvest-clients-${new Date().toISOString().slice(0,10)}.csv`;
   a.click(); URL.revokeObjectURL(url);
 }
+
+/* ══ INVESTMENT HISTORY ══ */
+let allInvestments = [];
+let currentFilter = 'all';
+
+/* Load from KV (stored by dashboard when user invests) */
+async function loadInvestments(){
+  $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Loading…</div></td></tr>';
+  try{
+    const r = await fetch('/api/admin-investments', { headers:{'x-admin-secret':secret} });
+    if(!r.ok){ $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Could not load investment data.</div></td></tr>'; return; }
+    const data = await r.json();
+    allInvestments = data.investments || [];
+    renderInv(allInvestments);
+  } catch(e){
+    /* Fallback: investments stored in localStorage on client side — show note */
+    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Investment data is stored client-side. Connect to /api/admin-investments to see server-side records, or check individual client history via dashboard.</div></td></tr>';
+    renderInvSummary([]);
+  }
+}
+
+function filterInv(filter, btn){
+  currentFilter = filter;
+  document.querySelectorAll('.inv-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = filter==='all' ? allInvestments : allInvestments.filter(i=>i.status===filter);
+  renderInv(filtered);
+}
+
+function renderInv(investments){
+  if(!investments.length){
+    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">No investments found for this filter.</div></td></tr>';
+    renderInvSummary(allInvestments);
+    return;
+  }
+  $('invBody').innerHTML = investments.map((inv,i)=>{
+    const statusClass = {active:'sb-active',paid:'sb-paid',rejected:'sb-rejected'}[inv.status]||'sb-active';
+    const statusLabel = {active:'Active',paid:'Paid out',rejected:'Rejected'}[inv.status]||inv.status;
+    const date = inv.date ? new Date(inv.date).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    const actionBtn = inv.status==='rejected'
+      ? `<button class="restore-btn" onclick="restoreInvestment('${esc(inv.id)}')">↩ Restore</button>`
+      : inv.status==='active'
+        ? `<button class="reject-btn" onclick="rejectInvestment('${esc(inv.id)}')">✕ Reject</button>`
+        : `<span style="color:var(--t4);font-size:12px">—</span>`;
+    return `<tr id="inv-row-${esc(inv.id)}">
+      <td><span class="td-idx">${i+1}</span></td>
+      <td>
+        <div class="td-user">
+          <div class="td-avatar" style="font-size:11px">${esc((inv.name||inv.phone||'?').slice(0,2).toUpperCase())}</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">${esc(inv.name||'—')}</div>
+            <div style="font-size:11px;color:var(--t4);font-family:var(--mono)">${esc(inv.phone||'—')}</div>
+          </div>
+        </div>
+      </td>
+      <td><strong>${esc(inv.plan||'—')}</strong></td>
+      <td style="font-family:var(--mono);font-weight:700">$${parseFloat(inv.amount||0).toFixed(2)}</td>
+      <td style="font-family:var(--mono);font-weight:700;color:#059669">$${parseFloat(inv.payout||0).toFixed(2)}</td>
+      <td><span class="inv-status-badge ${statusClass}"><span class="sb-dot"></span>${statusLabel}</span></td>
+      <td class="td-date">${date}</td>
+      <td>${actionBtn}</td>
+    </tr>`;
+  }).join('');
+  renderInvSummary(allInvestments);
+}
+
+function renderInvSummary(investments){
+  const total = investments.reduce((s,i)=>s+parseFloat(i.amount||0),0);
+  const totalOut = investments.reduce((s,i)=>s+parseFloat(i.payout||0),0);
+  const active = investments.filter(i=>i.status==='active').length;
+  const paid = investments.filter(i=>i.status==='paid').length;
+  const rejected = investments.filter(i=>i.status==='rejected').length;
+  $('invSummary').innerHTML = `
+    <div class="inv-sum-item">Total invested: <strong>$${total.toFixed(2)}</strong></div>
+    <div class="inv-sum-item">Total payouts: <strong>$${totalOut.toFixed(2)}</strong></div>
+    <div class="inv-sum-item">Active: <strong>${active}</strong></div>
+    <div class="inv-sum-item">Paid: <strong>${paid}</strong></div>
+    <div class="inv-sum-item">Rejected: <strong>${rejected}</strong></div>
+  `;
+}
+
+async function rejectInvestment(id){
+  if(!confirm('Reject this investment? This will mark it as failed/rejected and cannot be auto-undone.')) return;
+  const btn = document.querySelector(`#inv-row-${id} .reject-btn`);
+  if(btn){btn.disabled=true;btn.textContent='Rejecting…';}
+  try{
+    const r = await fetch('/api/admin-reject-investment',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-admin-secret':secret},
+      body:JSON.stringify({id})
+    });
+    if(r.ok){
+      const inv = allInvestments.find(i=>i.id===id);
+      if(inv) inv.status='rejected';
+      filterInv(currentFilter, document.querySelector('.inv-filter-btn.active'));
+    } else {
+      alert('Could not reject investment. Check API connection.');
+      if(btn){btn.disabled=false;btn.textContent='✕ Reject';}
+    }
+  } catch(e){
+    alert('Network error: '+e.message);
+    if(btn){btn.disabled=false;btn.textContent='✕ Reject';}
+  }
+}
+
+async function restoreInvestment(id){
+  const btn = document.querySelector(`#inv-row-${id} .restore-btn`);
+  if(btn){btn.disabled=true;btn.textContent='Restoring…';}
+  try{
+    const r = await fetch('/api/admin-reject-investment',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-admin-secret':secret},
+      body:JSON.stringify({id, restore:true})
+    });
+    if(r.ok){
+      const inv = allInvestments.find(i=>i.id===id);
+      if(inv) inv.status='active';
+      filterInv(currentFilter, document.querySelector('.inv-filter-btn.active'));
+    } else {
+      if(btn){btn.disabled=false;btn.textContent='↩ Restore';}
+    }
+  } catch(e){
+    if(btn){btn.disabled=false;btn.textContent='↩ Restore';}
+  }
+}
+
 </script>
 </body>
 </html>
