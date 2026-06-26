@@ -211,6 +211,32 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .info-box-s{font-size:11px;color:var(--t3);line-height:1.55}
 
 .powered{text-align:center;padding:12px 0 4px;font-size:9px;color:var(--t4);font-weight:500;letter-spacing:.4px}
+
+/* ── ZIMVEST LOGO (shared across all pages) ── */
+.zv-logo{display:flex;align-items:center;gap:10px}
+.zv-mark{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#5B5FEF 0%,#059669 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(91,95,239,.25);
+}
+.zv-mark-sm{width:30px;height:30px;border-radius:8px}
+.zv-mark-lg{width:42px;height:42px;border-radius:13px}
+.zv-mark svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.zv-mark-sm svg{width:16px;height:16px}
+.zv-mark-lg svg{width:22px;height:22px}
+.zv-name{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.zv-name .v{color:#818CF8}  /* "Vest" in indigo-light */
+.zv-sub{font-size:11px;font-weight:600;margin-top:1px;opacity:.65}
+/* On dark bg (headers) */
+.zv-on-dark .zv-name{color:#fff}
+.zv-on-dark .zv-name .v{color:#A5B4FC}
+.zv-on-dark .zv-sub{color:rgba(255,255,255,.6)}
+/* On light bg (topbar/nav) */
+.zv-on-light .zv-name{color:#0F172A}
+.zv-on-light .zv-name .v{color:#5B5FEF}
+.zv-on-light .zv-sub{color:#64748B}
+
 </style>
 </head>
 <body>
@@ -220,9 +246,9 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
   <div class="hdr">
     <div class="hdr-inner">
       <div class="hdr-top">
-        <div class="logo">
-          <div class="logo-ring"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <span class="logo-name">ZimVest</span>
+        <div class="zv-logo zv-on-dark" style="gap:8px">
+          <div class="zv-mark zv-mark-sm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="zv-name" style="font-size:16px">Zim<span class="v">Vest</span></div>
         </div>
         <button class="logout-btn" onclick="doLogout()">
           <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
