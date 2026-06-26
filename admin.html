@@ -723,16 +723,24 @@ let currentFilter = 'all';
 
 /* Load from KV (stored by dashboard when user invests) */
 async function loadInvestments(){
-  $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Loading…</div></td></tr>';
+  $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Loading investments…</div></td></tr>';
+  $('invSummary').innerHTML='';
   try{
     const r = await fetch('/api/admin-investments', { headers:{'x-admin-secret':secret} });
-    if(!r.ok){ $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Could not load investment data.</div></td></tr>'; return; }
     const data = await r.json();
+    if(!r.ok){
+      $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty" style="color:#DC2626">Error ' + r.status + ': ' + (data.error||'Failed to load') + '</div></td></tr>';
+      return;
+    }
     allInvestments = data.investments || [];
+    if(!allInvestments.length){
+      $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">No investments yet. They appear here once clients proceed to EcoCash payment.</div></td></tr>';
+      renderInvSummary([]);
+      return;
+    }
     renderInv(allInvestments);
   } catch(e){
-    /* Fallback: investments stored in localStorage on client side — show note */
-    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Investment data is stored client-side. Connect to /api/admin-investments to see server-side records, or check individual client history via dashboard.</div></td></tr>';
+    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty" style="color:#DC2626">Network error: ' + e.message + '. Check /api/admin-investments is deployed.</div></td></tr>';
     renderInvSummary([]);
   }
 }
