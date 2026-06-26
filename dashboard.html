@@ -593,12 +593,14 @@ async function proceed(){
   saveInvestment(p,calcAmt,total);
   // Persist to KV for admin visibility
   try {
+    const _phone = sessionStorage.getItem('zimvest_phone')||'';
+    const _name  = sessionStorage.getItem('zimvest_name')||'';
     await fetch('/api/save-investment',{
-      method:'POST',credentials:'include',
+      method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
+      body:JSON.stringify({phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
     });
-  } catch(e){/* non-blocking — proceed anyway */}
+  } catch(e){/* non-blocking */}
   location.href='login.html';
 }
 
