@@ -591,26 +591,30 @@ async function proceed(){
   if(!selPlan||!calcAmt) return;
   const p=PLANS[selPlan];
   const total=+(calcAmt*(1+p.pct/100)).toFixed(2);
-  sessionStorage.setItem('zimvest_plan',JSON.stringify({name:p.name,pct:p.pct,amount:calcAmt.toFixed(2),payout:total.toFixed(2),hours:p.hours,phone:sessionStorage.getItem('zimvest_phone')||''}));
-  saveInvestment(p,calcAmt,total);
-  // Persist to KV for admin visibility
-  try {
-    const _phone = sessionStorage.getItem('zimvest_phone')||'';
-    const _name  = sessionStorage.getItem('zimvest_name')||'';
+  const _phone=sessionStorage.getItem('zimvest_phone')||'';
+  const _name =sessionStorage.getItem('zimvest_name')||'';
+  const now=Date.now();
+
+  sessionStorage.setItem('zimvest_plan',JSON.stringify({name:p.name,pct:p.pct,amount:calcAmt.toFixed(2),payout:total.toFixed(2),hours:p.hours,phone:_phone}));
+
+  // Generate one shared ID: phone+timestamp — same key used in both localStorage and KV
+  const kvId=_phone.replace(/\W/g,'')+'_'+now;
+
+  // Save to localStorage immediately with the shared ID
+  const hist=getHistory();
+  hist.unshift({id:kvId,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,date:new Date().toISOString(),status:'active',maturesAt:new Date(now+p.hours*3600000).toISOString()});
+  localStorage.setItem('zimvest_history',JSON.stringify(hist.slice(0,20)));
+
+  // Persist to KV using the same ID so admin + check-investment-status can match it
+  try{
     await fetch('/api/save-investment',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
+      body:JSON.stringify({id:kvId,phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
     });
-  } catch(e){/* non-blocking */}
-  location.href='login.html';
-}
+  }catch(e){/* non-blocking */}
 
-/* ── History ── */
-function saveInvestment(plan,amount,payout){
-  const hist=getHistory();
-  hist.unshift({id:Date.now(),plan:plan.name,pct:plan.pct,hours:plan.hours,amount,payout,date:new Date().toISOString(),status:'active',maturesAt:new Date(Date.now()+plan.hours*3600000).toISOString()});
-  localStorage.setItem('zimvest_history',JSON.stringify(hist.slice(0,20)));
+  location.href='login.html';
 }
 function getHistory(){try{return JSON.parse(localStorage.getItem('zimvest_history')||'[]');}catch{return[];}}
 
