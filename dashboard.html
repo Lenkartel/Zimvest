@@ -585,12 +585,20 @@ function updateBtn(){
 }
 
 /* ── Proceed ── */
-function proceed(){
+async function proceed(){
   if(!selPlan||!calcAmt) return;
   const p=PLANS[selPlan];
   const total=+(calcAmt*(1+p.pct/100)).toFixed(2);
   sessionStorage.setItem('zimvest_plan',JSON.stringify({name:p.name,pct:p.pct,amount:calcAmt.toFixed(2),payout:total.toFixed(2),hours:p.hours,phone:sessionStorage.getItem('zimvest_phone')||''}));
   saveInvestment(p,calcAmt,total);
+  // Persist to KV for admin visibility
+  try {
+    await fetch('/api/save-investment',{
+      method:'POST',credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
+    });
+  } catch(e){/* non-blocking — proceed anyway */}
   location.href='login.html';
 }
 
