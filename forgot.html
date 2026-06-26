@@ -160,10 +160,10 @@
 .powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
 
 /* HEADER */
-.hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:calc(env(safe-area-inset-top)+18px) 20px 26px;flex-shrink:0;position:relative;overflow:hidden}
+.hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:0;flex-shrink:0;position:relative;overflow:hidden}
 .hdr::after{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
-.hdr-inner{position:relative;z-index:1}
-.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:none;border-radius:999px;padding:7px 13px;cursor:pointer;color:rgba(255,255,255,.85);font:600 12px/1 var(--font);transition:background .15s;margin-bottom:20px}
+.hdr-inner{position:relative;z-index:1;display:flex;flex-direction:column}
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:none;border-radius:999px;padding:7px 13px;cursor:pointer;color:rgba(255,255,255,.85);font:600 12px/1 var(--font);transition:background .15s;flex-shrink:0;white-space:nowrap}
 .back-btn:hover{background:rgba(255,255,255,.25)}
 .back-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .brand{display:flex;align-items:center;gap:11px}
@@ -280,7 +280,7 @@ html,body{
     overflow:hidden;
   }
   /* Header gets rounded top */
-  .hdr{border-radius:24px 24px 0 0;overflow:hidden}
+  .hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:0;flex-shrink:0;position:relative;overflow:hidden}
 }
 @media(min-width:1024px){
   body{padding:60px 24px}
@@ -319,12 +319,14 @@ html,body{
 
 <div class="hdr">
   <div class="hdr-inner">
-    <button class="back-btn" id="backBtn" onclick="goBack()">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
-    </button>
-    <div class="zv-logo zv-on-dark">
-      <div class="zv-mark zv-mark-lg"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <div><div class="zv-name">Zim<span class="v">Vest</span></div><div class="zv-sub">Reset password</div></div>
+    <div style="height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box">
+      <div class="zv-logo zv-on-dark">
+        <div class="zv-mark zv-mark-sm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><div class="zv-name" style="font-size:15px">Zim<span class="v">Vest</span></div><div class="zv-sub">Reset password</div></div>
+      </div>
+      <button class="back-btn" id="backBtn" onclick="goBack()">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+      </button>
     </div>
   </div>
 </div>
