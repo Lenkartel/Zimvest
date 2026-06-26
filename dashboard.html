@@ -169,9 +169,11 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .inv-status{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;margin-top:4px}
 .s-active{background:rgba(91,95,239,.12);color:var(--in)}
 .s-paid{background:rgba(5,150,105,.1);color:var(--em)}
+.s-rejected{background:rgba(220,38,38,.08);color:#DC2626}
 .s-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .s-active .s-dot{background:var(--in);animation:pd 1.5s ease-in-out infinite}
 .s-paid .s-dot{background:var(--em)}
+.s-rejected .s-dot{background:#DC2626}
 @keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
 .countdown-mini{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--warn);margin-top:3px}
 
@@ -612,13 +614,34 @@ function saveInvestment(plan,amount,payout){
 }
 function getHistory(){try{return JSON.parse(localStorage.getItem('zimvest_history')||'[]');}catch{return[];}}
 
-function loadHistory(){
+async function loadHistory(){
   const hist=getHistory();
   const card=document.getElementById('historyCard');
   const empty=document.getElementById('historyEmpty');
   const list=document.getElementById('historyList');
   const now=Date.now();
+  /* Auto-mature active investments whose timer has expired */
   hist.forEach(h=>{if(h.status==='active'&&new Date(h.maturesAt).getTime()<now)h.status='paid';});
+  /* Sync rejection status from KV (admin may have rejected while client was viewing) */
+  const activeIds=hist.filter(h=>h.status==='active').map(h=>h.id);
+  if(activeIds.length){
+    try{
+      const r=await fetch('/api/check-investment-status',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({ids:activeIds})
+      });
+      if(r.ok){
+        const data=await r.json();
+        const statusMap=data.statuses||{};
+        hist.forEach(h=>{
+          if(statusMap[h.id] && statusMap[h.id]!==h.status){
+            h.status=statusMap[h.id];
+          }
+        });
+      }
+    }catch(e){/* non-blocking — use local status */}
+  }
   localStorage.setItem('zimvest_history',JSON.stringify(hist));
   /* Profile stats */
   const totInv=hist.reduce((s,h)=>s+parseFloat(h.amount),0);
@@ -634,6 +657,8 @@ function loadHistory(){
     const date=new Date(h.date).toLocaleDateString('en-ZW',{day:'numeric',month:'short',year:'numeric'});
     const statusHtml=h.status==='active'
       ?`<div class="inv-status s-active"><div class="s-dot"></div>Active</div>`
+      :h.status==='rejected'
+      ?`<div class="inv-status s-rejected"><div class="s-dot"></div>Rejected</div>`
       :`<div class="inv-status s-paid"><div class="s-dot"></div>Paid out</div>`;
     const cdHtml=h.status==='active'?`<div class="countdown-mini" id="cd-${h.id}">Calculating…</div>`:'';
     return`<div class="inv-item"><div><div class="inv-plan">${h.plan} Plan</div><div class="inv-date">${date}</div>${statusHtml}${cdHtml}</div><div><div class="inv-amount">$${parseFloat(h.amount).toFixed(2)}</div><div class="inv-return">→ $${parseFloat(h.payout).toFixed(2)} (+${h.pct}%)</div></div></div>`;
