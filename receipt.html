@@ -299,12 +299,20 @@ html,body{
   body{padding:60px 24px}
   .app-shell,.screen,.sh{max-width:440px}
 }
+
+/* Receipt logo bar */
+.r-logo{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:14px}
+.r-logo-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.r-logo-mark svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.r-logo-name{font-size:14px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:-.3px}
+.r-logo-name span{color:#A5B4FC}
 </style>
 </head>
 <body>
 <div class="app-shell">
 
   <div class="r-header">
+    <div class="r-logo"><div class="r-logo-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="r-logo-name">Zim<span>Vest</span></div></div>
     <div class="check-ring">
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
