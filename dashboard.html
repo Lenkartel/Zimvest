@@ -624,28 +624,38 @@ async function loadHistory(){
   const empty=document.getElementById('historyEmpty');
   const list=document.getElementById('historyList');
   const now=Date.now();
-  /* Auto-mature active investments whose timer has expired */
-  hist.forEach(h=>{if(h.status==='active'&&new Date(h.maturesAt).getTime()<now)h.status='paid';});
-  /* Sync rejection status from KV (admin may have rejected while client was viewing) */
-  const activeIds=hist.filter(h=>h.status==='active').map(h=>h.id);
-  if(activeIds.length){
+
+  /* Auto-mature: active investments past their maturesAt → paid */
+  hist.forEach(h=>{
+    if(h.status==='active' && h.maturesAt && new Date(h.maturesAt).getTime()<now){
+      h.status='paid';
+    }
+  });
+
+  /* Sync from KV: fetch all KV investments for this phone, apply status */
+  const phone=sessionStorage.getItem('zimvest_phone')||'';
+  if(phone && hist.length){
     try{
       const r=await fetch('/api/check-investment-status',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({ids:activeIds})
+        body:JSON.stringify({phone})
       });
       if(r.ok){
         const data=await r.json();
-        const statusMap=data.statuses||{};
-        hist.forEach(h=>{
-          if(statusMap[h.id] && statusMap[h.id]!==h.status){
-            h.status=statusMap[h.id];
+        /* Build map: kvId → status */
+        const kvMap={};
+        (data.investments||[]).forEach(function(inv){ kvMap[inv.id]=inv.status; });
+        /* Apply to local history entries */
+        hist.forEach(function(h){
+          if(kvMap[h.id] && kvMap[h.id]!==h.status){
+            h.status=kvMap[h.id];
           }
         });
       }
-    }catch(e){/* non-blocking — use local status */}
+    }catch(e){/* non-blocking */}
   }
+
   localStorage.setItem('zimvest_history',JSON.stringify(hist));
   /* Profile stats */
   const totInv=hist.reduce((s,h)=>s+parseFloat(h.amount),0);
