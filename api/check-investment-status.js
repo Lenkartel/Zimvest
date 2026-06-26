@@ -1,8 +1,8 @@
-// api/check-investment-status.js
-// Called by dashboard.html on history load to sync admin-set statuses (e.g. rejected).
-// Body: { ids: string[] }   — list of investment IDs to check
-// Returns: { statuses: { [id]: 'active'|'paid'|'rejected' } }
-// No auth required — IDs are opaque (phone+timestamp) and only return status.
+// api/check-investment-status.js  v2
+// Fetches ALL investment records for a given phone number from KV.
+// Dashboard uses this to sync statuses — no ID matching needed.
+// Body: { phone: string }
+// Returns: { investments: [{id, status, plan, amount, payout, date, maturesAt}] }
 
 async function getKV() {
   try { const { kv } = await import('@vercel/kv'); return kv; }
@@ -16,29 +16,40 @@ export default async function handler(req, res) {
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch { return res.status(400).json({ error: 'Invalid JSON' }); }
 
-  const ids = Array.isArray(body.ids) ? body.ids.slice(0, 50) : [];
-  if (!ids.length) return res.status(200).json({ statuses: {} });
+  const phone = String(body.phone || '').trim();
+  if (!phone) return res.status(400).json({ error: 'Missing phone' });
 
   const kv = await getKV();
-  if (!kv) return res.status(200).json({ statuses: {} }); // graceful — client uses local
+  if (!kv) return res.status(503).json({ error: 'KV unavailable' });
 
   try {
-    const results = await Promise.all(
-      ids.map(async id => {
+    // Scan all investment keys for this phone
+    const phoneKey = phone.replace(/\W/g, '');
+    let cursor = 0;
+    const keys = [];
+    do {
+      const result = await kv.scan(cursor, { match: `investment:${phoneKey}_*`, count: 100 });
+      cursor = result[0];
+      keys.push(...result[1]);
+    } while (cursor !== 0);
+
+    if (!keys.length) return res.status(200).json({ investments: [] });
+
+    const investments = await Promise.all(
+      keys.map(async key => {
         try {
-          const raw = await kv.get(`investment:${id}`);
-          if (!raw) return [id, null];
+          const raw = await kv.get(key);
+          if (!raw) return null;
           const inv = typeof raw === 'string' ? JSON.parse(raw) : raw;
-          return [id, inv.status || 'active'];
-        } catch { return [id, null]; }
+          return { id: inv.id, status: inv.status || 'active' };
+        } catch { return null; }
       })
     );
 
-    const statuses = {};
-    results.forEach(([id, status]) => { if (status) statuses[id] = status; });
-
-    return res.status(200).json({ statuses });
+    return res.status(200).json({
+      investments: investments.filter(Boolean)
+    });
   } catch (err) {
-    return res.status(200).json({ statuses: {} }); // graceful fallback
+    return res.status(500).json({ error: err?.message });
   }
 }
