@@ -286,6 +286,32 @@ html,body{
   body{padding:60px 24px}
   .app-shell,.screen,.sh{max-width:440px}
 }
+
+/* ── ZIMVEST LOGO (shared across all pages) ── */
+.zv-logo{display:flex;align-items:center;gap:10px}
+.zv-mark{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#5B5FEF 0%,#059669 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(91,95,239,.25);
+}
+.zv-mark-sm{width:30px;height:30px;border-radius:8px}
+.zv-mark-lg{width:42px;height:42px;border-radius:13px}
+.zv-mark svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.zv-mark-sm svg{width:16px;height:16px}
+.zv-mark-lg svg{width:22px;height:22px}
+.zv-name{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.zv-name .v{color:#818CF8}  /* "Vest" in indigo-light */
+.zv-sub{font-size:11px;font-weight:600;margin-top:1px;opacity:.65}
+/* On dark bg (headers) */
+.zv-on-dark .zv-name{color:#fff}
+.zv-on-dark .zv-name .v{color:#A5B4FC}
+.zv-on-dark .zv-sub{color:rgba(255,255,255,.6)}
+/* On light bg (topbar/nav) */
+.zv-on-light .zv-name{color:#0F172A}
+.zv-on-light .zv-name .v{color:#5B5FEF}
+.zv-on-light .zv-sub{color:#64748B}
+
 </style>
 </head>
 <body>
@@ -296,9 +322,9 @@ html,body{
     <button class="back-btn" id="backBtn" onclick="goBack()">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
     </button>
-    <div class="brand">
-      <div class="brand-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <div><div class="brand-name">ZimVest</div><div class="brand-tag">Reset password</div></div>
+    <div class="zv-logo zv-on-dark">
+      <div class="zv-mark zv-mark-lg"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div><div class="zv-name">Zim<span class="v">Vest</span></div><div class="zv-sub">Reset password</div></div>
     </div>
   </div>
 </div>
