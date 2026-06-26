@@ -38,8 +38,7 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 @media(min-width:1024px){
   body{background:var(--bg)}
   .shell{max-width:100%}
-  .hdr{padding:20px 40px 0}
-  .hdr-inner{max-width:1200px;margin:0 auto;width:100%}
+  .hdr{padding:0 18px;margin:0 auto;width:100%}
   .tab-bar{padding:0 40px}
   .pane{padding:24px 40px calc(24px + env(safe-area-inset-bottom))}
   .plans-grid{grid-template-columns:1fr 1fr}
@@ -47,15 +46,15 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 }
 
 /* ── HEADER ── */
-.hdr{background:linear-gradient(135deg,#4547CC 0%,#5B5FEF 100%);padding:calc(env(safe-area-inset-top)+14px) 18px 0;flex-shrink:0;position:relative;overflow:hidden;z-index:10}
+.hdr{background:linear-gradient(135deg,#4547CC 0%,#5B5FEF 100%);padding:0 18px;flex-shrink:0;position:relative;overflow:hidden;z-index:10}
 .hdr::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 80% at 110% -10%,rgba(99,102,241,.18) 0%,transparent 55%)}
 .hdr-inner{}
-.hdr-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.hdr-top{height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;flex-shrink:0;position:relative;z-index:1}
 .logo{display:flex;align-items:center;gap:9px}
 .logo-ring{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:9px;display:flex;align-items:center;justify-content:center}
 .logo-ring svg{width:17px;height:17px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
 .logo-name{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.4px}
-.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:9px 14px;border-radius:999px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:12px;font-weight:600;padding:7px 12px;border-radius:999px;cursor:pointer;font-family:var(--font);transition:all .15s}
 .logout-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .logout-btn:hover{background:rgba(255,255,255,.16);color:#fff}
 .hdr-user{position:relative;z-index:1;display:flex;align-items:center;gap:13px;margin-bottom:18px}
