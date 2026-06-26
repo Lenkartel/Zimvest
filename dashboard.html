@@ -213,6 +213,12 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .info-box-s{font-size:11px;color:var(--t3);line-height:1.55}
 
 .powered{text-align:center;padding:12px 0 4px;font-size:9px;color:var(--t4);font-weight:500;letter-spacing:.4px}
+.hist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hist-refresh{display:flex;align-items:center;gap:5px;background:var(--sf);border:1.5px solid var(--bd);color:var(--t3);font:600 12px/1 var(--font);padding:7px 13px;border-radius:999px;cursor:pointer;transition:all .18s;-webkit-user-select:none}
+.hist-refresh:hover{border-color:var(--in);color:var(--in)}
+.hist-refresh svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;transition:transform .4s}
+.hist-refresh.spinning svg{animation:spin360 .7s linear infinite}
+@keyframes spin360{to{transform:rotate(360deg)}}
 
 /* ── ZIMVEST LOGO (shared across all pages) ── */
 .zv-logo{display:flex;align-items:center;gap:10px}
@@ -379,7 +385,13 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 
     <!-- ══ HISTORY PANE ══ -->
     <div class="pane" id="pane-history">
-      <div class="sec-lbl">Investment history</div>
+      <div class="hist-hdr">
+        <div class="sec-lbl" style="margin-bottom:0">Investment history</div>
+        <button class="hist-refresh" id="histRefreshBtn" onclick="refreshHistory()">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Refresh
+        </button>
+      </div>
       <div style="font-size:12px;color:#475569;margin-bottom:14px;line-height:1.6">Your investments appear here after each deposit. Active investments show a live countdown — payout is sent automatically when it reaches zero.</div>
 
       <div class="card" id="historyCard">
@@ -617,6 +629,18 @@ async function proceed(){
   location.href='login.html';
 }
 function getHistory(){try{return JSON.parse(localStorage.getItem('zimvest_history')||'[]');}catch{return[];}}
+
+async function refreshHistory(){
+  const btn=document.getElementById('histRefreshBtn');
+  if(btn) btn.classList.add('spinning');
+  await loadHistory();
+  if(btn){
+    btn.classList.remove('spinning');
+    /* Brief green flash to confirm refresh */
+    btn.style.borderColor='#059669';btn.style.color='#059669';
+    setTimeout(function(){btn.style.borderColor='';btn.style.color='';},1200);
+  }
+}
 
 async function loadHistory(){
   const hist=getHistory();
