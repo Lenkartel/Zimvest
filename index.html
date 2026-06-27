@@ -61,10 +61,10 @@ section{padding:96px 0}
 .btn-full{width:100%;justify-content:center}
 
 /* ── NAV ── embedded inside hero top bar */
-.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;height:68px;padding:0}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1080px;margin:0 auto;padding:0 28px}
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;height:60px;padding:0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1080px;margin:0 auto;padding:0 18px}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center}
 .logo-mark svg{width:19px;height:19px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
 .logo-text{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
 .nav-links{display:flex;gap:28px}
@@ -72,7 +72,7 @@ section{padding:96px 0}
 .nav-links a:hover{color:#fff}
 .nav-right{display:flex;gap:10px}
 /* Sign in — ghost on dark bg */
-.nav-btn-si{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;padding:8px 18px;border-radius:999px;font:600 13px/1 var(--font);cursor:pointer;text-decoration:none;transition:all .15s}
+.nav-btn-si{display:inline-flex;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);padding:7px 14px;border-radius:999px;font:600 12px/1 var(--font);cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
 .nav-btn-si:hover{background:rgba(255,255,255,.22)}
 /* Get started — white solid */
 .nav-btn-gs{background:#fff;color:var(--indigo);padding:9px 18px;border-radius:999px;font:700 13px/1 var(--font);cursor:pointer;text-decoration:none;transition:all .15s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
@@ -84,13 +84,13 @@ section{padding:96px 0}
 .nav-inner{padding:0 16px}.nav-btn-si{display:none}}
 
 /* ── HERO ── */
-.hero{background:linear-gradient(150deg,#1E1B4B 0%,#312E81 40%,#4547CC 75%,#5B5FEF 100%);padding:68px 0 0;overflow:hidden;position:relative;min-height:90vh;display:flex;flex-direction:column;justify-content:center}
+.hero{background:linear-gradient(150deg,#1E1B4B 0%,#312E81 40%,#4547CC 75%,#5B5FEF 100%);padding:100px 0 0;overflow:hidden;position:relative;min-height:90vh;display:flex;flex-direction:column;justify-content:center}
 .hero-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
 .hero-orb-1{width:500px;height:500px;top:-150px;right:-100px;background:rgba(91,95,239,.25)}
 .hero-orb-2{width:350px;height:350px;bottom:80px;left:-80px;background:rgba(5,150,105,.12)}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
 .hero-content{}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;margin-bottom:28px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;margin-bottom:28px;margin-top:20px}
 .pulse{width:7px;height:7px;border-radius:50%;background:#34D399;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:900;line-height:1.06;letter-spacing:-2px;color:#fff;margin-bottom:22px}
@@ -332,8 +332,8 @@ footer{background:#0F172A;padding:64px 0 28px}
   <nav>
     <div class="nav-inner">
       <div style="display:flex;align-items:center;gap:9px">
-        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <span style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px">Zim<span style="color:#A5B4FC">Vest</span></span>
+        <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <span style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px">Zim<span style="color:#A5B4FC">Vest</span></span>
       </div>
       <div class="nav-links">
         <a href="#plans">Plans</a>
