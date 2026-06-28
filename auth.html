@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="theme-color" content="#5B5FEF"/>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
-<link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
-<title>Create account · ZimVest</title>
+<title>Admin · ZimVest</title>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 :root {
   /* Backgrounds */
   --bg:       #EEF2F7;
@@ -103,7 +103,7 @@
 .phone-row{display:flex;border:1.5px solid #94A3B8;border-radius:var(--r);overflow:hidden;background:#fff;transition:border-color .18s,box-shadow .18s}
 .phone-row:focus-within{border-color:#5B5FEF;box-shadow:0 0 0 3px rgba(91,95,239,.15)}
 .phone-row.err{border-color:#DC2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}
-.phone-pfx{display:flex;align-items:center;padding:0 14px;background:#F1F5F9;border-right:1.5px solid #D1D9E6;font:700 14px/1 var(--mono);color:#1E293B;flex-shrink:0;user-select:none;letter-spacing:.3px}
+.phone-pfx{display:flex;align-items:center;padding:0 14px;background:#EEF2F7;border-right:1.5px solid #D1D9E6;font:700 14px/1 var(--mono);color:#1E293B;flex-shrink:0;user-select:none;letter-spacing:.3px}
 .phone-num{flex:1;height:50px;padding:0 14px;background:#fff;border:none;outline:none;font:500 16px/1 var(--mono);color:#0F172A;-webkit-appearance:none}
 .phone-num::placeholder{color:#94A3B8;font-family:var(--font)}
 
@@ -124,7 +124,7 @@
 .btn-p:active{transform:scale(.97)}
 .btn-p svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
 .btn-g{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 24px;border-radius:var(--r-lg);font:700 14px/1 var(--font);cursor:pointer;background:#fff;color:#334155;border:1.5px solid #D1D9E6;transition:all .18s var(--ease)}
-.btn-g:hover{background:#F1F5F9;border-color:#94A3B8}
+.btn-g:hover{background:#EEF2F7;border-color:#94A3B8}
 .btn-g svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
 .btn-lg{padding:17px 32px;font-size:15px;border-radius:var(--r-xl)}
 .btn-sm{padding:9px 18px;font-size:13px;border-radius:10px}
@@ -159,472 +159,697 @@
 .hidden{display:none!important}
 .powered{text-align:center;padding:10px 0 3px;font-size:9px;color:#94A3B8;letter-spacing:.6px;text-transform:uppercase}
 
-/* HEADER */
-.hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:0;flex-shrink:0;position:relative;overflow:hidden}
-.hdr::after{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
-.hdr-inner{position:relative;z-index:1;display:flex;flex-direction:column}
-.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:none;border-radius:999px;padding:7px 13px;cursor:pointer;color:rgba(255,255,255,.85);font:600 12px/1 var(--font);transition:background .15s;flex-shrink:0;white-space:nowrap}
-.back-btn:hover{background:rgba(255,255,255,.25)}
-.back-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-.brand{display:flex;align-items:center;gap:11px}
-.brand-mark{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.brand-mark svg{width:21px;height:21px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.brand-name{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
-.brand-tag{font-size:11px;color:rgba(255,255,255,.65);font-weight:500;margin-top:2px}
+html, body { width:100%; min-height:100vh; font-family:var(--font); background:#EEF2F7; color:var(--t1); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 
-/* FLOW BAR */
-.flow-bar{display:flex;align-items:center;margin-top:20px;position:relative;z-index:1}
-.fb-step{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
-.fb-circle{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 11px/1 var(--font)}
-.fb-active .fb-circle{background:#fff;color:var(--primary)}
-.fb-inactive .fb-circle{background:rgba(255,255,255,.2);color:rgba(255,255,255,.6)}
-.fb-done .fb-circle{background:rgba(255,255,255,.25);color:#fff}
-.fb-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.fb-active .fb-label{color:#fff}
-.fb-inactive .fb-label,.fb-done .fb-label{color:rgba(255,255,255,.5)}
-.fb-line{flex:1;height:1.5px;background:rgba(255,255,255,.2);margin-bottom:13px}
+/* ── LOGIN SCREEN ── */
+.login-wrap {
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.login-card {
+  width:100%; max-width:380px;
+  background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg);
+  overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,.4);
+}
+.lc-bar { height:3px; background:linear-gradient(90deg,#5B5FEF,#818CF8,#059669); }
+.lc-body { padding:32px; }
+.lc-logo { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+.lc-mark {
+  width:38px; height:38px; border-radius:11px;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+}
+.lc-mark svg { width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; }
+.lc-name { font-size:18px; font-weight:800; color:var(--t1); letter-spacing:-.4px; }
+.lc-name span { color:#818CF8; }
+.lc-sub { font-size:12px; color:var(--t3); margin-top:2px; }
+.lc-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.9px; color:var(--t3); margin-bottom:6px; display:block; }
+.lc-input {
+  width:100%; height:46px; padding:0 14px;
+  background:#F1F5F9; border:1.5px solid #94A3B8; border-radius:var(--r);
+  font:500 14px/1 var(--font); color:var(--t1); outline:none;
+  transition:border-color .18s,box-shadow .18s; -webkit-appearance:none;
+}
+.lc-input::placeholder { color:var(--t4); }
+.lc-input:focus { border-color:#5B5FEF; box-shadow:0 0 0 3px var(--indigo-bg); }
+.lc-field { margin-bottom:16px; }
+.lc-err { font-size:12px; color:#FCA5A5; font-weight:600; margin-top:8px; display:none; }
+.lc-btn {
+  width:100%; padding:14px; border-radius:var(--r-lg); border:none;
+  background:#5B5FEF; color:#fff; font:700 14px/1 var(--font);
+  cursor:pointer; margin-top:4px; transition:background .15s,transform .15s;
+  box-shadow:0 4px 16px var(--indigo-bg);
+}
+.lc-btn:hover { background:#4547CC; transform:translateY(-1px); }
+.lc-btn:active { transform:scale(.98); }
+.lc-note { font-size:11px; color:var(--t4); text-align:center; margin-top:16px; line-height:1.5; }
 
-/* BODY */
-.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:20px 16px calc(96px + env(safe-area-inset-bottom));background:var(--bg)}
-.body::-webkit-scrollbar{display:none}
+/* ── ADMIN PANEL ── */
+.panel { min-height:100vh; display:none; flex-direction:column; }
+.panel.visible { display:flex; }
 
-/* SKELETON */
-.skel-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);padding:20px;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.skel-line{height:11px;background:var(--surface-3);border-radius:6px;margin-bottom:10px;animation:skel 1.4s ease-in-out infinite}
-.skel-line.s{width:55%}.skel-line:last-child{margin:0}
-@keyframes skel{0%,100%{opacity:1}50%{opacity:.3}}
+/* Top bar */
+.topbar {
+  background:#FFFFFF; border-bottom:1px solid var(--bd);
+  padding:0 28px; height:60px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+}
+.tb-logo { display:flex; align-items:center; gap:9px; }
+.tb-mark {
+  width:30px; height:30px; border-radius:8px;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+}
+.tb-mark svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; }
+.tb-name { font-size:15px; font-weight:800; color:var(--t1); letter-spacing:-.3px; }
+.tb-name span { color:#818CF8; }
+.tb-badge {
+  background:var(--gold-bg); border:1px solid rgba(245,158,11,.3);
+  color:#B45309; font-size:10px; font-weight:700;
+  padding:3px 8px; border-radius:6px; letter-spacing:.5px; text-transform:uppercase;
+}
+.tb-right { display:flex; align-items:center; gap:12px; }
+.tb-time { font-size:12px; color:var(--t3); font-family:var(--mono); }
+.tb-logout {
+  display:flex; align-items:center; gap:5px;
+  background:rgba(239,68,68,.1); border:1px solid var(--red-bd);
+  color:#FCA5A5; font-size:12px; font-weight:600;
+  padding:7px 12px; border-radius:999px; cursor:pointer; border:none;
+  font-family:var(--font); transition:all .15s;
+}
+.tb-logout:hover { background:rgba(239,68,68,.2); }
+.tb-logout svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
 
-/* RETURNING BANNER */
-.rb{background:var(--surface);border:1.5px solid var(--primary-bd);border-radius:var(--r-xl);padding:18px;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.rb-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.rb-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--success-lt));display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--mono);color:#fff;flex-shrink:0}
-.rb-name{font-size:14px;font-weight:700;color:var(--t1)}
-.rb-hint{font-size:11px;color:var(--t3);margin-top:2px}
-.rb-btns{display:flex;gap:8px}
-.rb-primary{flex:1;padding:12px;border-radius:var(--r-lg);border:none;cursor:pointer;background:var(--primary);color:#fff;font:700 13px/1 var(--font);transition:background .15s}
-.rb-primary:hover{background:var(--primary-d)}
-.rb-secondary{padding:12px 16px;border-radius:var(--r-lg);border:1.5px solid var(--bd-md);background:transparent;color:var(--t3);font:700 13px/1 var(--font);cursor:pointer}
+/* Main content */
+.main { flex:1; padding:28px; max-width:1200px; margin:0 auto; width:100%; }
 
-/* TABS */
-.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1.5px solid var(--bd);border-radius:var(--r-xl);padding:4px;gap:4px;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.tab{padding:11px 8px;border-radius:var(--r-lg);border:none;background:transparent;color:var(--t4);font:700 13px/1 var(--font);cursor:pointer;transition:all .18s}
-.tab.on{background:var(--primary);color:#fff;box-shadow:0 2px 8px var(--primary-ring)}
+/* Stats grid */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+@media(max-width:900px) { .stats-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:500px) { .stats-grid { grid-template-columns:1fr; } }
+.stat-card {
+  background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg);
+  padding:20px 22px; position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.stat-card:nth-child(1)::before { background:linear-gradient(90deg,#5B5FEF,#818CF8); }
+.stat-card:nth-child(2)::before { background:linear-gradient(90deg,#059669,#10B981); }
+.stat-card:nth-child(3)::before { background:linear-gradient(90deg,#D97706,#B45309); }
+.stat-card:nth-child(4)::before { background:linear-gradient(90deg,#3B82F6,#93C5FD); }
+.stat-icon { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.stat-card:nth-child(1) .stat-icon { background:var(--indigo-bg); }
+.stat-card:nth-child(2) .stat-icon { background:var(--em-bg); }
+.stat-card:nth-child(3) .stat-icon { background:var(--gold-bg); }
+.stat-card:nth-child(4) .stat-icon { background:rgba(59,130,246,.12); }
+.stat-icon svg { width:18px; height:18px; fill:none; stroke-width:2; stroke-linecap:round; }
+.stat-card:nth-child(1) .stat-icon svg { stroke:#818CF8; }
+.stat-card:nth-child(2) .stat-icon svg { stroke:#10B981; }
+.stat-card:nth-child(3) .stat-icon svg { stroke:#B45309; }
+.stat-card:nth-child(4) .stat-icon svg { stroke:#93C5FD; }
+.stat-val { font:700 28px/1 var(--mono); color:var(--t1); margin-bottom:4px; }
+.stat-lbl { font-size:12px; color:var(--t3); font-weight:500; }
 
-/* FORM CARD */
-.fc{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh-sm)}
-.fc-bar{height:3px;background:linear-gradient(90deg,var(--primary),var(--primary-lt))}
-.fc-hdr{padding:16px 18px 13px;border-bottom:1px solid var(--bd)}
-.fc-title{font-size:15px;font-weight:700;color:var(--t1)}
-.fc-sub{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.45}
-.fc-body{padding:18px;display:flex;flex-direction:column;gap:15px}
+/* Table card */
+.table-card { background:#FFFFFF; border:1px solid #D1D9E6; border-radius:var(--r-lg); overflow:hidden; }
+.table-hdr {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding:18px 20px; border-bottom:1px solid var(--bd);
+}
+.table-hdr-left h2 { font-size:16px; font-weight:700; color:var(--t1); }
+.table-hdr-left p  { font-size:12px; color:var(--t3); margin-top:3px; }
+.table-hdr-right { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:14px; height:14px; stroke:var(--t3); fill:none; stroke-width:2; stroke-linecap:round; }
+.search-input {
+  height:34px; padding:0 12px 0 32px; width:160px;
+  background:#F1F5F9; border:1px solid var(--bd2); border-radius:var(--r);
+  font:500 13px/1 var(--font); color:var(--t1); outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+.search-input::placeholder { color:var(--t4); }
+.search-input:focus { border-color:#5B5FEF; box-shadow:0 0 0 2px var(--indigo-bg); }
+.export-btn {
+  display:flex; align-items:center; gap:5px;
+  height:34px; padding:0 11px; border-radius:var(--r); border:none;
+  background:var(--em-bg); color:#10B981; font:600 13px/1 var(--font);
+  cursor:pointer; border:1px solid var(--em-bd); transition:background .15s;
+}
+.export-btn:hover { background:rgba(16,185,129,.2); }
+.export-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
+.refresh-btn {
+  display:flex; align-items:center; gap:5px;
+  height:34px; padding:0 11px; border-radius:var(--r); border:none;
+  background:var(--indigo-bg); color:#818CF8; font:600 13px/1 var(--font);
+  cursor:pointer; border:1px solid var(--indigo-bd); transition:all .15s;
+}
+.refresh-btn:hover { background:rgba(99,102,241,.2); }
+.refresh-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; }
+.refresh-btn.spinning svg { animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 
-/* FIELD */
-.field{display:flex;flex-direction:column;gap:6px}
-.f-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t3)}
-.f-hint{font-size:11px;color:var(--t4);line-height:1.45}
-.f-err{font-size:11px;font-weight:600;color:var(--danger);display:none}
+/* Table */
+.tbl-wrap { overflow-x:auto; }
+.tbl-wrap::-webkit-scrollbar { height:4px; }
+.tbl-wrap::-webkit-scrollbar-track { background:var(--bd); }
+.tbl-wrap::-webkit-scrollbar-thumb { background:var(--bd2); border-radius:2px; }
+table { width:100%; border-collapse:collapse; min-width:620px; }
+thead th {
+  padding:12px 16px; text-align:left;
+  font-size:10px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.9px; color:var(--t3);
+  background:#F1F5F9; border-bottom:1px solid var(--bd);
+  white-space:nowrap;
+}
+tbody tr { border-bottom:1px solid var(--bd); transition:background .15s; }
+tbody tr:last-child { border-bottom:none; }
+tbody tr:hover { background:#F1F5F9; }
+tbody td { padding:14px 16px; font-size:13px; color:var(--t1); vertical-align:middle; }
+.td-mono { font-family:var(--mono); font-size:13px; color:var(--t1); }
+.td-phone { font-family:var(--mono); font-size:13px; color:#818CF8; }
+.td-name { font-weight:600; color:var(--t1); }
+.td-date { font-family:var(--mono); font-size:12px; color:var(--t2); white-space:nowrap; }
+.td-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 9px; border-radius:999px; font-size:10px; font-weight:700;
+  background:var(--em-bg); color:#10B981; border:1px solid var(--em-bd);
+}
+.td-badge::before { content:''; width:5px; height:5px; border-radius:50%; background:#059669; display:block; }
+.td-avatar {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#5B5FEF,#059669);
+  display:flex; align-items:center; justify-content:center;
+  font:700 11px/1 var(--mono); color:#fff;
+}
+.td-user { display:flex; align-items:center; gap:10px; }
+.td-idx { font-family:var(--mono); font-size:11px; color:var(--t4); }
 
-/* PHONE ROW */
-.phone-row{display:flex;border:1.5px solid var(--bd-md);border-radius:var(--r);overflow:hidden;background:var(--surface);transition:border-color .18s,box-shadow .18s}
-.phone-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
-.phone-row.err{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-bg)}
-.phone-pfx{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border-right:1.5px solid var(--bd);font:700 14px/1 var(--mono);color:var(--t2);flex-shrink:0;user-select:none;letter-spacing:.3px}
-.phone-num{flex:1;height:50px;padding:0 14px;background:var(--surface);border:none;outline:none;font:500 16px/1 var(--mono);color:var(--t1);-webkit-appearance:none}
-.phone-num::placeholder{color:var(--t5);font-family:var(--font)}
+/* Empty / loading states */
+.tbl-empty { padding:48px 20px; text-align:center; }
+.tbl-empty svg { width:40px; height:40px; stroke:var(--bd2); fill:none; stroke-width:1.5; stroke-linecap:round; margin:0 auto 12px; }
+.tbl-empty p { font-size:14px; color:var(--t3); }
+.tbl-loading { display:flex; align-items:center; justify-content:center; gap:10px; padding:40px; }
+.tbl-loading svg { width:20px; height:20px; stroke:#818CF8; fill:none; stroke-width:2; stroke-linecap:round; animation:spin .8s linear infinite; }
+.tbl-loading p { font-size:13px; color:var(--t2); }
 
-/* TEXT / PASSWORD */
-.fi{width:100%;height:50px;padding:0 16px;background:var(--surface);border:1.5px solid var(--bd-md);border-radius:var(--r);font:500 15px/1 var(--font);color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
-.fi::placeholder{color:var(--t5)}
-.fi:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
-.fi.err{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-bg)}
-.pw-field{position:relative}
-.pw-field .fi{padding-right:50px}
-.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--t4);display:flex;padding:4px;transition:color .15s}
-.eye-btn:hover{color:var(--primary)}
-.eye-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Footer */
+.tbl-foot { padding:14px 20px; border-top:1px solid var(--bd); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.tbl-count { font-size:12px; color:var(--t3); }
+.tbl-count strong { color:var(--t1); }
+.powered { text-align:center; padding:20px 0 8px; font-size:10px; color:var(--t4); letter-spacing:.4px; }
 
-/* STRENGTH */
-.strength-wrap{margin-top:6px}
-.strength-bar{height:4px;background:var(--bd);border-radius:2px;overflow:hidden}
-.strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
-.strength-lbl{font-size:10px;font-weight:700;margin-top:4px}
-
-/* FORGOT LINK */
-.forgot-link{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;text-align:right;display:block}
-.forgot-link:hover{color:var(--primary-d)}
-
-/* API ERROR */
-.api-err{background:var(--danger-bg);border:1px solid var(--danger-bd);border-radius:var(--r-lg);padding:11px 14px;font-size:12px;color:var(--danger);font-weight:600;line-height:1.45;display:none}
-
-/* NOTICE */
-.notice{display:flex;align-items:flex-start;gap:9px;background:var(--success-bg);border:1px solid var(--success-bd);border-radius:var(--r-lg);padding:12px 14px}
-.notice svg{width:14px;height:14px;stroke:var(--success);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
-.notice span{font-size:11px;color:var(--t2);font-weight:500;line-height:1.5}
-
-/* TRUST BADGES */
-.trust{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;padding:8px 0}
-.trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);font-weight:500}
-.trust-item svg{width:13px;height:13px;stroke:var(--success);fill:none;stroke-width:2;stroke-linecap:round}
-
-/* FOOTER */
-.sticky-foot{position:sticky;bottom:0;z-index:10;padding:12px 16px max(20px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 65%,transparent)}
-.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:var(--bd-md);color:var(--t4);transition:all .2s var(--ease)}
-.cta.on{background:var(--primary);color:#fff;cursor:pointer;box-shadow:0 4px 18px var(--primary-ring)}
-.cta.on:hover{background:var(--primary-d);transform:translateY(-1px)}
-.cta.on:active{transform:scale(.98)}
-.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
-.f-switch{text-align:center;font-size:12px;color:var(--t3);margin-top:10px}
-.f-switch a{color:var(--primary);font-weight:700;cursor:pointer}
-.powered{text-align:center;padding:10px 0 2px;font-size:9px;color:var(--t5);letter-spacing:.5px;text-transform:uppercase}
-.hidden{display:none!important}
-
-  .screen{max-width:430px}
+/* Error banner */
+.err-banner {
+  background:var(--red-bg); border:1px solid var(--red-bd);
+  border-radius:var(--r-lg); padding:14px 18px;
+  font-size:13px; color:#FCA5A5; margin-bottom:20px; display:none;
+}
+@media(max-width:600px){
+  .main{padding:12px}
+  .topbar{padding:0 12px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .table-hdr{flex-direction:column;align-items:flex-start;gap:8px}
+  .table-hdr-right{width:100%;justify-content:flex-start}
+  .search-input{width:130px;font-size:12px}
+  .export-btn span,.refresh-btn span{display:none}
+  .export-btn,.refresh-btn{padding:0 10px;min-width:34px;justify-content:center}
+  .tbl-wrap{margin:0 -12px;width:calc(100% + 24px);border-radius:0}
+}
+@media(max-width:400px){
+  .search-input{width:110px}
+  .stat-val{font-size:22px}
 }
 
-
-
-/* ══ RESPONSIVE LAYOUT ══ */
-html,body{
-  width:100%;min-height:100vh;min-height:100dvh;
-  font-family:var(--font,'Inter',system-ui,sans-serif);color:#0F172A;
-  -webkit-font-smoothing:antialiased;
-  background:#EEF2F7;
-}
-/* Mobile: full-screen app */
-.app-shell,.screen,.sh{
-  width:100%;min-height:100dvh;
-  display:flex;flex-direction:column;
-  background:#EEF2F7;
-}
-/* Tablet+ : true centered card layout, NOT phone mockup */
-@media(min-width:700px){
-  body{
-    display:flex;align-items:center;justify-content:center;
-    min-height:100vh;padding:40px 24px;
-    background:linear-gradient(135deg,#EEF2F7 0%,#E0E8F4 100%);
-  }
-  .app-shell,.screen,.sh{
-    min-height:auto;
-    max-width:480px;width:100%;
-    border-radius:24px;
-    box-shadow:0 4px 6px rgba(15,23,42,.04),0 20px 60px rgba(15,23,42,.10),0 0 0 1px rgba(15,23,42,.06);
-    overflow:hidden;
-  }
-  /* Header gets rounded top */
-  .hdr{background:linear-gradient(150deg,#4F52D9 0%,#5B5FEF 60%,#6366F1 100%);padding:0;flex-shrink:0;position:relative;overflow:hidden}
-}
-@media(min-width:1024px){
-  body{padding:60px 24px}
-  .app-shell,.screen,.sh{max-width:440px}
-}
-
-/* ── ZIMVEST LOGO (shared across all pages) ── */
-.zv-logo{display:flex;align-items:center;gap:10px}
-.zv-mark{
-  width:36px;height:36px;border-radius:10px;flex-shrink:0;
-  background:linear-gradient(135deg,#5B5FEF 0%,#059669 100%);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(91,95,239,.25);
-}
-.zv-mark-sm{width:30px;height:30px;border-radius:8px}
-.zv-mark-lg{width:42px;height:42px;border-radius:13px}
-.zv-mark svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
-.zv-mark-sm svg{width:16px;height:16px}
-.zv-mark-lg svg{width:22px;height:22px}
-.zv-name{font-size:18px;font-weight:800;letter-spacing:-.4px}
-.zv-name .v{color:#818CF8}  /* "Vest" in indigo-light */
-.zv-sub{font-size:11px;font-weight:600;margin-top:1px;opacity:.65}
-/* On dark bg (headers) */
-.zv-on-dark .zv-name{color:#fff}
-.zv-on-dark .zv-name .v{color:#A5B4FC}
-.zv-on-dark .zv-sub{color:rgba(255,255,255,.6)}
-/* On light bg (topbar/nav) */
-.zv-on-light .zv-name{color:#0F172A}
-.zv-on-light .zv-name .v{color:#5B5FEF}
-.zv-on-light .zv-sub{color:#64748B}
+/* Investment history section */
+.section-title{font-size:14px;font-weight:700;color:var(--t1);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.inv-table-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm);margin-bottom:24px}
+.inv-filter-row{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.inv-filter-btn{padding:6px 14px;border-radius:999px;font:600 12px/1 var(--font);border:1px solid var(--bd);background:transparent;color:var(--t3);cursor:pointer;transition:all .15s}
+.inv-filter-btn.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.inv-filter-btn:hover:not(.active){background:var(--bg)}
+.inv-tbl-wrap{overflow-x:auto}
+.inv-tbl-wrap table{width:100%;border-collapse:collapse}
+.inv-tbl-wrap th{background:var(--bg);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);padding:10px 14px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--bd)}
+.inv-tbl-wrap td{padding:12px 14px;border-bottom:1px solid var(--bd);font-size:13px;color:var(--t2);vertical-align:middle}
+.inv-tbl-wrap tbody tr:last-child td{border-bottom:none}
+.inv-tbl-wrap tbody tr:hover{background:var(--bg)}
+.inv-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px}
+.sb-active{background:rgba(91,95,239,.1);color:#4547CC}
+.sb-paid{background:rgba(5,150,105,.1);color:#059669}
+.sb-rejected{background:rgba(220,38,38,.1);color:#DC2626}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.reject-btn{padding:5px 12px;border-radius:8px;font:600 11px/1 var(--font);border:1px solid rgba(220,38,38,.3);background:rgba(220,38,38,.06);color:#DC2626;cursor:pointer;transition:all .15s;white-space:nowrap}
+.reject-btn:hover{background:rgba(220,38,38,.15);border-color:#DC2626}
+.reject-btn:disabled{opacity:.4;cursor:not-allowed}
+.restore-btn{padding:5px 12px;border-radius:8px;font:600 11px/1 var(--font);border:1px solid rgba(5,150,105,.3);background:rgba(5,150,105,.06);color:#059669;cursor:pointer;transition:all .15s;white-space:nowrap}
+.restore-btn:hover{background:rgba(5,150,105,.15)}
+.inv-empty{text-align:center;padding:36px 20px;color:var(--t4);font-size:13px}
+.inv-summary{display:flex;gap:16px;padding:12px 16px;background:var(--bg);border-top:1px solid var(--bd);flex-wrap:wrap}
+.inv-sum-item{font-size:12px;color:var(--t3)}
+.inv-sum-item strong{color:var(--t1);font-weight:700}
+@media(max-width:600px){.inv-filter-row{gap:6px}.inv-filter-btn{padding:5px 10px;font-size:11px}}
 
 </style>
 </head>
 <body>
-<div class="app-shell">
 
-<div class="hdr">
-  <div class="hdr-inner">
-    <div style="height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box">
-      <div class="zv-logo zv-on-dark">
-        <div class="zv-mark zv-mark-sm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div><div class="zv-name" style="font-size:15px">Zim<span class="v">Vest</span></div><div class="zv-sub">Secure Investment Platform</div></div>
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginWrap" class="login-wrap">
+  <div class="login-card">
+    <div class="lc-bar"></div>
+    <div class="lc-body">
+      <div class="lc-logo">
+        <div class="lc-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div>
+          <div class="lc-name">Zim<span>Vest</span></div>
+          <div class="lc-sub">Admin panel</div>
+        </div>
       </div>
-      <button class="back-btn" onclick="history.back()">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+      <div class="lc-field">
+        <label class="lc-label" for="adminSecret">Admin secret key</label>
+        <input class="lc-input" type="password" id="adminSecret" placeholder="Enter your admin key"
+          autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div id="loginErr" class="lc-err"></div>
+      <button class="lc-btn" onclick="doLogin()">Access admin panel →</button>
+      <p class="lc-note">This panel is restricted to ZimVest administrators.<br>Set <code style="color:#818CF8">ADMIN_SECRET</code> in Vercel env vars.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="panel" class="panel">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="tb-logo">
+      <div class="tb-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span class="tb-name">Zim<span>Vest</span></span>
+      <span class="tb-badge">Admin</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-time" id="tbTime">—</span>
+      <button class="tb-logout" onclick="doLogout()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out
       </button>
     </div>
-    <div class="flow-bar">
-      <div class="fb-step fb-active"><div class="fb-circle">1</div><div class="fb-label">Register</div></div>
-      <div class="fb-line"></div>
-      <div class="fb-step fb-inactive"><div class="fb-circle">2</div><div class="fb-label">Choose plan</div></div>
-      <div class="fb-line"></div>
-      <div class="fb-step fb-inactive"><div class="fb-circle">3</div><div class="fb-label">Pay &amp; earn</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="body">
-  <div id="skel" class="skel-card">
-    <div class="skel-line"></div><div class="skel-line"></div><div class="skel-line s"></div>
   </div>
 
-  <div id="rb" class="rb hidden">
-    <div class="rb-top">
-      <div class="rb-av" id="rbAv">?</div>
-      <div><div class="rb-name" id="rbName">—</div><div class="rb-hint">Already signed in — continue?</div></div>
-    </div>
-    <div class="rb-btns">
-      <button class="rb-primary" id="rbGo">Continue to dashboard →</button>
-      <button class="rb-secondary" id="rbSwitch">Switch account</button>
-    </div>
-  </div>
+  <!-- Main -->
+  <div class="main">
 
-  <div id="apiErr" class="api-err"></div>
-
-  <div id="tabs" class="tabs hidden">
-    <button class="tab" id="tSi" onclick="setTab('si')">Sign in</button>
-    <button class="tab on" id="tRg" onclick="setTab('rg')">Create account</button>
-  </div>
-
-  <div id="fc" class="fc hidden">
-    <div class="fc-bar"></div>
-    <div class="fc-hdr">
-      <div class="fc-title" id="fcTitle">Create your account</div>
-      <div class="fc-sub"   id="fcSub">Register free — takes under a minute</div>
-    </div>
-    <div class="fc-body">
-
-      <div class="field hidden" id="fName">
-        <label class="f-label" for="iName">Full name</label>
-        <input class="fi" type="text" id="iName" placeholder="e.g. Tendai Moyo" autocomplete="name" oninput="val()">
-        <div class="f-err" id="eName"></div>
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="stat-val" id="sTotal">—</div>
+        <div class="stat-lbl">Total registered users</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+        <div class="stat-val" id="sToday">—</div>
+        <div class="stat-lbl">Registered today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="stat-val" id="sWeek">—</div>
+        <div class="stat-lbl">This week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="stat-val" id="sMonth">—</div>
+        <div class="stat-lbl">This month</div>
+      </div>
+    </div>
 
-      <div class="field">
-        <label class="f-label" for="iPhone">EcoCash number</label>
-        <div class="phone-row" id="phoneRow">
-          <div class="phone-pfx">+263</div>
-          <input class="phone-num" type="tel" id="iPhone"
-            inputmode="numeric" pattern="[0-9]*" maxlength="9"
-            placeholder="7XXXXXXXX" autocomplete="tel"
-            oninput="handlePhone(this)" onblur="blurPhone()">
+    <!-- Error banner -->
+    <div id="errBanner" class="err-banner"></div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-hdr">
+        <div class="table-hdr-left">
+          <h2>Registered clients</h2>
+          <p>All users registered on ZimVest</p>
         </div>
-        <div class="f-hint">9 digits starting with 7 — your payout is sent to this number</div>
-        <div class="f-err" id="ePhone"></div>
-      </div>
-
-      <div class="field">
-        <label class="f-label" id="lPw" for="iPw">Password</label>
-        <div class="pw-field">
-          <input class="fi" type="password" id="iPw" placeholder="Enter password" autocomplete="current-password" oninput="handlePw()">
-          <button class="eye-btn" type="button" onclick="toggleEye('iPw','eyI')" aria-label="Show password">
-            <svg id="eyI" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="table-hdr-right">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="search-input" type="text" id="searchInput" placeholder="Search by name or number…" oninput="applySearch()">
+          </div>
+          <button class="refresh-btn" id="refreshBtn" onclick="loadUsers()">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            <span>Refresh</span>
+          </button>
+          <button class="export-btn" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Export CSV</span>
           </button>
         </div>
-        <div class="strength-wrap hidden" id="swrap">
-          <div class="strength-bar"><div class="strength-fill" id="sbar"></div></div>
-          <div class="strength-lbl" id="slbl"></div>
-        </div>
-        <div class="f-err" id="ePw"></div>
       </div>
 
-      <div class="field hidden" id="fConf">
-        <label class="f-label" for="iConf">Confirm password</label>
-        <div class="pw-field">
-          <input class="fi" type="password" id="iConf" placeholder="Re-enter password" autocomplete="new-password" oninput="val()">
-          <button class="eye-btn" type="button" onclick="toggleEye('iConf','eyC')" aria-label="Show password">
-            <svg id="eyC" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <div class="f-err" id="eConf"></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>EcoCash number</th>
+              <th>Status</th>
+              <th>Registered</th>
+              <th>Last updated</th>
+            </tr>
+          </thead>
+          <tbody id="tBody">
+            <tr>
+              <td colspan="6">
+                <div class="tbl-loading">
+                  <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  <p>Loading clients…</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <a href="forgot.html" class="forgot-link" id="fForgot">Forgot password?</a>
+      <div class="tbl-foot">
+        <div class="tbl-count" id="tCount">Loading…</div>
+        <div style="font-size:11px;color:var(--t4)">Data from Vercel KV · Refresh to update</div>
+      </div>
     </div>
-  </div>
 
-  <div id="secureNotice" class="notice hidden">
-    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    <span>After registering you go straight to your dashboard — choose a plan, set your amount, and pay via EcoCash. Payout is automatic. No calls, no agents.</span>
-  </div>
 
-  <div id="trustBadges" class="trust hidden">
-    <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>256-bit SSL</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>EcoCash official</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Always free</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.45 5.45l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="https://wa.me/263712345678" target="_blank" style="color:inherit;text-decoration:none">WhatsApp support</a></div>
-  </div>
-  <div style="background:rgba(5,150,105,.07);border:1px solid rgba(5,150,105,.18);border-radius:14px;padding:12px 14px;margin:8px 0 4px">
-    <div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:8px">✓ What you get with your free account</div>
-    <div style="display:flex;flex-direction:column;gap:5px">
-      <div style="font-size:12px;color:#1E293B;display:flex;align-items:center;gap:7px"><span style="color:#059669;font-weight:800">✓</span> Access to Starter (+20%) and Growth (+35%) plans</div>
-      <div style="font-size:12px;color:#1E293B;display:flex;align-items:center;gap:7px"><span style="color:#059669;font-weight:800">✓</span> Automatic payout to your EcoCash in 48–72hrs</div>
-      <div style="font-size:12px;color:#1E293B;display:flex;align-items:center;gap:7px"><span style="color:#059669;font-weight:800">✓</span> Real-time investment dashboard</div>
-      <div style="font-size:12px;color:#1E293B;display:flex;align-items:center;gap:7px"><span style="color:#059669;font-weight:800">✓</span> Zero registration or maintenance fees</div>
+    <!-- Investment History Panel -->
+    <div class="section-title">📊 Investment history &amp; payment control</div>
+    <div class="inv-table-card">
+      <div class="inv-filter-row">
+        <button class="inv-filter-btn active" onclick="filterInv('all',this)">All</button>
+        <button class="inv-filter-btn" onclick="filterInv('active',this)">Active</button>
+        <button class="inv-filter-btn" onclick="filterInv('paid',this)">Paid out</button>
+        <button class="inv-filter-btn" onclick="filterInv('rejected',this)">Rejected</button>
+        <button class="inv-filter-btn" style="margin-left:auto" onclick="loadInvestments()">⟳ Refresh</button>
+      </div>
+      <div class="inv-tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Plan</th>
+              <th>Deposit</th>
+              <th>Payout</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="invBody">
+            <tr><td colspan="8"><div class="inv-empty">Loading investments…</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="inv-summary" id="invSummary"></div>
     </div>
+
+    <div class="powered">ZimVest Admin Panel · Confidential · Not for distribution</div>
   </div>
-  <p style="text-align:center;font-size:10px;color:#94A3B8;margin-top:8px">By continuing you agree to our <a href="#" style="color:#5B5FEF;text-decoration:none">Terms</a> &amp; <a href="#" style="color:#5B5FEF;text-decoration:none">Privacy Policy</a></p>
-
-  <div class="powered">ZimVest · Secured by EcoCash · Zimbabwe</div>
-</div>
-
-<div class="sticky-foot" id="sFoot" style="display:none">
-  <button class="cta" id="cta" onclick="submit()">Create account</button>
-  <div class="f-switch" id="fSwitch">Already have an account? <a onclick="setTab('si')">Sign in</a></div>
-</div>
 </div>
 
 <script>
+let secret = '';
+let allUsers = [];
 const $ = id => document.getElementById(id);
-const show = id => { const e=$(id); if(e){e.classList.remove('hidden');e.style.display='';} };
-const hide = id => { const e=$(id); if(e) e.classList.add('hidden'); };
-let mode='rg', phone='', pw='', conf='', name='', busy=false;
 
-(async ()=>{
+/* ── Login ── */
+function doLogin(){
+  const s = $('adminSecret').value.trim();
+  if(!s){ const e=$('loginErr'); e.textContent='Enter the admin secret key.'; e.style.display='block'; return; }
+  secret = s;
+  $('loginErr').style.display='none';
+  $('loginWrap').style.display='none';
+  $('panel').classList.add('visible');
+  sessionStorage.setItem('zv_admin',s);
+  loadUsers();
+  loadInvestments();
+  startClock();
+}
+
+function doLogout(){
+  sessionStorage.removeItem('zv_admin');
+  secret=''; allUsers=[];
+  $('panel').classList.remove('visible');
+  $('loginWrap').style.display='flex';
+  $('adminSecret').value='';
+}
+
+/* ── Auto-restore session ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved = sessionStorage.getItem('zv_admin');
+  if(saved){ secret=saved; $('adminSecret').value=saved; doLogin(); }
+});
+
+/* ── Clock ── */
+function startClock(){
+  const tick=()=>{ $('tbTime').textContent = new Date().toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'medium'}); };
+  tick(); setInterval(tick,1000);
+}
+
+/* ── Load users ── */
+async function loadUsers(){
+  if(!secret) return;
+  const btn = $('refreshBtn');
+  btn.classList.add('spinning');
+  $('errBanner').style.display='none';
+  $('tBody').innerHTML=`<tr><td colspan="6"><div class="tbl-loading"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><p>Loading clients…</p></div></td></tr>`;
+
   try{
-    const r=await fetch('/api/me',{credentials:'include'});
-    if(r.ok){
-      const u=await r.json();
-      sessionStorage.setItem('zimvest_phone',u.phone);
-      sessionStorage.setItem('zimvest_name',u.name||'');
-      hide('skel');
-      const init=(u.name||u.phone||'ZV').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-      $('rbAv').textContent=init;
-      $('rbName').textContent='Welcome back, '+(u.name||u.phone)+'!';
-      show('rb');
-      $('rbGo').onclick=()=>location.href='dashboard.html';
-      $('rbSwitch').onclick=async()=>{
-        hide('rb');
-        await fetch('/api/logout',{method:'POST',credentials:'include'});
-        sessionStorage.clear(); showForm();
-      };
-    } else showForm();
-  } catch { showForm(); }
-})();
-
-function showForm(){
-  hide('skel'); show('tabs'); show('fc');
-  show('secureNotice'); show('trustBadges'); $('sFoot').style.display='';
-  // Read URL param: ?tab=si or ?tab=rg
-  const urlTab = new URLSearchParams(location.search).get('tab');
-  if(urlTab === 'si') setTab('si');
-  else setTab('rg'); // default: create account
-  val();
-  // Autofocus first visible field
-  setTimeout(()=>{ const el = mode==='rg' ? $('iName') : $('iPhone'); if(el) el.focus(); }, 300);
-}
-
-function setTab(t){
-  mode=t; const r=t==='rg';
-  $('tSi').classList.toggle('on',!r); $('tRg').classList.toggle('on',r);
-  $('fcTitle').textContent=r?'Create your account':'Welcome back';
-  $('fcSub').textContent=r?'Register free — takes under a minute':'Sign in to your ZimVest account to continue';
-  r?show('fName'):hide('fName');
-  r?show('fConf'):hide('fConf');
-  r?show('swrap'):hide('swrap');
-  r?hide('fForgot'):show('fForgot');
-  $('lPw').textContent=r?'Create password':'Password';
-  $('iPw').autocomplete=r?'new-password':'current-password';
-  $('cta').textContent=r?'Create account':'Sign in';
-  $('fSwitch').innerHTML=r?'Already have an account? <a onclick="setTab(\'si\')">Sign in</a>':'No account? <a onclick="setTab(\'rg\')">Create one free</a>';
-  clearErrs(); val();
-}
-
-function handlePhone(el){
-  let v=el.value.replace(/\D/g,'');
-  if(v.startsWith('263'))v=v.slice(3);
-  if(v.startsWith('0'))v=v.slice(1);
-  if(v.length>0&&v[0]!=='7')v='7'+v.slice(1);
-  v=v.slice(0,9); el.value=v; phone='+263'+v;
-  $('phoneRow').classList.toggle('err',v.length>0&&v.length<9); val();
-}
-function blurPhone(){
-  const v=$('iPhone').value;
-  if(v.length>0&&v.length<9){ $('phoneRow').classList.add('err'); showErr('ePhone','Enter 9 digits starting with 7'); }
-  else { $('phoneRow').classList.remove('err'); hideErr('ePhone'); }
-}
-
-function handlePw(){
-  pw=$('iPw').value;
-  if(mode==='rg'){
-    const s=pwScore(pw),pct=pw.length?Math.min(100,s*20):0;
-    const cols=['','#DC2626','#D97706','#D97706','#059669','#047857'];
-    const lbls=['','Too short','Weak','Fair','Good','Strong'];
-    const b=$('sbar'); b.style.width=pct+'%'; b.style.background=cols[s]||'#DC2626';
-    const l=$('slbl'); l.textContent=pw.length?lbls[s]:''; l.style.color=cols[s]||'#DC2626';
-  }
-  val();
-}
-function pwScore(p){let s=0;if(p.length>=6)s++;if(p.length>=10)s++;if(/[A-Z]/.test(p))s++;if(/[0-9]/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s;}
-
-function toggleEye(inputId,iconId){
-  const el=$(inputId),show=el.type==='password'; el.type=show?'text':'password';
-  $(iconId).innerHTML=show
-    ?`<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
-    :`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-}
-
-function val(){
-  pw=$('iPw').value; conf=$('iConf')?$('iConf').value:''; name=$('iName')?$('iName').value.trim():'';
-  const ok=phone.length===13&&(mode==='rg'?pw.length>=6&&name.length>=2&&conf===pw:pw.length>0);
-  $('cta').classList.toggle('on',ok);
-}
-function showErr(id,msg){const e=$(id);if(e){e.textContent=msg;e.style.display='block';}}
-function hideErr(id){const e=$(id);if(e){e.textContent='';e.style.display='none';}}
-function clearErrs(){['eName','ePhone','ePw','eConf'].forEach(hideErr);$('phoneRow').classList.remove('err');const ae=$('apiErr');ae.textContent='';ae.style.display='none';}
-
-async function submit(){
-  if(busy)return; clearErrs();
-  if(mode==='rg'){
-    if(name.length<2){showErr('eName','Enter your full name.');return;}
-    if(pw.length<6){showErr('ePw','Password must be at least 6 characters.');return;}
-    if(pw!==$('iConf').value){showErr('eConf','Passwords do not match.');return;}
-  }
-  if(phone.length!==13){$('phoneRow').classList.add('err');showErr('ePhone','Enter a valid 9-digit EcoCash number.');return;}
-  busy=true;
-  let success=false;
-  const btn=$('cta'),orig=btn.textContent;
-  btn.textContent='Please wait…';btn.classList.add('loading');btn.classList.remove('on');
-  const ep=mode==='rg'?'/api/register':'/api/login';
-  const payload=mode==='rg'?{phone,password:pw,name}:{phone,password:pw};
-  try{
-    const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(payload)});
-    const d=await r.json().catch(()=>({}));
-    if(r.ok){
-      success=true;
-      sessionStorage.setItem('zimvest_phone',d.phone||phone);
-      sessionStorage.setItem('zimvest_name',d.name||name);
-      if(mode==='rg'){
-        btn.textContent='✓ Account created! Taking you in…';
-        btn.classList.remove('loading');
-        btn.classList.add('on');
-        btn.style.background='#059669';
-        setTimeout(()=>location.href='dashboard.html', 1400);
-      } else {
-        location.href='dashboard.html';
-      }
-    } else {
-      const msg=d.error||'Something went wrong. Please try again.';
-      const lc=msg.toLowerCase();
-      if(lc.includes('number')||lc.includes('account')||lc.includes('registered'))showErr('ePhone',msg);
-      else if(lc.includes('password')||lc.includes('incorrect'))showErr('ePw','Incorrect password. Try again or reset it.');
-      else if(lc.includes('name'))showErr('eName',msg);
-      else if(lc.includes('storage')||lc.includes('unavailable')){const ae=$('apiErr');ae.textContent='Service temporarily unavailable. Please try again.';ae.style.display='block';}
-      else{const ae=$('apiErr');ae.textContent=msg;ae.style.display='block';}
-    }
-  } catch(e) {
-    const ae=$('apiErr');ae.textContent='Network error — check your connection and try again.';ae.style.display='block';
+    const r = await fetch('/api/admin-users',{ headers:{'x-admin-secret':secret} });
+    if(r.status===401){ $('errBanner').textContent='Invalid admin secret. Access denied.'; $('errBanner').style.display='block'; renderEmpty(); return; }
+    if(!r.ok){ const d=await r.json().catch(()=>({error:'Server error'})); throw new Error(d.error); }
+    const data = await r.json();
+    allUsers = data.users || [];
+    calcStats(allUsers);
+    renderTable(allUsers);
+  } catch(e){
+    $('errBanner').textContent='Failed to load users: '+(e.message||'Network error'); $('errBanner').style.display='block';
+    renderEmpty();
   } finally {
-    busy=false;
-    if(!success){ btn.textContent=orig; btn.classList.remove('loading'); val(); }
+    btn.classList.remove('spinning');
   }
 }
+
+/* ── Stats ── */
+function calcStats(users){
+  const now = new Date();
+  const today = now.toDateString();
+  const weekAgo = new Date(now-7*86400000);
+  const monthAgo = new Date(now.getFullYear(),now.getMonth(),1);
+  $('sTotal').textContent = users.length;
+  $('sToday').textContent = users.filter(u=>u.createdAt && new Date(u.createdAt).toDateString()===today).length;
+  $('sWeek').textContent  = users.filter(u=>u.createdAt && new Date(u.createdAt)>=weekAgo).length;
+  $('sMonth').textContent = users.filter(u=>u.createdAt && new Date(u.createdAt)>=monthAgo).length;
+}
+
+/* ── Render table ── */
+function renderTable(users){
+  if(!users.length){ renderEmpty(); return; }
+  $('tCount').innerHTML = `Showing <strong>${users.length}</strong> of <strong>${allUsers.length}</strong> clients`;
+  $('tBody').innerHTML = users.map((u,i)=>{
+    const init=(u.name||u.phone||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const created = u.createdAt ? new Date(u.createdAt).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    const updated = u.updatedAt ? new Date(u.updatedAt).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    return `<tr>
+      <td><span class="td-idx">${i+1}</span></td>
+      <td>
+        <div class="td-user">
+          <div class="td-avatar">${init}</div>
+          <span class="td-name">${esc(u.name)}</span>
+        </div>
+      </td>
+      <td><span class="td-phone">${esc(u.phone)}</span></td>
+      <td><span class="td-badge">Active</span></td>
+      <td class="td-date">${created}</td>
+      <td class="td-date">${updated}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderEmpty(){
+  $('tBody').innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>No clients found</p></div></td></tr>`;
+  $('tCount').innerHTML = 'No results';
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Search ── */
+function applySearch(){
+  const q = $('searchInput').value.toLowerCase().trim();
+  if(!q){ renderTable(allUsers); return; }
+  const filtered = allUsers.filter(u=>
+    (u.name||'').toLowerCase().includes(q) ||
+    (u.phone||'').includes(q)
+  );
+  renderTable(filtered);
+}
+
+/* ── Export CSV ── */
+function exportCSV(){
+  if(!allUsers.length) return;
+  const rows = [['#','Name','Phone','Status','Registered','Last updated']];
+  allUsers.forEach((u,i)=>{
+    rows.push([
+      i+1,
+      `"${(u.name||'').replace(/"/g,'""')}"`,
+      u.phone||'',
+      'Active',
+      u.createdAt ? new Date(u.createdAt).toLocaleString('en-ZW') : '',
+      u.updatedAt ? new Date(u.updatedAt).toLocaleString('en-ZW') : '',
+    ]);
+  });
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=`zimvest-clients-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+/* ══ INVESTMENT HISTORY ══ */
+let allInvestments = [];
+let currentFilter = 'all';
+
+/* Load from KV (stored by dashboard when user invests) */
+async function loadInvestments(){
+  $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">Loading investments…</div></td></tr>';
+  $('invSummary').innerHTML='';
+  try{
+    const r = await fetch('/api/admin-investments', { headers:{'x-admin-secret':secret} });
+    const data = await r.json();
+    if(!r.ok){
+      $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty" style="color:#DC2626">Error ' + r.status + ': ' + (data.error||'Failed to load') + '</div></td></tr>';
+      return;
+    }
+    allInvestments = data.investments || [];
+    if(!allInvestments.length){
+      $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">No investments yet. They appear here once clients proceed to EcoCash payment.</div></td></tr>';
+      renderInvSummary([]);
+      return;
+    }
+    renderInv(allInvestments);
+  } catch(e){
+    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty" style="color:#DC2626">Network error: ' + e.message + '. Check /api/admin-investments is deployed.</div></td></tr>';
+    renderInvSummary([]);
+  }
+}
+
+function filterInv(filter, btn){
+  currentFilter = filter;
+  document.querySelectorAll('.inv-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = filter==='all' ? allInvestments : allInvestments.filter(i=>i.status===filter);
+  renderInv(filtered);
+}
+
+function renderInv(investments){
+  if(!investments.length){
+    $('invBody').innerHTML='<tr><td colspan="8"><div class="inv-empty">No investments found for this filter.</div></td></tr>';
+    renderInvSummary(allInvestments);
+    return;
+  }
+  $('invBody').innerHTML = investments.map((inv,i)=>{
+    const statusClass = {active:'sb-active',paid:'sb-paid',rejected:'sb-rejected'}[inv.status]||'sb-active';
+    const statusLabel = {active:'Active',paid:'Paid out',rejected:'Rejected'}[inv.status]||inv.status;
+    const date = inv.date ? new Date(inv.date).toLocaleString('en-ZW',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    const actionBtn = inv.status==='rejected'
+      ? `<button class="restore-btn" onclick="restoreInvestment('${esc(inv.id)}')">↩ Restore</button>`
+      : inv.status==='active'
+        ? `<button class="reject-btn" onclick="rejectInvestment('${esc(inv.id)}')">✕ Reject</button>`
+        : `<span style="color:var(--t4);font-size:12px">—</span>`;
+    return `<tr id="inv-row-${esc(inv.id)}">
+      <td><span class="td-idx">${i+1}</span></td>
+      <td>
+        <div class="td-user">
+          <div class="td-avatar" style="font-size:11px">${esc((inv.name||inv.phone||'?').slice(0,2).toUpperCase())}</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">${esc(inv.name||'—')}</div>
+            <div style="font-size:11px;color:var(--t4);font-family:var(--mono)">${esc(inv.phone||'—')}</div>
+          </div>
+        </div>
+      </td>
+      <td><strong>${esc(inv.plan||'—')}</strong></td>
+      <td style="font-family:var(--mono);font-weight:700">$${parseFloat(inv.amount||0).toFixed(2)}</td>
+      <td style="font-family:var(--mono);font-weight:700;color:#059669">$${parseFloat(inv.payout||0).toFixed(2)}</td>
+      <td><span class="inv-status-badge ${statusClass}"><span class="sb-dot"></span>${statusLabel}</span></td>
+      <td class="td-date">${date}</td>
+      <td>${actionBtn}</td>
+    </tr>`;
+  }).join('');
+  renderInvSummary(allInvestments);
+}
+
+function renderInvSummary(investments){
+  const total = investments.reduce((s,i)=>s+parseFloat(i.amount||0),0);
+  const totalOut = investments.reduce((s,i)=>s+parseFloat(i.payout||0),0);
+  const active = investments.filter(i=>i.status==='active').length;
+  const paid = investments.filter(i=>i.status==='paid').length;
+  const rejected = investments.filter(i=>i.status==='rejected').length;
+  $('invSummary').innerHTML = `
+    <div class="inv-sum-item">Total invested: <strong>$${total.toFixed(2)}</strong></div>
+    <div class="inv-sum-item">Total payouts: <strong>$${totalOut.toFixed(2)}</strong></div>
+    <div class="inv-sum-item">Active: <strong>${active}</strong></div>
+    <div class="inv-sum-item">Paid: <strong>${paid}</strong></div>
+    <div class="inv-sum-item">Rejected: <strong>${rejected}</strong></div>
+  `;
+}
+
+async function rejectInvestment(id){
+  if(!confirm('Reject this investment? This will mark it as failed/rejected and cannot be auto-undone.')) return;
+  const btn = document.querySelector(`#inv-row-${id} .reject-btn`);
+  if(btn){btn.disabled=true;btn.textContent='Rejecting…';}
+  try{
+    const r = await fetch('/api/admin-reject-investment',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-admin-secret':secret},
+      body:JSON.stringify({id})
+    });
+    if(r.ok){
+      const inv = allInvestments.find(i=>i.id===id);
+      if(inv) inv.status='rejected';
+      filterInv(currentFilter, document.querySelector('.inv-filter-btn.active'));
+    } else {
+      alert('Could not reject investment. Check API connection.');
+      if(btn){btn.disabled=false;btn.textContent='✕ Reject';}
+    }
+  } catch(e){
+    alert('Network error: '+e.message);
+    if(btn){btn.disabled=false;btn.textContent='✕ Reject';}
+  }
+}
+
+async function restoreInvestment(id){
+  const btn = document.querySelector(`#inv-row-${id} .restore-btn`);
+  if(btn){btn.disabled=true;btn.textContent='Restoring…';}
+  try{
+    const r = await fetch('/api/admin-reject-investment',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-admin-secret':secret},
+      body:JSON.stringify({id, restore:true})
+    });
+    if(r.ok){
+      const inv = allInvestments.find(i=>i.id===id);
+      if(inv) inv.status='active';
+      filterInv(currentFilter, document.querySelector('.inv-filter-btn.active'));
+    } else {
+      if(btn){btn.disabled=false;btn.textContent='↩ Restore';}
+    }
+  } catch(e){
+    if(btn){btn.disabled=false;btn.textContent='↩ Restore';}
+  }
+}
+
 </script>
 </body>
 </html>
