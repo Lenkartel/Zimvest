@@ -703,13 +703,15 @@ async function proceed(){
   const kvId=_phone.replace(/\W/g,'')+'_'+now;
   const hist=getHistory();
   hist.unshift({id:kvId,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,date:new Date().toISOString(),status:'active',maturesAt:new Date(now+p.hours*3600000).toISOString(),autoReinvest,bonus});
-  localStorage.setItem('zimvest_history',JSON.stringify(hist.slice(0,30)));
+  saveHistory(hist);
   try{
     await fetch('/api/save-investment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:kvId,phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,autoReinvest,bonus,refCode})});
   }catch(e){}
   location.href='login.html';
 }
-function getHistory(){try{return JSON.parse(localStorage.getItem('zimvest_history')||'[]');}catch{return[];}}
+function histKey(){return 'zimvest_history_'+(sessionStorage.getItem('zimvest_phone')||'default').replace(/\W/g,'');}
+function getHistory(){try{return JSON.parse(localStorage.getItem(histKey())||'[]');}catch{return[];}}
+function saveHistory(hist){localStorage.setItem(histKey(),JSON.stringify(hist.slice(0,30)));}
 
 /* ── HISTORY ── */
 async function refreshHistory(){
@@ -730,7 +732,7 @@ async function loadHistory(){
       if(r.ok){const data=await r.json();const kvMap={};(data.investments||[]).forEach(inv=>{kvMap[inv.id]=inv.status;});hist.forEach(h=>{if(kvMap[h.id]&&kvMap[h.id]!==h.status)h.status=kvMap[h.id];});}
     }catch(e){}
   }
-  localStorage.setItem('zimvest_history',JSON.stringify(hist));
+  saveHistory(hist);
   const totInv=hist.reduce((s,h)=>s+parseFloat(h.amount),0);
   const totEarned=hist.reduce((s,h)=>s+(parseFloat(h.payout)-parseFloat(h.amount)),0);
   const active=hist.filter(h=>h.status==='active').length;
