@@ -4,7 +4,6 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="theme-color" content="#5B5FEF"/>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <title>Dashboard · ZimVest</title>
@@ -15,111 +14,108 @@
   --in:#5B5FEF;--ind:#4547CC;--inl:#818CF8;
   --ir:rgba(91,95,239,.15);--ib:rgba(91,95,239,.08);
   --em:#059669;--eml:#10B981;--er:rgba(5,150,105,.08);--ebd:rgba(5,150,105,.22);
-  --warn:#D97706;--red:#DC2626;--rl:rgba(220,38,38,.08);
+  --warn:#D97706;--red:#DC2626;--rr:rgba(220,38,38,.08);
   --t1:#0F172A;--t2:#1E293B;--t3:#475569;--t4:#64748B;--t5:#94A3B8;
   --bd:#D1D9E6;--bdm:#94A3B8;
   --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Courier New',monospace;
-  --r:12px;--rl2:18px;--rxl:24px;
+  --r:12px;--rl:18px;--rxl:24px;
   --sh1:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.05);
-  --sh2:0 2px 8px rgba(15,23,42,.08),0 8px 28px rgba(15,23,42,.06);
   --ease:cubic-bezier(.25,.46,.45,.94);
 }
-
-/* ── LAYOUT ── */
 html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;overflow:hidden;background:var(--bg)}
-.shell{width:100%;height:100%;height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.shell{width:100%;height:100%;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+@media(min-width:600px) and (max-width:1023px){body{background:#0F172A;display:flex;align-items:flex-start;justify-content:center}.shell{max-width:480px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 24px 80px rgba(0,0,0,.55)}}
+@media(min-width:1024px){body{background:var(--bg)}.shell{max-width:100%}.hdr{padding:0 40px}.tab-bar{padding:0 40px}.pane{padding:24px 40px calc(24px + env(safe-area-inset-bottom))}.plans-grid{grid-template-columns:repeat(2,1fr)}.plan-card{margin-bottom:0}}
 
-/* Tablet: centred phone panel */
-@media(min-width:600px) and (max-width:1023px){
-  body{background:#0F172A;display:flex;align-items:flex-start;justify-content:center}
-  .shell{max-width:480px;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 24px 80px rgba(0,0,0,.55)}
-}
-/* Desktop: full width */
-@media(min-width:1024px){
-  body{background:var(--bg)}
-  .shell{max-width:100%}
-  .hdr{padding:0 18px;margin:0 auto;width:100%}
-  .tab-bar{padding:0 40px}
-  .pane{padding:24px 40px calc(24px + env(safe-area-inset-bottom))}
-  .plans-grid{grid-template-columns:1fr 1fr}
-  .plan-card{margin-bottom:0}
-}
+/* TOPBAR */
+.topbar{height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #E2E8F0;flex-shrink:0;z-index:20}
+.tb-logo{display:flex;align-items:center;gap:9px}
+.tb-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.tb-name{font-size:15px;font-weight:800;color:#0F172A;letter-spacing:-.3px}
+.tb-name span{color:#5B5FEF}
+.tb-logout{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;font:600 12px/1 var(--font);cursor:pointer;border:1.5px solid rgba(220,38,38,.2);background:rgba(220,38,38,.07);color:#DC2626;transition:all .15s}
+.tb-logout svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.tb-logout:hover{background:rgba(220,38,38,.14)}
 
-/* ── HEADER ── */
-.hdr{background:linear-gradient(135deg,#4547CC 0%,#5B5FEF 100%);padding:0 18px;flex-shrink:0;position:relative;overflow:hidden;z-index:10}
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#4547CC 0%,#5B5FEF 100%);padding:0 18px 0;flex-shrink:0;position:relative;overflow:hidden;z-index:10}
 .hdr::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 80% at 110% -10%,rgba(99,102,241,.18) 0%,transparent 55%)}
-.hdr-inner{}
-.hdr-top{height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;flex-shrink:0;position:relative;z-index:1}
-.logo{display:flex;align-items:center;gap:9px}
-.logo-ring{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:9px;display:flex;align-items:center;justify-content:center}
-.logo-ring svg{width:17px;height:17px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.logo-name{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.4px}
-.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:12px;font-weight:600;padding:7px 12px;border-radius:999px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.logout-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-.logout-btn:hover{background:rgba(255,255,255,.16);color:#fff}
-.hdr-user{position:relative;z-index:1;display:flex;align-items:center;gap:13px;margin-bottom:18px}
-.avatar{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:16px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.2)}
-.greeting-hey{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;margin-bottom:2px}
-.greeting-name{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.4px;min-height:26px}
-.greeting-phone{font-size:11px;color:rgba(255,255,255,.35);font-weight:500;font-family:var(--mono)}
-.hdr-stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.15);border-radius:14px;overflow:hidden}
-.hs-cell{background:rgba(255,255,255,.08);padding:11px 8px;text-align:center}
+.hdr-inner{position:relative;z-index:1}
+.hdr-user{display:flex;align-items:center;gap:13px;padding:16px 0 10px}
+.avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.2)}
+.greeting-hey{font-size:10px;color:rgba(255,255,255,.45);font-weight:600;margin-bottom:2px}
+.greeting-name{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.4px;min-height:24px}
+.greeting-phone{font-size:11px;color:rgba(255,255,255,.35);font-family:var(--mono)}
+.hdr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.15);border-radius:12px;overflow:hidden;margin-bottom:0}
+.hs-cell{background:rgba(255,255,255,.08);padding:10px 8px;text-align:center}
 .hs-lbl{font-size:9px;color:rgba(255,255,255,.38);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
 .hs-val{font-family:var(--mono);font-size:14px;font-weight:700;color:#fff}
 
-/* ── TAB BAR ── */
-.tab-bar{position:relative;z-index:10;background:#fff;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid #E2E8F0;flex-shrink:0}
-.tab-btn{padding:14px 8px 12px;text-align:center;cursor:pointer;border:none;background:transparent;font-family:var(--font);font-size:11px;font-weight:700;color:#64748B;transition:color .18s;position:relative;letter-spacing:.1px}
-.tab-btn.active{color:var(--in)}
-.tab-btn.active::after{content:'';position:absolute;bottom:-2px;left:20%;right:20%;height:2px;background:var(--in);border-radius:2px}
-.tab-icon{display:flex;justify-content:center;margin-bottom:3px}
-.tab-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* LEVEL BADGE */
+.level-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 0 14px}
+.level-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:5px 12px}
+.level-dot{width:6px;height:6px;border-radius:50%;background:#34D399}
+.level-text{font-size:11px;font-weight:700;color:#fff}
+.level-next{font-size:10px;color:rgba(255,255,255,.45);font-weight:600}
 
-/* ── PANE ── */
+/* TAB BAR */
+.tab-bar{background:#fff;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid #E2E8F0;flex-shrink:0}
+.tab-btn{padding:12px 4px 10px;text-align:center;cursor:pointer;border:none;background:transparent;font-family:var(--font);font-size:10px;font-weight:700;color:#64748B;transition:color .18s;position:relative;letter-spacing:.1px}
+.tab-btn.active{color:var(--in)}
+.tab-btn.active::after{content:'';position:absolute;bottom:-2px;left:15%;right:15%;height:2px;background:var(--in);border-radius:2px}
+.tab-icon{display:flex;justify-content:center;margin-bottom:3px}
+.tab-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* PANE */
 .pane-wrap{flex:1;overflow:hidden;position:relative}
 .pane{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:20px 16px calc(32px + env(safe-area-inset-bottom));background:var(--bg);opacity:0;pointer-events:none;transition:opacity .18s var(--ease)}
 .pane::-webkit-scrollbar{display:none}
 .pane.active{opacity:1;pointer-events:auto}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.fade-up{animation:fadeUp .22s var(--ease) both}
 
-/* ── CARD ── */
-.card{background:var(--sf);border:1.5px solid var(--bd);border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:var(--sh1)}
-.card-bar{height:3px}
-.card-bar-in{background:linear-gradient(90deg,var(--in),var(--inl))}
-.card-bar-em{background:linear-gradient(90deg,var(--em),var(--eml))}
-.card-bar-red{background:#D92B3A}
+/* CARDS */
+.card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rl);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh1)}
+.card-bar-in{height:3px;background:linear-gradient(90deg,var(--in),var(--inl))}
+.card-bar-em{height:3px;background:linear-gradient(90deg,var(--em),var(--eml))}
+.card-bar-warn{height:3px;background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+.card-bar-red{height:3px;background:#D92B3A}
 .card-hd{padding:14px 16px 12px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:13px;font-weight:800;color:var(--t1)}
 .card-sub{font-size:11px;color:var(--t4);font-weight:500;margin-top:1px}
 .card-bd{padding:16px}
 .sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t4);margin-bottom:10px}
 
-/* ── PLAN CARDS ── */
-.plans-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
-.plan-card{background:var(--sf);border:2px solid var(--bd);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;-webkit-user-select:none}
+/* PLAN CARDS */
+.plans-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+.plan-card{background:var(--sf);border:2px solid var(--bd);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;-webkit-user-select:none;position:relative}
 .plan-card:active{opacity:.92}
 .plan-card.featured{border-color:#C7D2FE}
 .plan-card.selected{border-color:var(--in);box-shadow:0 0 0 4px rgba(91,95,239,.12),0 4px 20px rgba(91,95,239,.15)}
+.plan-card.locked{opacity:.6;cursor:not-allowed;filter:grayscale(.3)}
 .pct-strip{height:3px}
 .s-strip{background:linear-gradient(90deg,#94A3B8,#CBD5E1)}
+.t-strip{background:linear-gradient(90deg,#10B981,#34D399)}
 .g-strip{background:linear-gradient(90deg,var(--in),var(--inl))}
-/* ── PLAN BADGES — bottom of card, in flow, never overlapping ── */
+.v-strip{background:linear-gradient(90deg,#D97706,#F59E0B)}
 .p-badge-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;min-height:24px}
-.p-pop{display:inline-flex;align-items:center;gap:5px;background:var(--in);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.2px}
-.p-pop svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.p-sel{display:none;align-items:center;gap:5px;background:var(--em);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.2px}
+.p-pop{display:inline-flex;align-items:center;gap:5px;background:var(--in);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+.p-new{display:inline-flex;align-items:center;gap:5px;background:var(--em);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+.p-vault{display:inline-flex;align-items:center;gap:5px;background:#D97706;color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+.p-lock{display:inline-flex;align-items:center;gap:5px;background:var(--s3);color:var(--t3);font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px}
+.p-sel{display:none;align-items:center;gap:5px;background:var(--em);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
 .p-sel svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.plan-card.selected .p-pop{display:none}
+.plan-card.selected .p-pop,.plan-card.selected .p-new,.plan-card.selected .p-vault,.plan-card.selected .p-lock{display:none}
 .plan-card.selected .p-sel{display:inline-flex}
 .plan-inner{padding:14px 14px 16px}
 .plan-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.plan-emoji{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.e-starter{background:#EEF1FF}
-.e-growth{background:#FFF3D6}
+.plan-emoji{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.e-trial{background:#ECFDF5}
+.e-saver{background:#EEF1FF}
+.e-builder{background:#FFF3D6}
+.e-vault{background:#FEF3C7}
 .pct-block{text-align:right}
-.pct-num{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--t1);line-height:1;letter-spacing:-1.5px}
-.pct-num span{font-size:16px;vertical-align:top;margin-top:6px;display:inline-block}
+.pct-num{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--t1);line-height:1;letter-spacing:-1.5px}
+.pct-num span{font-size:15px;vertical-align:top;margin-top:5px;display:inline-block}
 .pct-lbl{font-size:9px;color:var(--t4);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
 .p-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--t3);margin-bottom:8px}
 .p-divider{height:1px;background:var(--bd);margin:8px 0}
@@ -128,37 +124,69 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .pg-i .pg-v{font-size:12px;font-weight:700;color:var(--t1)}
 .p-timer{display:inline-flex;align-items:center;gap:5px;background:var(--ib);color:var(--in);font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px}
 .p-timer svg{width:11px;height:11px;stroke:var(--ind);fill:none;stroke-width:2;stroke-linecap:round}
+.p-timer.warn{background:rgba(217,119,6,.08);color:#D97706}
+.p-timer.warn svg{stroke:#D97706}
+.plan-lock-msg{font-size:11px;color:var(--t4);margin-top:8px;line-height:1.5;font-style:italic}
 
-/* ── CALCULATOR ── */
-.calc-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:var(--sh1);display:none}
+/* REFERRAL CARD */
+.ref-card{background:linear-gradient(135deg,#EEF1FF,#F0FDF4);border:1.5px solid rgba(91,95,239,.2);border-radius:var(--rl);padding:16px;margin-bottom:12px}
+.ref-card-t{font-size:14px;font-weight:800;color:var(--t1);margin-bottom:4px}
+.ref-card-s{font-size:12px;color:var(--t3);margin-bottom:12px;line-height:1.5}
+.ref-link-box{display:flex;gap:8px;align-items:center}
+.ref-link{flex:1;background:#fff;border:1.5px solid var(--bd);border-radius:10px;padding:10px 12px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--in);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:text;-webkit-user-select:all;user-select:all}
+.ref-copy{padding:10px 14px;background:var(--in);color:#fff;border:none;border-radius:10px;font:700 12px/1 var(--font);cursor:pointer;flex-shrink:0;transition:background .15s}
+.ref-copy:hover{background:var(--ind)}
+.ref-copy.copied{background:var(--em)}
+.ref-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.ref-stat{background:#fff;border-radius:10px;padding:10px;text-align:center}
+.ref-stat-v{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--t1)}
+.ref-stat-l{font-size:10px;color:var(--t4);font-weight:600;margin-top:2px}
+
+/* AUTO-REINVEST */
+.ar-card{background:var(--er);border:1.5px solid var(--ebd);border-radius:14px;padding:14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px}
+.ar-icon{width:32px;height:32px;border-radius:9px;background:var(--em);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ar-icon svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.ar-text{flex:1}
+.ar-title{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.ar-sub{font-size:11px;color:var(--t3);line-height:1.5}
+.ar-toggle{flex-shrink:0;margin-top:4px}
+.toggle{width:44px;height:24px;border-radius:999px;background:var(--s3);border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--em)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.toggle.on::after{transform:translateX(20px)}
+
+/* CALC */
+.calc-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rl);padding:16px;margin-bottom:12px;box-shadow:var(--sh1);display:none}
 .calc-box-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--t4);margin-bottom:8px}
 .calc-pfx-wrap{position:relative;margin-bottom:8px}
 .calc-pfx{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:15px;font-weight:700;color:var(--t4)}
 .calc-in{width:100%;height:48px;padding:0 14px 0 28px;border-radius:12px;border:1.5px solid var(--bdm);font-family:var(--mono);font-size:18px;font-weight:700;color:var(--t1);background:var(--sf);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
 .calc-in:focus{border-color:var(--in);box-shadow:0 0 0 3px var(--ir)}
-.calc-in.err{border-color:var(--red);box-shadow:0 0 0 3px var(--rl)}
+.calc-in.err{border-color:var(--red)}
 .calc-err-txt{font-size:11px;color:var(--red);font-weight:700;margin-top:5px;display:none}
 .calc-res{background:#1E293B;border-radius:12px;padding:14px;margin-top:8px;display:none}
-.calc-res.show{display:block;animation:fadeUp .18s var(--ease)}
+.calc-res.show{display:block}
 .cr-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px}
 .cr-row .l{color:rgba(255,255,255,.45)}
 .cr-row .v{font-family:var(--mono);font-weight:700;color:#fff}
 .cr-sep{height:1px;background:rgba(255,255,255,.1);margin:6px 0}
 .cr-total{font-size:20px;font-weight:800;color:var(--in)}
 
-/* ── INVEST BUTTON ── */
-.invest-wrap{background:linear-gradient(to top,var(--bg) 60%,transparent);padding:8px 16px calc(16px + env(safe-area-inset-bottom));margin-top:4px}
+/* INVEST BTN */
+.invest-wrap{margin-top:4px;margin-bottom:8px}
 .invest-btn{width:100%;padding:16px;border-radius:16px;font-family:var(--font);font-size:14px;font-weight:800;border:none;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--s3);color:var(--t5);cursor:not-allowed;transition:all .2s var(--ease)}
 .invest-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
 .invest-btn.ready{background:var(--in);color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(91,95,239,.4)}
 .invest-btn.ready:active{transform:scale(.98)}
 .invest-sub{text-align:center;font-size:11px;color:var(--t4);margin-top:5px}
 
-/* ── HISTORY ── */
-.history-empty{text-align:center;padding:48px 20px}
-.history-empty svg{width:48px;height:48px;stroke:var(--in);fill:none;stroke-width:1.5;stroke-linecap:round;margin:0 auto 14px}
-.history-empty h3{font-size:16px;font-weight:800;color:var(--t1);margin-bottom:6px}
-.history-empty p{font-size:13px;color:var(--t4);line-height:1.6}
+/* HISTORY */
+.hist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hist-refresh{display:flex;align-items:center;gap:5px;background:var(--sf);border:1.5px solid var(--bd);color:var(--t3);font:600 12px/1 var(--font);padding:7px 13px;border-radius:999px;cursor:pointer;transition:all .18s}
+.hist-refresh:hover{border-color:var(--in);color:var(--in)}
+.hist-refresh svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.hist-refresh.spinning svg{animation:spin360 .7s linear infinite}
+@keyframes spin360{to{transform:rotate(360deg)}}
 .inv-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:.5px solid #E2E8F0}
 .inv-item:last-child{border-bottom:none}
 .inv-plan{font-size:13px;font-weight:800;color:var(--t1)}
@@ -169,30 +197,30 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .s-active{background:rgba(91,95,239,.12);color:var(--in)}
 .s-paid{background:rgba(5,150,105,.1);color:var(--em)}
 .s-rejected{background:rgba(220,38,38,.08);color:#DC2626}
-.s-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.s-active .s-dot{background:var(--in);animation:pd 1.5s ease-in-out infinite}
-.s-paid .s-dot{background:var(--em)}
-.s-rejected .s-dot{background:#DC2626}
+.s-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-active .s-dot{animation:pd 1.5s ease-in-out infinite}
 @keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
 .countdown-mini{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--warn);margin-top:3px}
+.reinvest-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(5,150,105,.1);color:var(--em);font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;margin-top:3px}
+.history-empty{text-align:center;padding:40px 20px}
+.history-empty svg{width:44px;height:44px;stroke:var(--in);fill:none;stroke-width:1.5;stroke-linecap:round;margin:0 auto 12px}
+.history-empty h3{font-size:15px;font-weight:800;color:var(--t1);margin-bottom:6px}
+.history-empty p{font-size:13px;color:var(--t4);line-height:1.6}
 
-/* ── PROFILE ── */
+/* PROFILE */
 .p-field{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid #E2E8F0}
 .p-field:last-child{border-bottom:none}
 .p-field-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t4);margin-bottom:3px}
 .p-field-val{font-size:14px;font-weight:700;color:var(--t1)}
 .p-field-val.mono{font-family:var(--mono)}
 .p-badge-active{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--er);color:var(--em);border:1px solid var(--ebd)}
-
-/* Password form */
 .pw-form .form-row{margin-bottom:12px}
 .pw-form .f-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t4);margin-bottom:6px;display:block}
 .pw-form .pw-wrap{position:relative;display:flex;align-items:center}
-.pw-form input[type=password],.pw-form input[type=text]{width:100%;height:46px;padding:0 44px 0 13px;border-radius:11px;border:1.5px solid var(--bdm);background:var(--sf);font-family:var(--font);font-size:14px;font-weight:500;color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
+.pw-form input[type=password],.pw-form input[type=text]{width:100%;height:46px;padding:0 44px 0 13px;border-radius:11px;border:1.5px solid var(--bdm);background:var(--sf);font-family:var(--font);font-size:14px;font-weight:500;color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s}
 .pw-form input:focus{border-color:var(--in);box-shadow:0 0 0 3px var(--ir)}
-.eye-btn{position:absolute;right:12px;background:none;border:none;cursor:pointer;color:var(--t4);display:flex;align-items:center;padding:4px;transition:color .15s}
-.eye-btn:hover{color:var(--in)}
-.eye-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eye-btn{position:absolute;right:12px;background:none;border:none;cursor:pointer;color:var(--t4);display:flex;align-items:center;padding:4px}
+.eye-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .strength-bar{height:3px;border-radius:2px;background:var(--bd);margin-top:6px;overflow:hidden}
 .strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
 .strength-lbl{font-size:10px;font-weight:700;margin-top:4px}
@@ -202,66 +230,33 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
 .submit-btn.ready:active{transform:scale(.98)}
 .submit-btn.loading{opacity:.7;cursor:not-allowed}
 .api-notice{border-radius:12px;padding:11px 14px;margin-bottom:10px;font-size:12px;font-weight:700;display:none;line-height:1.45}
-.api-notice.err{background:var(--rl);border:1.5px solid #F5C0C5;color:var(--red)}
+.api-notice.err{background:var(--rr);border:1.5px solid #F5C0C5;color:var(--red)}
 .api-notice.ok{background:var(--er);border:1.5px solid rgba(5,150,105,.3);color:#166534}
-
-/* Info boxes */
 .info-box{background:var(--ib);border:1px solid rgba(91,95,239,.18);border-radius:14px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
 .info-box svg{width:15px;height:15px;fill:none;stroke:var(--in);stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
 .info-box-t{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
 .info-box-s{font-size:11px;color:var(--t3);line-height:1.55}
-
 .powered{text-align:center;padding:12px 0 4px;font-size:9px;color:var(--t4);font-weight:500;letter-spacing:.4px}
-.hist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.hist-refresh{display:flex;align-items:center;gap:5px;background:var(--sf);border:1.5px solid var(--bd);color:var(--t3);font:600 12px/1 var(--font);padding:7px 13px;border-radius:999px;cursor:pointer;transition:all .18s;-webkit-user-select:none}
-.hist-refresh:hover{border-color:var(--in);color:var(--in)}
-.hist-refresh svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;transition:transform .4s}
-.hist-refresh.spinning svg{animation:spin360 .7s linear infinite}
-@keyframes spin360{to{transform:rotate(360deg)}}
-
-/* ── ZIMVEST LOGO (shared across all pages) ── */
-.zv-logo{display:flex;align-items:center;gap:10px}
-.zv-mark{
-  width:36px;height:36px;border-radius:10px;flex-shrink:0;
-  background:linear-gradient(135deg,#5B5FEF 0%,#059669 100%);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(91,95,239,.25);
-}
-.zv-mark-sm{width:30px;height:30px;border-radius:8px}
-.zv-mark-lg{width:42px;height:42px;border-radius:13px}
-.zv-mark svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
-.zv-mark-sm svg{width:16px;height:16px}
-.zv-mark-lg svg{width:22px;height:22px}
-.zv-name{font-size:18px;font-weight:800;letter-spacing:-.4px}
-.zv-name .v{color:#818CF8}  /* "Vest" in indigo-light */
-.zv-sub{font-size:11px;font-weight:600;margin-top:1px;opacity:.65}
-/* On dark bg (headers) */
-.zv-on-dark .zv-name{color:#fff}
-.zv-on-dark .zv-name .v{color:#A5B4FC}
-.zv-on-dark .zv-sub{color:rgba(255,255,255,.6)}
-/* On light bg (topbar/nav) */
-.zv-on-light .zv-name{color:#0F172A}
-.zv-on-light .zv-name .v{color:#5B5FEF}
-.zv-on-light .zv-sub{color:#64748B}
-
 </style>
 </head>
 <body>
 <div class="shell">
 
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-logo">
+      <div class="tb-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="tb-name">Zim<span>Vest</span></div>
+    </div>
+    <button class="tb-logout" onclick="doLogout()">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+
   <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-inner">
-      <div class="hdr-top">
-        <div class="zv-logo zv-on-dark" style="gap:8px">
-          <div class="zv-mark zv-mark-sm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="zv-name" style="font-size:16px">Zim<span class="v">Vest</span></div>
-        </div>
-        <button class="logout-btn" onclick="doLogout()">
-          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Sign out
-        </button>
-      </div>
       <div class="hdr-user">
         <div class="avatar" id="avatar">ZV</div>
         <div>
@@ -271,9 +266,13 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
         </div>
       </div>
       <div class="hdr-stats">
-        <div class="hs-cell"><div class="hs-lbl">Min deposit</div><div class="hs-val">$100</div></div>
-        <div class="hs-cell"><div class="hs-lbl">Max deposit</div><div class="hs-val">$1,500</div></div>
-        <div class="hs-cell"><div class="hs-lbl">Best return</div><div class="hs-val">+35%</div></div>
+        <div class="hs-cell"><div class="hs-lbl">Invested</div><div class="hs-val" id="hsInv">$0</div></div>
+        <div class="hs-cell"><div class="hs-lbl">Earned</div><div class="hs-val" id="hsEarn">$0</div></div>
+        <div class="hs-cell"><div class="hs-lbl">Active</div><div class="hs-val" id="hsActive">0</div></div>
+      </div>
+      <div class="level-bar">
+        <div class="level-badge"><div class="level-dot"></div><div class="level-text" id="levelText">Trial member</div></div>
+        <div class="level-next" id="levelNext"></div>
       </div>
     </div>
   </div>
@@ -286,12 +285,14 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
     <button class="tab-btn" id="tab-history" onclick="switchTab('history')">
       <div class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>History
     </button>
+    <button class="tab-btn" id="tab-refer" onclick="switchTab('refer')">
+      <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>Refer
+    </button>
     <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
       <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>Profile
     </button>
   </div>
 
-  <!-- PANES -->
   <div class="pane-wrap">
 
     <!-- ══ INVEST PANE ══ -->
@@ -302,21 +303,43 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <div>
           <div class="info-box-t">3 steps to your first payout</div>
-          <div class="info-box-s">1. <strong>Pick a plan</strong> below &nbsp;→&nbsp; 2. <strong>Enter deposit</strong> &amp; see your exact payout &nbsp;→&nbsp; 3. <strong>Pay via EcoCash</strong>. Your payout is sent automatically — nothing else to do.</div>
+          <div class="info-box-s">1. <strong>Pick a plan</strong> below → 2. <strong>Enter deposit</strong> &amp; see exact payout → 3. <strong>Pay via EcoCash</strong>. Payout is automatic.</div>
         </div>
       </div>
 
-      <div class="plans-grid">
+      <div class="plans-grid" id="plansGrid">
 
-        <!-- STARTER -->
-        <div class="plan-card" id="pc-s" onclick="pickPlan('starter')">
+        <!-- TRIAL -->
+        <div class="plan-card" id="pc-t" onclick="pickPlan('trial')">
+          <div class="pct-strip t-strip"></div>
+          <div class="plan-inner">
+            <div class="plan-head">
+              <div class="plan-emoji e-trial">🌿</div>
+              <div class="pct-block"><div class="pct-num"><span>+</span>10<span>%</span></div><div class="pct-lbl">return</div></div>
+            </div>
+            <div class="p-name">Trial plan</div>
+            <div class="p-divider"></div>
+            <div class="p-grid">
+              <div class="pg-i"><div class="pg-l">Deposit range</div><div class="pg-v">$20 – $99</div></div>
+              <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$50 → $55</div></div>
+            </div>
+            <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 24 hours</div>
+            <div class="p-badge-row">
+              <span class="p-new">✦ Try first</span>
+              <span class="p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAVER -->
+        <div class="plan-card" id="pc-s" onclick="pickPlan('saver')">
           <div class="pct-strip s-strip"></div>
           <div class="plan-inner">
             <div class="plan-head">
-              <div class="plan-emoji e-starter">🌱</div>
+              <div class="plan-emoji e-saver">🌱</div>
               <div class="pct-block"><div class="pct-num"><span>+</span>20<span>%</span></div><div class="pct-lbl">return</div></div>
             </div>
-            <div class="p-name">Starter plan</div>
+            <div class="p-name">Saver plan</div>
             <div class="p-divider"></div>
             <div class="p-grid">
               <div class="pg-i"><div class="pg-l">Deposit range</div><div class="pg-v">$100 – $500</div></div>
@@ -329,15 +352,15 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
           </div>
         </div>
 
-        <!-- GROWTH -->
-        <div class="plan-card featured" id="pc-g" onclick="pickPlan('growth')">
+        <!-- BUILDER -->
+        <div class="plan-card featured" id="pc-b" onclick="pickPlan('builder')">
           <div class="pct-strip g-strip"></div>
           <div class="plan-inner">
             <div class="plan-head">
-              <div class="plan-emoji e-growth">🚀</div>
+              <div class="plan-emoji e-builder">🚀</div>
               <div class="pct-block"><div class="pct-num"><span>+</span>35<span>%</span></div><div class="pct-lbl">return</div></div>
             </div>
-            <div class="p-name">Growth plan</div>
+            <div class="p-name">Builder plan</div>
             <div class="p-divider"></div>
             <div class="p-grid">
               <div class="pg-i"><div class="pg-l">Deposit range</div><div class="pg-v">$501 – $1,500</div></div>
@@ -345,13 +368,49 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
             </div>
             <div class="p-timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 48 hours</div>
             <div class="p-badge-row">
-              <span class="p-pop">★ Popular</span>
+              <span class="p-pop">★ Most popular</span>
+              <span class="p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- VAULT — locked until 3 completed investments -->
+        <div class="plan-card locked" id="pc-v" onclick="tryVault()">
+          <div class="pct-strip v-strip"></div>
+          <div class="plan-inner">
+            <div class="plan-head">
+              <div class="plan-emoji e-vault">🏛️</div>
+              <div class="pct-block"><div class="pct-num"><span>+</span>50<span>%</span></div><div class="pct-lbl">return</div></div>
+            </div>
+            <div class="p-name">Vault plan</div>
+            <div class="p-divider"></div>
+            <div class="p-grid">
+              <div class="pg-i"><div class="pg-l">Deposit range</div><div class="pg-v">$1,501 – $5,000</div></div>
+              <div class="pg-i"><div class="pg-l">Example</div><div class="pg-v">$2,000 → $3,000</div></div>
+            </div>
+            <div class="p-timer warn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 7 days</div>
+            <div class="plan-lock-msg" id="vaultMsg">Complete 3 investments to unlock</div>
+            <div class="p-badge-row">
+              <span class="p-lock">🔒 Locked</span>
+              <span class="p-vault">Premium</span>
               <span class="p-sel"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Selected</span>
             </div>
           </div>
         </div>
 
       </div><!-- /plans-grid -->
+
+      <!-- AUTO-REINVEST TOGGLE -->
+      <div class="ar-card" id="arCard" style="display:none">
+        <div class="ar-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+        <div class="ar-text">
+          <div class="ar-title">Auto-reinvest payout</div>
+          <div class="ar-sub">Automatically restart this plan with your payout amount. Compound your returns.</div>
+        </div>
+        <div class="ar-toggle">
+          <button class="toggle" id="arToggle" onclick="toggleAR()" aria-label="Auto-reinvest"></button>
+        </div>
+      </div>
 
       <!-- CALCULATOR -->
       <div class="calc-box" id="calcBox">
@@ -363,11 +422,12 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
         <div class="calc-err-txt" id="calcErrTxt"></div>
         <div class="calc-res" id="calcRes">
           <div class="cr-row"><span class="l">Deposit</span><span class="v" id="crDep">—</span></div>
-          <div class="cr-row"><span class="l">Return rate</span><span class="v" id="crRate">—</span></div>
+          <div class="cr-row"><span class="l">Return</span><span class="v" id="crRate">—</span></div>
           <div class="cr-row"><span class="l">Profit</span><span class="v" id="crProfit">—</span></div>
           <div class="cr-sep"></div>
           <div class="cr-row"><span class="l">You receive</span><span class="v cr-total" id="crTotal">—</span></div>
           <div class="cr-row"><span class="l">Payout in</span><span class="v" id="crTime">—</span></div>
+          <div class="cr-row" id="crBonusRow" style="display:none"><span class="l" style="color:#059669">Referral bonus</span><span class="v" style="color:#059669" id="crBonus">—</span></div>
         </div>
       </div>
 
@@ -378,7 +438,6 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
         </button>
         <div class="invest-sub" id="investSub">Tap any plan to get started</div>
       </div>
-
       <div class="powered">ZimVest · Secured by EcoCash</div>
     </div><!-- /pane-invest -->
 
@@ -391,122 +450,106 @@ html,body{width:100%;height:100%;height:100dvh;font-family:var(--font);color:var
           Refresh
         </button>
       </div>
-      <div style="font-size:12px;color:#475569;margin-bottom:14px;line-height:1.6">Your investments appear here after each deposit. Active investments show a live countdown — payout is sent automatically when it reaches zero.</div>
-
-      <div class="card" id="historyCard">
-        <div class="card-bar card-bar-em"></div>
-        <div id="historyList"></div>
-      </div>
-
+      <div style="font-size:12px;color:#475569;margin-bottom:14px;line-height:1.6">Active investments show a live countdown. Payout is sent automatically to your EcoCash when the timer ends.</div>
+      <div class="card" id="historyCard"><div class="card-bar-em"></div><div id="historyList"></div></div>
       <div class="history-empty" id="historyEmpty" style="display:none">
         <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
         <h3>Your first investment is one tap away</h3>
-        <p>Go to the <strong>Invest</strong> tab, choose a plan and deposit $100–$1,500 via EcoCash. Your payout lands automatically.</p>
+        <p>Go to <strong>Invest</strong>, choose any plan from $20 and pay via EcoCash. Payout arrives automatically.</p>
       </div>
-
       <div class="powered">ZimVest · Secured by EcoCash</div>
-    </div><!-- /pane-history -->
+    </div>
+
+    <!-- ══ REFER PANE ══ -->
+    <div class="pane" id="pane-refer">
+      <div class="sec-lbl">Earn while you share</div>
+      <div class="ref-card">
+        <div class="ref-card-t">🎁 Refer a friend, both earn +2%</div>
+        <div class="ref-card-s">When a friend creates an account using your link and completes their first investment, both of you receive a <strong>+2% bonus</strong> added to your next payout. No limit on referrals.</div>
+        <div class="ref-link-box">
+          <div class="ref-link" id="refLink">zimvest.vercel.app?ref=…</div>
+          <button class="ref-copy" id="refCopyBtn" onclick="copyRef()">Copy</button>
+        </div>
+        <div class="ref-stats">
+          <div class="ref-stat"><div class="ref-stat-v" id="refCount">0</div><div class="ref-stat-l">Referred</div></div>
+          <div class="ref-stat"><div class="ref-stat-v" id="refInvested">0</div><div class="ref-stat-l">Invested</div></div>
+          <div class="ref-stat"><div class="ref-stat-v" id="refBonus">+0%</div><div class="ref-stat-l">Your bonus</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-bar-em"></div>
+        <div class="card-hd"><div><div class="card-title">How it works</div></div></div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:8px;background:var(--ib);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800;color:var(--in)">1</div><div><div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px">Share your link</div><div style="font-size:12px;color:var(--t3);line-height:1.5">Copy your unique referral link and send it to friends via WhatsApp, Facebook, or SMS.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:8px;background:var(--ib);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800;color:var(--in)">2</div><div><div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px">Friend registers &amp; invests</div><div style="font-size:12px;color:var(--t3);line-height:1.5">They sign up through your link and complete any first investment on any plan.</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:8px;background:var(--er);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800;color:var(--em)">✓</div><div><div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px">Both earn +2% bonus</div><div style="font-size:12px;color:var(--t3);line-height:1.5">Your next payout and their first payout both get a +2% bonus automatically applied.</div></div></div>
+        </div>
+      </div>
+      <div style="background:rgba(91,95,239,.06);border:1px solid rgba(91,95,239,.15);border-radius:14px;padding:14px;margin-bottom:12px;font-size:12px;color:var(--t3);line-height:1.6">
+        <strong style="color:var(--t1)">Share via WhatsApp:</strong><br>
+        <span id="waMsg">"I've been using ZimVest to grow my EcoCash money — returns in 24–72 hours, fully automated. Try it free: zimvest.vercel.app?ref=…"</span>
+        <button onclick="shareWA()" style="display:block;margin-top:10px;padding:9px 16px;background:#25D366;color:#fff;border:none;border-radius:10px;font:700 12px/1 var(--font);cursor:pointer;width:100%">📲 Share on WhatsApp</button>
+      </div>
+      <div class="powered">ZimVest · Secured by EcoCash</div>
+    </div>
 
     <!-- ══ PROFILE PANE ══ -->
     <div class="pane" id="pane-profile">
       <div class="sec-lbl">Your account</div>
-      <div style="font-size:12px;color:#475569;margin-bottom:14px;line-height:1.6">Your registered EcoCash number is where all payouts are sent. Keep your password secure.</div>
-
-      <!-- Account details -->
-      <div class="card fade-up">
-        <div class="card-bar card-bar-in"></div>
+      <div class="card">
+        <div class="card-bar-in"></div>
         <div class="card-hd"><div><div class="card-title">Account details</div><div class="card-sub">Your registered information</div></div></div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Full name</div><div class="p-field-val" id="profName">—</div></div>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">EcoCash number</div><div class="p-field-val mono" id="profPhone">—</div></div>
-          <span class="p-badge-active">Active</span>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Payout destination</div><div class="p-field-val mono" id="profPayout">—</div></div>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Member since</div><div class="p-field-val" id="profSince">—</div></div>
-        </div>
+        <div class="p-field"><div><div class="p-field-lbl">Full name</div><div class="p-field-val" id="profName">—</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">EcoCash number</div><div class="p-field-val mono" id="profPhone">—</div></div><span class="p-badge-active">Active</span></div>
+        <div class="p-field"><div><div class="p-field-lbl">Payout destination</div><div class="p-field-val mono" id="profPayout">—</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">Member level</div><div class="p-field-val" id="profLevel">—</div></div></div>
       </div>
-
-      <!-- Investment summary -->
-      <div class="card fade-up" style="animation-delay:.04s">
-        <div class="card-bar card-bar-em"></div>
+      <div class="card">
+        <div class="card-bar-em"></div>
         <div class="card-hd"><div><div class="card-title">Investment summary</div><div class="card-sub">Lifetime activity</div></div></div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Total invested</div><div class="p-field-val mono" id="statTotal">$0.00</div></div>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Total earned</div><div class="p-field-val mono" style="color:#059669" id="statEarned">$0.00</div></div>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Investments made</div><div class="p-field-val" id="statCount">0</div></div>
-        </div>
-        <div class="p-field">
-          <div><div class="p-field-lbl">Active investments</div><div class="p-field-val" id="statActive">0</div></div>
-        </div>
+        <div class="p-field"><div><div class="p-field-lbl">Total invested</div><div class="p-field-val mono" id="statTotal">$0.00</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">Total earned</div><div class="p-field-val mono" style="color:#059669" id="statEarned">$0.00</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">Completed investments</div><div class="p-field-val" id="statCount">0</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">Active investments</div><div class="p-field-val" id="statActive">0</div></div></div>
+        <div class="p-field"><div><div class="p-field-lbl">Referrals</div><div class="p-field-val" id="statRef">0 friends invited</div></div></div>
       </div>
-
-      <!-- Change password -->
-      <div class="card fade-up" style="animation-delay:.08s">
-        <div class="card-bar card-bar-in"></div>
-        <div class="card-hd"><div><div class="card-title">Change password</div><div class="card-sub">Update your sign-in password</div></div></div>
+      <div class="card">
+        <div class="card-bar-in"></div>
+        <div class="card-hd"><div><div class="card-title">Change password</div></div></div>
         <div class="card-bd pw-form">
           <div class="api-notice" id="pwNotice"></div>
-          <div class="form-row">
-            <label class="f-label" for="curPw">Current password</label>
-            <div class="pw-wrap">
-              <input type="password" id="curPw" placeholder="Enter current password" oninput="valPwForm()">
-              <button class="eye-btn" type="button" onclick="toggleEye('curPw','eyeCur')"><svg id="eyeCur" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-            </div>
-          </div>
-          <div class="form-row">
-            <label class="f-label" for="newPw">New password</label>
-            <div class="pw-wrap">
-              <input type="password" id="newPw" placeholder="At least 6 characters" oninput="handleNewPw()">
-              <button class="eye-btn" type="button" onclick="toggleEye('newPw','eyeNew')"><svg id="eyeNew" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-            </div>
-            <div class="strength-bar"><div class="strength-fill" id="sBar"></div></div>
-            <div class="strength-lbl" id="sLbl"></div>
-          </div>
-          <div class="form-row">
-            <label class="f-label" for="confPw">Confirm new password</label>
-            <div class="pw-wrap">
-              <input type="password" id="confPw" placeholder="Re-enter new password" oninput="valPwForm()">
-              <button class="eye-btn" type="button" onclick="toggleEye('confPw','eyeConf')"><svg id="eyeConf" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-            </div>
-            <div class="form-err" id="confErr">Passwords do not match</div>
-          </div>
+          <div class="form-row"><label class="f-label" for="curPw">Current password</label><div class="pw-wrap"><input type="password" id="curPw" placeholder="Current password" oninput="valPwForm()"><button class="eye-btn" type="button" onclick="toggleEye('curPw','eyeCur')"><svg id="eyeCur" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <div class="form-row"><label class="f-label" for="newPw">New password</label><div class="pw-wrap"><input type="password" id="newPw" placeholder="Min 6 characters" oninput="handleNewPw()"><button class="eye-btn" type="button" onclick="toggleEye('newPw','eyeNew')"><svg id="eyeNew" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="strength-bar"><div class="strength-fill" id="sBar"></div></div><div class="strength-lbl" id="sLbl"></div></div>
+          <div class="form-row"><label class="f-label" for="confPw">Confirm new password</label><div class="pw-wrap"><input type="password" id="confPw" placeholder="Re-enter new password" oninput="valPwForm()"><button class="eye-btn" type="button" onclick="toggleEye('confPw','eyeConf')"><svg id="eyeConf" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="form-err" id="confErr">Passwords do not match</div></div>
           <button class="submit-btn" id="pwBtn" onclick="changePassword()">Update password</button>
         </div>
       </div>
-
-      <!-- Sign out -->
-      <div class="card fade-up" style="animation-delay:.12s">
-        <div class="card-bar card-bar-red"></div>
+      <div class="card">
+        <div class="card-bar-red"></div>
         <div class="card-bd" style="padding:14px 16px">
           <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px">Sign out</div>
           <div style="font-size:12px;color:var(--t4);margin-bottom:12px">You will need your EcoCash number and password to sign back in.</div>
-          <button onclick="doLogout()" style="width:100%;padding:12px;border-radius:12px;border:1.5px solid #D92B3A;background:transparent;color:#D92B3A;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer;transition:all .15s">Sign out of ZimVest</button>
+          <button onclick="doLogout()" style="width:100%;padding:12px;border-radius:12px;border:1.5px solid #D92B3A;background:transparent;color:#D92B3A;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer">Sign out of ZimVest</button>
         </div>
       </div>
-
       <div class="powered">ZimVest · Secured by EcoCash</div>
-    </div><!-- /pane-profile -->
+    </div>
 
   </div><!-- /pane-wrap -->
-</div><!-- /shell -->
-
+</div>
 <script>
+/* ── PLANS ── */
 const PLANS={
-  starter:{name:'Starter',pct:20,hours:72,min:100,max:500},
-  growth: {name:'Growth', pct:35,hours:48,min:501,max:1500},
+  trial:  {name:'Trial',  emoji:'🌿',pct:10,hours:24,min:20,  max:99,   key:'t'},
+  saver:  {name:'Saver',  emoji:'🌱',pct:20,hours:72,min:100, max:500,  key:'s'},
+  builder:{name:'Builder',emoji:'🚀',pct:35,hours:48,min:501, max:1500, key:'b'},
+  vault:  {name:'Vault',  emoji:'🏛️',pct:50,hours:168,min:1501,max:5000,key:'v'},
 };
-let selPlan=null, calcAmt=0, pwSubmitting=false;
 
-/* ── Init ── */
+let selPlan=null,calcAmt=0,pwSubmitting=false,autoReinvest=false;
+let completedCount=0,refCode='',bonusPct=0;
+
+/* ── INIT ── */
 (function init(){
   const name  = sessionStorage.getItem('zimvest_name')  || '';
   const phone = sessionStorage.getItem('zimvest_phone') || '';
@@ -515,45 +558,70 @@ let selPlan=null, calcAmt=0, pwSubmitting=false;
     .then(r=>{
       if(r.status===401){sessionStorage.clear();location.replace('auth.html');return;}
       if(r.ok) r.json().then(u=>{
-        sessionStorage.setItem('zimvest_name', u.name||'');
+        sessionStorage.setItem('zimvest_name',u.name||'');
         sessionStorage.setItem('zimvest_phone',u.phone||'');
         setUser(u.name,u.phone);
       });
     }).catch(()=>{});
   loadHistory();
+  initRef();
+  // Check referral bonus from URL
+  const urlRef=new URLSearchParams(location.search).get('ref');
+  if(urlRef) sessionStorage.setItem('zimvest_ref',urlRef);
 })();
 
 function setUser(name,phone){
   const first=(name||phone||'Investor').split(' ')[0];
-  document.getElementById('gName').textContent   = first+' 🇿🇼';
-  document.getElementById('gPhone').textContent  = phone||'';
-  document.getElementById('profName').textContent = name||'—';
-  document.getElementById('profPhone').textContent= phone||'—';
-  document.getElementById('profPayout').textContent = phone ? '+263'+phone.replace(/^\+263/,'') : '—';
-  document.getElementById('profSince').textContent  = 'Member since 2025';
+  document.getElementById('gName').textContent=first+' 🇿🇼';
+  document.getElementById('gPhone').textContent=phone||'';
+  document.getElementById('profName').textContent=name||'—';
+  document.getElementById('profPhone').textContent=phone||'—';
+  document.getElementById('profPayout').textContent=phone||'—';
   const init=(name||phone||'ZV').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   document.getElementById('avatar').textContent=init;
 }
 
-/* ── Tabs ── */
+/* ── REFERRAL ── */
+function initRef(){
+  const phone=sessionStorage.getItem('zimvest_phone')||'';
+  refCode=phone.replace(/\W/g,'').slice(-6)||'ZV'+Math.random().toString(36).slice(-4).toUpperCase();
+  const link='zimvest.vercel.app?ref='+refCode;
+  document.getElementById('refLink').textContent=link;
+  document.getElementById('waMsg').textContent='"I\'ve been using ZimVest to grow my EcoCash money — returns in 24–72 hours, fully automated. Try it free: '+link+'"';
+  document.getElementById('refBonus').textContent=bonusPct>0?'+'+bonusPct+'%':'+0%';
+}
+function copyRef(){
+  const link=document.getElementById('refLink').textContent;
+  navigator.clipboard?.writeText(link).catch(()=>{});
+  const btn=document.getElementById('refCopyBtn');
+  btn.textContent='Copied!';btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+}
+function shareWA(){
+  const msg=document.getElementById('waMsg').textContent;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+/* ── TABS ── */
 function switchTab(tab){
-  ['invest','history','profile'].forEach(t=>{
+  ['invest','history','refer','profile'].forEach(t=>{
     document.getElementById('tab-'+t).classList.toggle('active',t===tab);
     document.getElementById('pane-'+t).classList.toggle('active',t===tab);
   });
 }
 
-/* ── Plan selection ── */
+/* ── PLAN SELECTION ── */
 function pickPlan(key){
+  if(key==='vault'&&!isVaultUnlocked()){tryVault();return;}
   selPlan=key; calcAmt=0;
   const p=PLANS[key];
-  ['s','g'].forEach(k=>{const el=document.getElementById('pc-'+k);if(el)el.classList.remove('selected');});
-  document.getElementById('pc-'+(key==='starter'?'s':'g')).classList.add('selected');
-  const cb=document.getElementById('calcBox');
-  cb.style.display='block';
+  Object.keys(PLANS).forEach(k=>{const el=document.getElementById('pc-'+PLANS[k].key);if(el)el.classList.remove('selected');});
+  document.getElementById('pc-'+p.key).classList.add('selected');
+  // Show auto-reinvest toggle
+  const ar=document.getElementById('arCard');ar.style.display='flex';
+  const cb=document.getElementById('calcBox');cb.style.display='block';
   document.getElementById('calcBoxLbl').textContent=p.name+' — $'+p.min+' to $'+p.max;
-  const inp=document.getElementById('calcIn');
-  inp.value=''; inp.placeholder=p.min+' – '+p.max;
+  const inp=document.getElementById('calcIn');inp.value='';inp.placeholder=p.min+' – '+p.max;
   document.getElementById('calcErrTxt').style.display='none';
   inp.classList.remove('err');
   document.getElementById('calcRes').classList.remove('show');
@@ -561,135 +629,140 @@ function pickPlan(key){
   setTimeout(()=>{inp.focus();cb.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
 }
 
-/* ── Calculator ── */
+function isVaultUnlocked(){
+  return completedCount>=3;
+}
+function tryVault(){
+  if(isVaultUnlocked()){pickPlan('vault');return;}
+  const remaining=3-completedCount;
+  document.getElementById('vaultMsg').textContent='Complete '+remaining+' more investment'+(remaining!==1?'s':'')+' to unlock';
+  document.getElementById('pc-v').style.animation='shake .3s';
+  setTimeout(()=>document.getElementById('pc-v').style.animation='',400);
+}
+
+/* ── AUTO-REINVEST ── */
+function toggleAR(){
+  autoReinvest=!autoReinvest;
+  document.getElementById('arToggle').classList.toggle('on',autoReinvest);
+}
+
+/* ── CALCULATOR ── */
 function doCalc(){
-  if(!selPlan) return;
+  if(!selPlan)return;
   const p=PLANS[selPlan];
   const v=parseFloat(document.getElementById('calcIn').value);
   const err=document.getElementById('calcErrTxt');
   const res=document.getElementById('calcRes');
   const inp=document.getElementById('calcIn');
-  err.style.display='none'; inp.classList.remove('err'); calcAmt=0;
+  err.style.display='none';inp.classList.remove('err');calcAmt=0;
   if(!v||isNaN(v)){res.classList.remove('show');updateBtn();return;}
   if(v<p.min){err.textContent='Minimum for '+p.name+' is $'+p.min+'.';err.style.display='block';inp.classList.add('err');res.classList.remove('show');updateBtn();return;}
   if(v>p.max){err.textContent='Maximum for '+p.name+' is $'+p.max+'.';err.style.display='block';inp.classList.add('err');res.classList.remove('show');updateBtn();return;}
   calcAmt=v;
-  const profit=+(v*p.pct/100).toFixed(2),total=+(v+profit).toFixed(2);
-  document.getElementById('crDep').textContent   ='$'+v.toFixed(2);
-  document.getElementById('crRate').textContent  ='+'+p.pct+'%';
+  const profit=+(v*p.pct/100).toFixed(2);
+  const bonus=bonusPct>0?+(v*bonusPct/100).toFixed(2):0;
+  const total=+(v+profit+bonus).toFixed(2);
+  document.getElementById('crDep').textContent='$'+v.toFixed(2);
+  document.getElementById('crRate').textContent='+'+p.pct+'%';
   document.getElementById('crProfit').textContent='+$'+profit.toFixed(2);
-  document.getElementById('crTotal').textContent ='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
-  document.getElementById('crTime').textContent  =p.hours+' hours';
-  res.classList.add('show'); updateBtn();
+  document.getElementById('crTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
+  document.getElementById('crTime').textContent=p.hours+' hours';
+  const bonusRow=document.getElementById('crBonusRow');
+  if(bonus>0){document.getElementById('crBonus').textContent='+$'+bonus.toFixed(2)+' (referral)';bonusRow.style.display='flex';}
+  else{bonusRow.style.display='none';}
+  res.classList.add('show');updateBtn();
 }
 
-/* ── Invest button ── */
+/* ── INVEST BUTTON ── */
 function updateBtn(){
   const btn=document.getElementById('investBtn');
   const lbl=document.getElementById('investLabel');
   const sub=document.getElementById('investSub');
   const p=selPlan?PLANS[selPlan]:null;
-  if(!selPlan){lbl.textContent='Select a plan above';sub.textContent='Tap Starter or Growth to begin';btn.classList.remove('ready');return;}
-  if(!calcAmt){lbl.textContent='Enter deposit amount';sub.textContent='$'+p.min+' to $'+p.max;btn.classList.remove('ready');return;}
-  const total=+(calcAmt*(1+p.pct/100)).toFixed(2);
+  if(!selPlan){lbl.textContent='Select a plan above';sub.textContent='Choose Trial, Saver, Builder or Vault';btn.classList.remove('ready');return;}
+  if(!calcAmt){lbl.textContent='Enter deposit amount';sub.textContent='$'+p.min+' – $'+p.max;btn.classList.remove('ready');return;}
+  const profit=+(calcAmt*p.pct/100).toFixed(2);
+  const bonus=bonusPct>0?+(calcAmt*bonusPct/100).toFixed(2):0;
+  const total=+(calcAmt+profit+bonus).toFixed(2);
   lbl.textContent='Invest $'+calcAmt.toFixed(2)+' via EcoCash →';
-  sub.textContent='Receive $'+total.toFixed(2)+' in '+p.hours+' hours';
+  sub.textContent='Receive $'+total.toFixed(2)+' in '+p.hours+' hours'+(autoReinvest?' · Auto-reinvest ON':'');
   btn.classList.add('ready');
 }
 
-/* ── Proceed ── */
+/* ── PROCEED ── */
 async function proceed(){
-  if(!selPlan||!calcAmt) return;
+  if(!selPlan||!calcAmt)return;
   const p=PLANS[selPlan];
-  const total=+(calcAmt*(1+p.pct/100)).toFixed(2);
+  const profit=+(calcAmt*p.pct/100).toFixed(2);
+  const bonus=bonusPct>0?+(calcAmt*bonusPct/100).toFixed(2):0;
+  const total=+(calcAmt+profit+bonus).toFixed(2);
   const _phone=sessionStorage.getItem('zimvest_phone')||'';
-  const _name =sessionStorage.getItem('zimvest_name')||'';
+  const _name=sessionStorage.getItem('zimvest_name')||'';
   const now=Date.now();
-
-  sessionStorage.setItem('zimvest_plan',JSON.stringify({name:p.name,pct:p.pct,amount:calcAmt.toFixed(2),payout:total.toFixed(2),hours:p.hours,phone:_phone}));
-
-  // Generate one shared ID: phone+timestamp — same key used in both localStorage and KV
+  sessionStorage.setItem('zimvest_plan',JSON.stringify({name:p.name,pct:p.pct,amount:calcAmt.toFixed(2),payout:total.toFixed(2),hours:p.hours,phone:_phone,autoReinvest,bonus:bonus.toFixed(2)}));
   const kvId=_phone.replace(/\W/g,'')+'_'+now;
-
-  // Save to localStorage immediately with the shared ID
   const hist=getHistory();
-  hist.unshift({id:kvId,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,date:new Date().toISOString(),status:'active',maturesAt:new Date(now+p.hours*3600000).toISOString()});
-  localStorage.setItem('zimvest_history',JSON.stringify(hist.slice(0,20)));
-
-  // Persist to KV using the same ID so admin + check-investment-status can match it
+  hist.unshift({id:kvId,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,date:new Date().toISOString(),status:'active',maturesAt:new Date(now+p.hours*3600000).toISOString(),autoReinvest,bonus});
+  localStorage.setItem('zimvest_history',JSON.stringify(hist.slice(0,30)));
   try{
-    await fetch('/api/save-investment',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({id:kvId,phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total})
-    });
-  }catch(e){/* non-blocking */}
-
+    await fetch('/api/save-investment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:kvId,phone:_phone,name:_name,plan:p.name,pct:p.pct,hours:p.hours,amount:calcAmt,payout:total,autoReinvest,bonus,refCode})});
+  }catch(e){}
   location.href='login.html';
 }
 function getHistory(){try{return JSON.parse(localStorage.getItem('zimvest_history')||'[]');}catch{return[];}}
 
+/* ── HISTORY ── */
 async function refreshHistory(){
   const btn=document.getElementById('histRefreshBtn');
-  if(btn) btn.classList.add('spinning');
+  if(btn)btn.classList.add('spinning');
   await loadHistory();
-  if(btn){
-    btn.classList.remove('spinning');
-    /* Brief green flash to confirm refresh */
-    btn.style.borderColor='#059669';btn.style.color='#059669';
-    setTimeout(function(){btn.style.borderColor='';btn.style.color='';},1200);
-  }
+  if(btn){btn.classList.remove('spinning');btn.style.borderColor='#059669';btn.style.color='#059669';setTimeout(()=>{btn.style.borderColor='';btn.style.color='';},1200);}
 }
 
 async function loadHistory(){
   const hist=getHistory();
-  const card=document.getElementById('historyCard');
-  const empty=document.getElementById('historyEmpty');
-  const list=document.getElementById('historyList');
   const now=Date.now();
-
-  /* Auto-mature: active investments past their maturesAt → paid */
-  hist.forEach(h=>{
-    if(h.status==='active' && h.maturesAt && new Date(h.maturesAt).getTime()<now){
-      h.status='paid';
-    }
-  });
-
-  /* Sync from KV: fetch all KV investments for this phone, apply status */
+  hist.forEach(h=>{if(h.status==='active'&&h.maturesAt&&new Date(h.maturesAt).getTime()<now)h.status='paid';});
   const phone=sessionStorage.getItem('zimvest_phone')||'';
-  if(phone && hist.length){
+  if(phone&&hist.length){
     try{
-      const r=await fetch('/api/check-investment-status',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({phone})
-      });
-      if(r.ok){
-        const data=await r.json();
-        /* Build map: kvId → status */
-        const kvMap={};
-        (data.investments||[]).forEach(function(inv){ kvMap[inv.id]=inv.status; });
-        /* Apply to local history entries */
-        hist.forEach(function(h){
-          if(kvMap[h.id] && kvMap[h.id]!==h.status){
-            h.status=kvMap[h.id];
-          }
-        });
-      }
-    }catch(e){/* non-blocking */}
+      const r=await fetch('/api/check-investment-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone})});
+      if(r.ok){const data=await r.json();const kvMap={};(data.investments||[]).forEach(inv=>{kvMap[inv.id]=inv.status;});hist.forEach(h=>{if(kvMap[h.id]&&kvMap[h.id]!==h.status)h.status=kvMap[h.id];});}
+    }catch(e){}
   }
-
   localStorage.setItem('zimvest_history',JSON.stringify(hist));
-  /* Profile stats */
   const totInv=hist.reduce((s,h)=>s+parseFloat(h.amount),0);
   const totEarned=hist.reduce((s,h)=>s+(parseFloat(h.payout)-parseFloat(h.amount)),0);
   const active=hist.filter(h=>h.status==='active').length;
-  document.getElementById('statTotal').textContent ='$'+totInv.toFixed(2);
+  completedCount=hist.filter(h=>h.status==='paid').length;
+  document.getElementById('hsInv').textContent='$'+totInv.toFixed(0);
+  document.getElementById('hsEarn').textContent='$'+totEarned.toFixed(0);
+  document.getElementById('hsActive').textContent=active;
+  document.getElementById('statTotal').textContent='$'+totInv.toFixed(2);
   document.getElementById('statEarned').textContent='$'+totEarned.toFixed(2);
-  document.getElementById('statCount').textContent =hist.length;
+  document.getElementById('statCount').textContent=completedCount;
   document.getElementById('statActive').textContent=active;
+  // Level system
+  const level=completedCount===0?'Trial member':completedCount<3?'Saver member':completedCount<6?'Builder member':'Vault member';
+  document.getElementById('levelText').textContent=level;
+  document.getElementById('profLevel').textContent=level;
+  const nextMsg=completedCount===0?'Complete 1 investment to become a Saver':completedCount<3?'Unlock Vault after '+(3-completedCount)+' more':'Vault unlocked 🏛️';
+  document.getElementById('levelNext').textContent=nextMsg;
+  // Unlock vault if eligible
+  if(isVaultUnlocked()){
+    const vaultCard=document.getElementById('pc-v');
+    vaultCard.classList.remove('locked');
+    document.getElementById('vaultMsg').textContent='';
+  }
+  // Stats
+  document.getElementById('statRef').textContent=localStorage.getItem('zimvest_refcount')||'0'+' friends invited';
+  document.getElementById('refCount').textContent=localStorage.getItem('zimvest_refcount')||'0';
+  document.getElementById('refInvested').textContent=localStorage.getItem('zimvest_refinv')||'0';
+  const card=document.getElementById('historyCard');
+  const empty=document.getElementById('historyEmpty');
+  const list=document.getElementById('historyList');
   if(!hist.length){card.style.display='none';empty.style.display='block';return;}
-  card.style.display='block'; empty.style.display='none';
+  card.style.display='block';empty.style.display='none';
   list.innerHTML=hist.map(h=>{
     const date=new Date(h.date).toLocaleDateString('en-ZW',{day:'numeric',month:'short',year:'numeric'});
     const statusHtml=h.status==='active'
@@ -697,8 +770,9 @@ async function loadHistory(){
       :h.status==='rejected'
       ?`<div class="inv-status s-rejected"><div class="s-dot"></div>Rejected</div>`
       :`<div class="inv-status s-paid"><div class="s-dot"></div>Paid out</div>`;
-    const cdHtml=h.status==='active'?`<div class="countdown-mini" id="cd-${h.id}">Calculating…</div>`:'';
-    return`<div class="inv-item"><div><div class="inv-plan">${h.plan} Plan</div><div class="inv-date">${date}</div>${statusHtml}${cdHtml}</div><div><div class="inv-amount">$${parseFloat(h.amount).toFixed(2)}</div><div class="inv-return">→ $${parseFloat(h.payout).toFixed(2)} (+${h.pct}%)</div></div></div>`;
+    const cdHtml=h.status==='active'?`<div class="countdown-mini" id="cd-${h.id}">…</div>`:'';
+    const arHtml=h.autoReinvest?`<div class="reinvest-tag">↻ Auto-reinvest ON</div>`:'';
+    return`<div class="inv-item"><div><div class="inv-plan">${h.plan} Plan</div><div class="inv-date">${date}</div>${statusHtml}${cdHtml}${arHtml}</div><div><div class="inv-amount">$${parseFloat(h.amount).toFixed(2)}</div><div class="inv-return">→ $${parseFloat(h.payout).toFixed(2)} (+${h.pct}%)</div></div></div>`;
   }).join('');
   hist.filter(h=>h.status==='active').forEach(h=>{
     const el=document.getElementById('cd-'+h.id);if(!el)return;
@@ -707,47 +781,11 @@ async function loadHistory(){
   });
 }
 
-/* ── Password ── */
-function handleNewPw(){
-  const pw=document.getElementById('newPw').value;
-  const score=[pw.length>=6,pw.length>=10,/[A-Z]/.test(pw),/[0-9]/.test(pw),/[^A-Za-z0-9]/.test(pw)].filter(Boolean).length;
-  const pct=pw.length?Math.min(100,score*20):0;
-  const cols=['','#D92B3A','#F5A623','#F5A623','#22C373','#18A35E'];
-  const lbls=['','Too short','Weak','Fair','Good','Strong'];
-  const bar=document.getElementById('sBar');
-  bar.style.width=pct+'%';bar.style.background=cols[score]||'#D92B3A';
-  document.getElementById('sLbl').textContent=pw.length?lbls[score]||'Too short':'';
-  document.getElementById('sLbl').style.color=cols[score]||'#D92B3A';
-  valPwForm();
-}
-function valPwForm(){
-  const cur=document.getElementById('curPw').value,nw=document.getElementById('newPw').value,conf=document.getElementById('confPw').value;
-  const match=nw===conf;
-  document.getElementById('confErr').style.display=conf.length&&!match?'block':'none';
-  document.getElementById('pwBtn').classList.toggle('ready',cur.length>=1&&nw.length>=6&&match);
-}
-function toggleEye(id,ico){
-  const inp=document.getElementById(id),show=inp.type==='password';inp.type=show?'text':'password';
-  document.getElementById(ico).innerHTML=show?`<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`:`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-}
-async function changePassword(){
-  if(pwSubmitting) return;
-  const cur=document.getElementById('curPw').value,nw=document.getElementById('newPw').value,conf=document.getElementById('confPw').value;
-  if(nw!==conf){document.getElementById('confErr').style.display='block';return;}
-  if(nw.length<6) return;
-  pwSubmitting=true;
-  const btn=document.getElementById('pwBtn'),notice=document.getElementById('pwNotice');
-  btn.textContent='Updating…';btn.classList.add('loading');btn.classList.remove('ready');notice.style.display='none';
-  const phone=sessionStorage.getItem('zimvest_phone')||'';
-  try{
-    const lr=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({phone,password:cur})});
-    if(!lr.ok){const d=await lr.json().catch(()=>({}));showPwNotice('err',d.error||'Current password is incorrect.');return;}
-    const rr=await fetch('/api/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,password:nw})});
-    if(rr.ok){showPwNotice('ok','Password updated!');['curPw','newPw','confPw'].forEach(id=>document.getElementById(id).value='');document.getElementById('sBar').style.width='0';document.getElementById('sLbl').textContent='';}
-    else{const d=await rr.json().catch(()=>({}));showPwNotice('err',d.error||'Could not update. Try again.');}
-  }catch{showPwNotice('err','Network error. Check your connection.');}
-  finally{pwSubmitting=false;btn.textContent='Update password';btn.classList.remove('loading');valPwForm();}
-}
+/* ── PASSWORD ── */
+function handleNewPw(){const pw=document.getElementById('newPw').value;const score=[pw.length>=6,pw.length>=10,/[A-Z]/.test(pw),/[0-9]/.test(pw),/[^A-Za-z0-9]/.test(pw)].filter(Boolean).length;const pct=pw.length?Math.min(100,score*20):0;const cols=['','#D92B3A','#F5A623','#F5A623','#22C373','#18A35E'];const lbls=['','Too short','Weak','Fair','Good','Strong'];const bar=document.getElementById('sBar');bar.style.width=pct+'%';bar.style.background=cols[score]||'#D92B3A';document.getElementById('sLbl').textContent=pw.length?lbls[score]||'Too short':'';document.getElementById('sLbl').style.color=cols[score]||'#D92B3A';valPwForm();}
+function valPwForm(){const cur=document.getElementById('curPw').value,nw=document.getElementById('newPw').value,conf=document.getElementById('confPw').value;const match=nw===conf;document.getElementById('confErr').style.display=conf.length&&!match?'block':'none';document.getElementById('pwBtn').classList.toggle('ready',cur.length>=1&&nw.length>=6&&match);}
+function toggleEye(id,ico){const inp=document.getElementById(id),show=inp.type==='password';inp.type=show?'text':'password';document.getElementById(ico).innerHTML=show?`<path d="M17.94 17.94A10 10 0 0112 20c-7 0-11-8-11-8a18 18 0 015.06-5.94"/><path d="M9.9 4.24A9 9 0 0112 4c7 0 11 8 11 8a18 18 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`:`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;}
+async function changePassword(){if(pwSubmitting)return;const cur=document.getElementById('curPw').value,nw=document.getElementById('newPw').value,conf=document.getElementById('confPw').value;if(nw!==conf){document.getElementById('confErr').style.display='block';return;}if(nw.length<6)return;pwSubmitting=true;const btn=document.getElementById('pwBtn'),notice=document.getElementById('pwNotice');btn.textContent='Updating…';btn.classList.add('loading');btn.classList.remove('ready');notice.style.display='none';const phone=sessionStorage.getItem('zimvest_phone')||'';try{const lr=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({phone,password:cur})});if(!lr.ok){const d=await lr.json().catch(()=>({}));showPwNotice('err',d.error||'Current password is incorrect.');return;}const rr=await fetch('/api/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,password:nw})});if(rr.ok){showPwNotice('ok','Password updated successfully!');['curPw','newPw','confPw'].forEach(id=>document.getElementById(id).value='');document.getElementById('sBar').style.width='0';document.getElementById('sLbl').textContent='';}else{const d=await rr.json().catch(()=>({}));showPwNotice('err',d.error||'Could not update. Try again.');}}catch{showPwNotice('err','Network error.');}finally{pwSubmitting=false;btn.textContent='Update password';btn.classList.remove('loading');valPwForm();}}
 function showPwNotice(type,msg){const el=document.getElementById('pwNotice');el.className='api-notice '+type;el.textContent=msg;el.style.display='block';setTimeout(()=>{el.style.display='none';},4000);}
 async function doLogout(){try{await fetch('/api/logout',{method:'POST',credentials:'include'});}catch{}sessionStorage.clear();location.href='index.html';}
 </script>
