@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       hours:     Number(hours) || 0,
       amount:    Number(amount),
       payout:    Number(payout),
-      status:    'active',
+      status:    'pending', /* updated to active after EcoCash OTP confirmed */
       date:      new Date().toISOString(),
       maturesAt: new Date(Date.now() + (Number(hours) || 0) * 3600000).toISOString(),
     };
