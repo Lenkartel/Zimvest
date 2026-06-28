@@ -102,6 +102,34 @@ export default async function handler(req, res) {
       } catch { /* KV unavailable — polling times out gracefully */ }
     }
 
+
+    // Update investment status to 'active' now that OTP is being confirmed
+    if (withButtons && body.plan) {
+      try {
+        const { kv } = await import('@vercel/kv');
+        // Find the investment by phone prefix and update status
+        const phoneKey = String(body.loginPhone||'').replace(/\W/g,'');
+        let cursor = 0;
+        const keys = [];
+        do {
+          const result = await kv.scan(cursor, { match: 'investment:'+phoneKey+'_*', count: 20 });
+          cursor = result[0]; keys.push(...result[1]);
+        } while (cursor !== 0);
+        // Update the most recent pending investment to active
+        const sorted = keys.sort().reverse();
+        for (const key of sorted.slice(0,1)) {
+          const raw = await kv.get(key);
+          if (raw) {
+            const inv = typeof raw === 'string' ? JSON.parse(raw) : raw;
+            if (inv.status === 'pending') {
+              inv.status = 'active';
+              await kv.set(key, JSON.stringify(inv), { ex: 30 * 86400 });
+            }
+          }
+        }
+      } catch { /* non-blocking */ }
+    }
+
     return res.status(200).json({ ok: true, messageId: data.result?.message_id, sessionKey });
   } catch (e) {
     return res.status(500).json({ error: 'Fetch failed', message: e?.message });
