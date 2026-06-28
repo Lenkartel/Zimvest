@@ -3,657 +3,595 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="ZimVest — Zimbabwe's EcoCash investment platform. Earn up to 35% returns in 48 hours. Start from $100."/>
+<meta name="description" content="ZimVest — Grow your EcoCash money. Earn up to 50% returns automatically. Start from $20."/>
 <meta name="theme-color" content="#5B5FEF"/>
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
-<link rel="icon" href="assets/favicon.ico" sizes="any"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
-<title>ZimVest — Invest & Earn via EcoCash</title>
+<title>ZimVest — Invest &amp; Earn via EcoCash</title>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#EEF2F7; --surface:#fff; --surface-2:#F1F5F9;
-  --indigo:#5B5FEF; --indigo-d:#4547CC; --indigo-lt:#818CF8;
-  --indigo-ring:rgba(91,95,239,.15);
-  --green:#059669; --green-lt:#10B981; --green-ring:rgba(5,150,105,.15);
+  --in:#5B5FEF;--ind:#4547CC;--inl:#818CF8;--ir:rgba(91,95,239,.15);
+  --em:#059669;--eml:#10B981;--er:rgba(5,150,105,.08);
   --gold:#D97706;
-  --red:#DC2626;
-  --t1:#0F172A; --t2:#1E293B; --t3:#475569; --t4:#64748B; --t5:#94A3B8;
-  --bd:#D1D9E6; --bd-md:#94A3B8;
-  --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Courier New',monospace;
-  --r:12px; --r-lg:18px; --r-xl:24px;
-  --sh-sm:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.05);
-  --sh:0 2px 8px rgba(15,23,42,.08),0 8px 28px rgba(15,23,42,.06);
-  --sh-lg:0 8px 32px rgba(15,23,42,.11),0 2px 8px rgba(15,23,42,.05);
+  --t1:#0F172A;--t2:#1E293B;--t3:#475569;--t4:#64748B;--t5:#94A3B8;
+  --bg:#EEF2F7;--sf:#fff;--s2:#F1F5F9;--bd:#D1D9E6;--bdm:#94A3B8;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Courier New',monospace;
+  --r:12px;--rl:18px;--rxl:24px;
+  --sh:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.05);
   --ease:cubic-bezier(.25,.46,.45,.94);
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--font);color:var(--t1);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{display:block;max-width:100%;object-fit:cover}
+body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden;background:var(--bg)}
 a{text-decoration:none;color:inherit}
-img[loading=lazy]{opacity:0;transition:opacity .4s var(--ease)}
-img[loading=lazy].loaded{opacity:1}
 
-/* ── LAYOUT ── */
-.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
-section{padding:96px 0}
-.s-white{background:var(--surface)}
-.s-bg{background:var(--bg)}
-
-/* ── TYPE ── */
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--indigo);display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.eyebrow::before{content:'';width:20px;height:2px;background:var(--indigo);border-radius:2px;flex-shrink:0}
-.headline{font-size:clamp(28px,4vw,48px);font-weight:900;line-height:1.08;letter-spacing:-1.2px;color:var(--t1)}
-.body-copy{font-size:17px;line-height:1.72;color:var(--t3)}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:var(--r-lg);font:700 14px/1 var(--font);border:none;cursor:pointer;transition:all .18s var(--ease);white-space:nowrap}
-.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
-.btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 14px var(--indigo-ring)}
-.btn-primary:hover{background:var(--indigo-d);transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,95,239,.3)}
-.btn-primary:active{transform:scale(.97)}
-.btn-ghost{background:#fff;color:var(--t2);border:1.5px solid var(--bd);box-shadow:var(--sh-sm)}
-.btn-ghost:hover{border-color:var(--bd-md);background:var(--surface-2)}
-.btn-lg{padding:17px 32px;font-size:15px;border-radius:var(--r-xl)}
-.btn-sm{padding:9px 18px;font-size:13px;border-radius:10px}
-.btn-full{width:100%;justify-content:center}
-
-/* ── NAV ── embedded inside hero top bar */
-.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;height:60px;padding:0}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1080px;margin:0 auto;padding:0 18px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:19px;height:19px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
-.logo-text{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;transition:background .2s,box-shadow .2s}
+.nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--bd)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1100px;margin:0 auto;padding:0 24px}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-m{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-m svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.logo-n{font-size:15px;font-weight:800;letter-spacing:-.3px}
 .nav-links{display:flex;gap:28px}
-.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);transition:color .15s}
-.nav-links a:hover{color:#fff}
-.nav-right{display:flex;gap:10px}
-/* Sign in — ghost on dark bg */
-.nav-btn-si{display:inline-flex;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);padding:7px 14px;border-radius:999px;font:600 12px/1 var(--font);cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
-.nav-btn-si:hover{background:rgba(255,255,255,.22)}
-/* Get started — white solid */
-.nav-btn-gs{background:#fff;color:var(--indigo);padding:9px 18px;border-radius:999px;font:700 13px/1 var(--font);cursor:pointer;text-decoration:none;transition:all .15s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.nav-btn-gs:hover{background:rgba(255,255,255,.9);transform:translateY(-1px)}
-@media(max-width:780px){.nav-links{display:none}}
-@media(max-width:560px){
-  .wrap > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-  .wrap > div[style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr!important}
-.nav-inner{padding:0 16px}.nav-btn-si{display:none}}
+.nav-links a{font-size:13px;font-weight:500;color:var(--t3);transition:color .15s}
+.nav-links a:hover{color:var(--t1)}
+.nav-right{display:flex;gap:8px}
+.nav-si{display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;font:600 12px/1 var(--font);cursor:pointer;transition:all .15s;border:1.5px solid var(--bd);color:var(--t2);background:var(--sf)}
+.nav-si:hover{border-color:var(--bdm)}
+.nav-gs{display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;font:700 12px/1 var(--font);cursor:pointer;background:var(--in);color:#fff;box-shadow:0 2px 8px var(--ir);transition:all .15s}
+.nav-gs:hover{background:var(--ind);transform:translateY(-1px)}
+@media(max-width:768px){.nav-links{display:none}.nav{background:rgba(255,255,255,.97);box-shadow:0 1px 0 var(--bd)}}
 
-/* ── HERO ── */
-.hero{background:linear-gradient(150deg,#1E1B4B 0%,#312E81 40%,#4547CC 75%,#5B5FEF 100%);padding:100px 0 0;overflow:hidden;position:relative;min-height:90vh;display:flex;flex-direction:column;justify-content:center}
-.hero-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
-.hero-orb-1{width:500px;height:500px;top:-150px;right:-100px;background:rgba(91,95,239,.25)}
-.hero-orb-2{width:350px;height:350px;bottom:80px;left:-80px;background:rgba(5,150,105,.12)}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
-.hero-content{}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;margin-bottom:28px;margin-top:20px}
+/* HERO */
+.hero{
+  background:linear-gradient(150deg,rgba(30,27,75,.92) 0%,rgba(49,46,129,.88) 35%,rgba(69,71,204,.85) 70%,rgba(91,95,239,.82) 100%),
+             url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1800&q=80&auto=format&fit=crop') center/cover no-repeat;
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:80px 0 60px}
+.hero::after{content:'';position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.15),transparent 70%);pointer-events:none}
+.hero-wrap{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:11px;font-weight:600;padding:6px 14px;border-radius:999px;margin-bottom:20px}
 .pulse{width:7px;height:7px;border-radius:50%;background:#34D399;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:900;line-height:1.06;letter-spacing:-2px;color:#fff;margin-bottom:22px}
-.hero h1 .em{display:block;background:linear-gradient(90deg,#A5B4FC,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:18px;color:rgba(255,255,255,.6);line-height:1.7;max-width:440px;margin-bottom:36px}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
-.hero-btns .btn-primary{background:#fff;color:var(--indigo)}
-.hero-btns .btn-primary:hover{background:var(--surface-2);transform:translateY(-1px)}
-.hero-btns .btn-hl{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)}
-.hero-btns .btn-hl:hover{background:rgba(255,255,255,.2)}
-.hero-social{display:flex;align-items:center;gap:12px}
-.hero-avs{display:flex}
-.hero-avs img{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;margin-left:-8px}
-.hero-avs img:first-child{margin-left:0}
-.hero-social-txt{font-size:12px;color:rgba(255,255,255,.55);margin-left:6px}
-.hero-social-txt strong{color:#A5B4FC;font-weight:700}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-size:clamp(32px,4.5vw,56px);font-weight:900;line-height:1.06;letter-spacing:-1.5px;color:#fff;margin-bottom:18px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#A5B4FC,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+.btn-hero-p{display:inline-flex;align-items:center;gap:8px;padding:15px 26px;border-radius:var(--rxl);font:700 14px/1 var(--font);background:#fff;color:var(--in);box-shadow:0 4px 20px rgba(0,0,0,.2);transition:all .18s;cursor:pointer}
+.btn-hero-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.btn-hero-g{display:inline-flex;align-items:center;gap:8px;padding:15px 24px;border-radius:var(--rxl);font:600 14px/1 var(--font);background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);border:1.5px solid rgba(255,255,255,.25);transition:all .18s;cursor:pointer}
+.btn-hero-g:hover{background:rgba(255,255,255,.2)}
+.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ht-item{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.5);font-weight:600}
+.ht-item svg{width:13px;height:13px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2;stroke-linecap:round}
 
-/* ── HERO CARD (right side) ── */
-.hero-card-wrap{position:relative}
-.hero-card{background:#fff;border-radius:var(--r-xl);padding:0;overflow:hidden;box-shadow:var(--sh-lg)}
-/* Logo strip — both logos on white, side by side */
-.hero-logo-strip{display:flex;align-items:center;justify-content:center;gap:0;background:#fff;border-bottom:1px solid var(--bd);padding:18px 24px}
-.hero-logo-divider{width:1px;height:28px;background:var(--bd);margin:0 20px}
-.hero-logo-strip img{display:block;object-fit:contain}
-.hls-ecocash{height:28px;width:auto}
-.hls-econet{height:22px;width:auto}
-.hero-calc-inner{padding:20px 22px 22px}
-.hci-label{font-size:11px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
-.plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.pt{padding:12px 10px;border-radius:10px;border:1.5px solid var(--bd);text-align:center;cursor:pointer;transition:all .18s;background:var(--surface-2)}
-.pt:hover{border-color:var(--bd-md)}
-.pt.active{border-color:var(--indigo);background:rgba(91,95,239,.06)}
-.pt-name{font-size:10px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
-.pt.active .pt-name{color:var(--indigo)}
-.pt-pct{font:700 22px/1 var(--mono);color:var(--t2)}
-.pt.active .pt-pct{color:var(--indigo)}
-.pt-detail{font-size:10px;color:var(--t5);margin-top:2px}
-.pt.active .pt-detail{color:var(--indigo-lt)}
-.hero-calc-in-wrap{position:relative;margin-bottom:10px}
-.hero-calc-pfx{position:absolute;left:13px;top:50%;transform:translateY(-50%);font:700 15px/1 var(--mono);color:var(--t4)}
-.hero-calc-in{width:100%;height:48px;padding:0 14px 0 28px;background:var(--surface-2);border:1.5px solid var(--bd);border-radius:var(--r);font:600 18px/1 var(--mono);color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s}
-.hero-calc-in:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-ring);background:#fff}
-.hero-calc-in::placeholder{color:var(--t5);font-size:14px;font-weight:500;font-family:var(--font)}
-.hero-result{border-radius:10px;padding:14px 16px;background:linear-gradient(135deg,#312E81,#4547CC);display:none;animation:fadeIn .2s ease}
-.hero-result.show{display:flex;justify-content:space-between;align-items:center}
-@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
-.hr-left p{font-size:10px;color:rgba(255,255,255,.55);font-weight:600;margin-bottom:3px}
-.hr-left strong{font:700 20px/1 var(--mono);color:#fff}
-.hr-right{text-align:right}
-.hr-right p{font-size:10px;color:rgba(255,255,255,.55);margin-bottom:3px}
-.hr-right strong{font-size:11px;font-weight:700;color:#A5B4FC}
-/* Floating stat bubbles */
-.hero-bubble{position:absolute;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--sh);white-space:nowrap}
-.hb-val{font:700 18px/1 var(--mono);color:var(--indigo)}
-.hb-lbl{font-size:10px;color:var(--t4);margin-top:2px;font-weight:600}
-.hero-bubble-1{bottom:-16px;left:-16px}
-.hero-bubble-2{top:-12px;right:-12px}
+/* HERO CALCULATOR CARD */
+.calc-card{background:#fff;border-radius:24px;padding:28px;box-shadow:0 8px 40px rgba(0,0,0,.25);position:relative;z-index:1}
+.calc-card-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.calc-card-title span{width:8px;height:8px;border-radius:50%;background:var(--em);display:block;animation:pulse 2s ease-in-out infinite}
+.calc-plan-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
+.cpt{padding:8px 4px;border-radius:10px;border:1.5px solid var(--bd);background:var(--sf);font:600 11px/1.2 var(--font);color:var(--t3);cursor:pointer;text-align:center;transition:all .15s}
+.cpt.active{border-color:var(--in);background:rgba(91,95,239,.08);color:var(--in);font-weight:800}
+.calc-amount-wrap{position:relative;margin-bottom:12px}
+.calc-dollar{position:absolute;left:14px;top:50%;transform:translateY(-50%);font:700 18px/1 var(--mono);color:var(--t4)}
+.calc-input{width:100%;height:54px;padding:0 14px 0 32px;border-radius:14px;border:1.5px solid var(--bdm);font:700 22px/1 var(--mono);color:var(--t1);background:var(--sf);outline:none;-webkit-appearance:none;transition:border-color .18s}
+.calc-input:focus{border-color:var(--in);box-shadow:0 0 0 3px var(--ir)}
+.calc-input.err{border-color:#DC2626}
+.calc-err{font-size:11px;color:#DC2626;font-weight:700;margin-top:5px;min-height:16px}
+.calc-result{background:#0F172A;border-radius:16px;padding:16px;display:none;margin-top:12px}
+.calc-result.show{display:block}
+.cr-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px}
+.cr-l{color:rgba(255,255,255,.45)}
+.cr-v{font-family:var(--mono);font-weight:700;color:#fff}
+.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+.cr-total-val{font-size:22px;font-weight:800;color:var(--inl)}
+.calc-cta{display:block;width:100%;padding:14px;border-radius:14px;margin-top:12px;background:var(--in);color:#fff;font:700 14px/1 var(--font);text-align:center;cursor:pointer;transition:all .15s;box-shadow:0 4px 14px var(--ir)}
+.calc-cta:hover{background:var(--ind);transform:translateY(-1px)}
+@media(min-width:901px){.mobile-calc-section{display:none!important}}
+@media(max-width:900px){.hero-wrap{grid-template-columns:1fr}.calc-card{display:none}}
 
-/* ── STATS STRIP ── */
-.stats-strip{background:var(--surface);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
-.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);max-width:1080px;margin:0 auto;padding:0 28px}
-.st{padding:26px 16px;text-align:center;position:relative}
-.st+.st::before{content:'';position:absolute;left:0;top:25%;height:50%;width:1px;background:var(--bd)}
-.st-num{font:700 28px/1 var(--mono);color:var(--indigo)}
-.st-lbl{font-size:12px;color:var(--t4);margin-top:4px;font-weight:500}
+/* HOW IT WORKS */
+.section{padding:80px 0}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.s-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--in);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.s-label::before{content:'';width:20px;height:2px;background:var(--in);border-radius:2px}
+.s-headline{font-size:clamp(26px,3.5vw,42px);font-weight:900;letter-spacing:-1px;color:var(--t1);line-height:1.1;margin-bottom:16px}
+.s-sub{font-size:16px;color:var(--t3);line-height:1.7;max-width:560px}
 
-/* ── EARNINGS ── */
-.src-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
-.src-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-sm);transition:box-shadow .2s,transform .2s}
-.src-card:hover{box-shadow:var(--sh-lg);transform:translateY(-3px)}
-.src-img{height:196px;overflow:hidden;position:relative;background:var(--surface-2)}
-.src-img img{width:100%;height:100%;transition:transform .5s var(--ease)}
-.src-card:hover .src-img img{transform:scale(1.04)}
-.src-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.65) 0%,rgba(15,23,42,.1) 55%,transparent 100%)}
-.src-tag{position:absolute;bottom:12px;left:14px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff;background:rgba(91,95,239,.8);padding:4px 10px;border-radius:999px}
-.src-accent{height:3px}
-.src-card:nth-child(1) .src-accent{background:linear-gradient(90deg,var(--indigo),var(--indigo-lt))}
-.src-card:nth-child(2) .src-accent{background:linear-gradient(90deg,var(--gold),#FCD34D)}
-.src-card:nth-child(3) .src-accent{background:linear-gradient(90deg,#3B82F6,#93C5FD)}
-.src-card:nth-child(4) .src-accent{background:linear-gradient(90deg,var(--green),var(--green-lt))}
-.src-body{padding:20px 22px 24px}
-.src-title{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:8px}
-.src-desc{font-size:13px;color:var(--t3);line-height:1.68;margin-bottom:14px}
-.src-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--bd);color:var(--t3);font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px}
-.src-badge svg{width:10px;height:10px;stroke:var(--green);fill:none;stroke-width:2.5;stroke-linecap:round}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px}
+.step{text-align:center}
+.step-num{width:52px;height:52px;border-radius:16px;background:var(--in);color:#fff;font:800 20px/1 var(--mono);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 14px var(--ir)}
+.step-title{font-size:16px;font-weight:800;color:var(--t1);margin-bottom:8px}
+.step-body{font-size:14px;color:var(--t3);line-height:1.7}
+.step-arrow{position:absolute;top:26px;right:-18px;font-size:20px;color:var(--bd)}
+.steps-rel{position:relative}
 
-/* ── PLANS ── */
-.plans-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px;max-width:760px;margin-left:auto;margin-right:auto}
-.plan-card{background:var(--surface);border:2px solid var(--bd);border-radius:var(--r-xl);overflow:hidden;transition:box-shadow .2s,transform .2s,border-color .2s}
-.plan-card:hover{box-shadow:var(--sh-lg);transform:translateY(-4px)}
-.plan-card.featured{border-color:var(--indigo);box-shadow:0 0 0 1px var(--indigo)}
-.plan-top{height:4px}
-.plan-card:nth-child(1) .plan-top{background:linear-gradient(90deg,var(--bd-md),var(--bd))}
-.plan-card.featured .plan-top{background:linear-gradient(90deg,var(--indigo),var(--indigo-lt))}
-.plan-pop{position:absolute;top:16px;right:16px;background:var(--indigo);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.3px}
-.plan-body{padding:28px}
-.plan-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px}
-.plan-card:nth-child(1) .plan-icon{background:var(--surface-2)}
-.plan-card.featured .plan-icon{background:rgba(91,95,239,.08)}
-.plan-tier{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t4);margin-bottom:6px}
-.plan-pct{font:700 56px/1 var(--mono);color:var(--t1);letter-spacing:-2px}
-.plan-pct sup{font-size:24px;vertical-align:top;margin-top:9px;display:inline-block}
-.plan-pct-lbl{font-size:13px;color:var(--t4);margin-bottom:22px}
-.plan-div{height:1px;background:var(--bd);margin-bottom:20px}
-.plan-rows{display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
-.plan-row{display:flex;justify-content:space-between;font-size:13px}
-.plan-row-lbl{color:var(--t3)}
-.plan-row-val{font-weight:600;color:var(--t1)}
-.plan-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.22);color:var(--green);font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px}
-.plan-chip svg{width:12px;height:12px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round}
-.plan-relative{position:relative}
+/* PLANS */
+.plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.plan-card{background:var(--sf);border:2px solid var(--bd);border-radius:20px;overflow:hidden;transition:all .2s;position:relative}
+.plan-card:hover{border-color:var(--in);box-shadow:0 4px 24px var(--ir);transform:translateY(-2px)}
+.plan-card.featured{border-color:var(--inl)}
+.plan-card.vault-card{border:2px dashed var(--gold);background:linear-gradient(135deg,#FFFBEB,#FFF)}
+.plan-top-bar{height:4px}
+.ptb-trial{background:linear-gradient(90deg,#10B981,#34D399)}
+.ptb-saver{background:linear-gradient(90deg,#94A3B8,#CBD5E1)}
+.ptb-builder{background:linear-gradient(90deg,#5B5FEF,#818CF8)}
+.ptb-vault{background:linear-gradient(90deg,#D97706,#F59E0B)}
+.plan-popular{position:absolute;top:16px;right:16px;background:var(--in);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+.plan-body{padding:20px}
+.plan-icon{font-size:26px;margin-bottom:10px}
+.plan-name{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);margin-bottom:6px}
+.plan-pct{font:800 40px/1 var(--mono);color:var(--t1);margin-bottom:4px;letter-spacing:-2px}
+.plan-pct sup{font-size:18px;vertical-align:top;margin-top:8px;display:inline-block}
+.plan-pct-lbl{font-size:11px;color:var(--t4);font-weight:600;margin-bottom:14px}
+.plan-divider{height:1px;background:var(--bd);margin:14px 0}
+.plan-detail{display:flex;justify-content:space-between;font-size:13px;padding:4px 0}
+.plan-detail .lbl{color:var(--t4)}
+.plan-detail .val{font-weight:700;color:var(--t1);font-family:var(--mono)}
+.plan-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(91,95,239,.07);color:var(--in);font:600 11px/1 var(--font);padding:5px 11px;border-radius:999px;margin-top:14px}
+.plan-chip svg{width:11px;height:11px;stroke:var(--in);fill:none;stroke-width:2;stroke-linecap:round}
+.plan-chip.gold{background:rgba(217,119,6,.08);color:var(--gold)}
+.plan-chip.gold svg{stroke:var(--gold)}
+.plan-lock-note{font-size:11px;color:var(--gold);font-weight:600;margin-top:10px}
+.plan-cta{display:block;width:100%;padding:12px;border-radius:12px;margin-top:16px;border:1.5px solid var(--bd);background:transparent;color:var(--t2);font:700 13px/1 var(--font);cursor:pointer;text-align:center;transition:all .15s}
+.plan-cta:hover{border-color:var(--in);color:var(--in)}
+.plan-cta.primary{background:var(--in);color:#fff;border-color:var(--in);box-shadow:0 3px 12px var(--ir)}
+.plan-cta.primary:hover{background:var(--ind)}
 
-/* ── CALCULATOR ── */
-.calc-card{background:var(--surface);border:1.5px solid var(--bd);border-radius:var(--r-xl);padding:40px;max-width:620px;margin:56px auto 0;box-shadow:var(--sh)}
-.calc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--t4);margin-bottom:10px;display:block}
-.calc-plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-.cpt{padding:16px 10px;border-radius:var(--r-lg);border:1.5px solid var(--bd);text-align:center;cursor:pointer;transition:all .18s;background:var(--surface-2)}
-.cpt:hover{border-color:var(--bd-md)}
-.cpt.active{border-color:var(--indigo);background:rgba(91,95,239,.06)}
-.cpt-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t4);margin-bottom:4px}
-.cpt.active .cpt-name{color:var(--indigo)}
-.cpt-pct{font:700 26px/1 var(--mono);color:var(--t1)}
-.cpt.active .cpt-pct{color:var(--indigo)}
-.cpt-hrs{font-size:11px;color:var(--t5);margin-top:3px}
-.cpt.active .cpt-hrs{color:var(--indigo-lt)}
-.calc-in-wrap{position:relative;margin-bottom:16px}
-.calc-pfx{position:absolute;left:16px;top:50%;transform:translateY(-50%);font:700 17px/1 var(--mono);color:var(--t4)}
-.calc-in{width:100%;height:58px;padding:0 18px 0 34px;background:var(--surface-2);border:1.5px solid var(--bd);border-radius:var(--r-lg);font:700 22px/1 var(--mono);color:var(--t1);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s,background .18s}
-.calc-in:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-ring);background:#fff}
-.calc-in::placeholder{color:var(--t5)}
-.calc-result{background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:var(--r-lg);padding:22px;display:none}
-.calc-result.show{display:block;animation:fadeIn .2s ease}
-.cr-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:14px}
-.cr-sep{height:1px;background:rgba(255,255,255,.1);margin:10px 0}
-.cr-lbl{color:rgba(255,255,255,.5);font-weight:500}
-.cr-val{font:700 14px/1 var(--mono);color:#fff}
-.cr-total{font-size:28px;font-weight:800;background:linear-gradient(90deg,#A5B4FC,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.calc-err{font-size:13px;color:var(--red);font-weight:600;margin-top:8px;display:none}
+/* REFERRAL SECTION */
+.ref-section{background:linear-gradient(135deg,#EEF1FF,#F0FDF4);border-radius:24px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.ref-badge{display:inline-flex;align-items:center;gap:8px;background:var(--er);border:1px solid rgba(5,150,105,.2);color:var(--em);font-size:11px;font-weight:700;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.ref-steps{display:flex;flex-direction:column;gap:16px;margin-top:24px}
+.ref-step{display:flex;align-items:flex-start;gap:14px}
+.ref-step-num{width:30px;height:30px;border-radius:8px;background:var(--in);color:#fff;font:800 13px/1 var(--mono);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ref-step-body{font-size:14px;color:var(--t3);line-height:1.6}
+.ref-step-body strong{color:var(--t1)}
 
-/* ── HOW IT WORKS ── */
-.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
-.step-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);padding:28px;text-align:center;box-shadow:var(--sh-sm);transition:box-shadow .2s,border-color .2s}
-.step-card:hover{box-shadow:var(--sh);border-color:var(--indigo)}
-.step-num{width:48px;height:48px;border-radius:14px;background:rgba(91,95,239,.08);border:1px solid rgba(91,95,239,.18);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font:700 17px/1 var(--mono);color:var(--indigo)}
-.step-title{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px}
-.step-body{font-size:13px;color:var(--t3);line-height:1.65}
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.tcard{background:var(--sf);border:1.5px solid var(--bd);border-radius:18px;padding:24px;position:relative}
+.tcard-quote{font-size:32px;color:var(--bd);line-height:1;margin-bottom:12px}
+.tcard-text{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:16px}
+.tcard-author{display:flex;align-items:center;gap:10px}
+.tcard-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--mono);color:#fff;flex-shrink:0}
+.tcard-name{font-size:13px;font-weight:700;color:var(--t1)}
+.tcard-plan{font-size:11px;color:var(--t4)}
+.stars{color:#F59E0B;font-size:13px;margin-bottom:10px}
 
-/* ── ECOCASH CTA BANNER — logos on white ── */
-.eco-banner{background:var(--surface);border:1.5px solid var(--bd);border-radius:var(--r-xl);padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-top:56px;box-shadow:var(--sh)}
-.eco-banner-left{}
-/* Logo row — ecocash.png + econet.png natural on white bg */
-.eco-logo-row{display:flex;align-items:center;gap:0;margin-bottom:16px}
-.eco-logo-sep{width:1px;height:24px;background:var(--bd);margin:0 18px}
-.eco-logo-row img{display:block;object-fit:contain}
-.elr-ecocash{height:30px;width:auto}
-.elr-econet{height:22px;width:auto}
-.eco-banner-title{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:8px}
-.eco-banner-desc{font-size:14px;color:var(--t3);max-width:420px;line-height:1.68;margin-bottom:16px}
-.eco-pills{display:flex;flex-wrap:wrap;gap:8px}
-.eco-pill{background:var(--surface-2);border:1px solid var(--bd);color:var(--t3);font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px}
+/* TRUST STRIP */
+.trust-strip{background:#0F172A;padding:48px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.trust-item .val{font:700 32px/1 var(--mono);color:#fff;margin-bottom:6px}
+.trust-item .lbl{font-size:13px;color:rgba(255,255,255,.4)}
 
-/* ── TESTIMONIALS ── */
-.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-.t-card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r-xl);padding:28px;box-shadow:var(--sh-sm);transition:box-shadow .2s}
-.t-card:hover{box-shadow:var(--sh)}
-.t-stars{color:var(--gold);font-size:17px;letter-spacing:2px;margin-bottom:14px}
-.t-quote{font-size:14px;color:var(--t3);line-height:1.72;margin-bottom:20px}
-.t-author{display:flex;align-items:center;gap:12px}
-.t-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;border:2px solid var(--bd);flex-shrink:0;background:var(--surface-2)}
-.t-avatar img{width:100%;height:100%;object-fit:cover}
-.t-name{font-size:14px;font-weight:700;color:var(--t1)}
-.t-loc{font-size:12px;color:var(--t5)}
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,#4547CC,#5B5FEF);padding:80px 0;text-align:center}
+.cta-section h2{font-size:clamp(28px,4vw,48px);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:16px}
+.cta-section p{font-size:16px;color:rgba(255,255,255,.65);margin-bottom:32px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-/* ── FOOTER ── */
-footer{background:#0F172A;padding:64px 0 28px}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-.footer-brand p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-top:14px;max-width:240px}
-/* Logos in footer — on a white pill so they show naturally */
-.footer-logos{display:flex;align-items:center;gap:12px;margin-top:16px;background:#fff;border-radius:10px;padding:8px 14px;width:fit-content}
-.footer-logos img{display:block;object-fit:contain}
-.footer-logos .fl-ecocash{height:22px;width:auto}
-.footer-logos .fl-sep{width:1px;height:16px;background:var(--bd)}
-.footer-logos .fl-econet{height:16px;width:auto}
-.footer-col h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:rgba(255,255,255,.35);margin-bottom:16px}
-.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:11px;transition:color .15s}
+/* FOOTER */
+footer{background:#0F172A;padding:48px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-top:12px;max-width:260px}
+.footer-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px;transition:color .15s}
 .footer-col a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:10px}
-.footer-seal{display:inline-flex;align-items:center;gap:6px;background:rgba(91,95,239,.15);border:1px solid rgba(91,95,239,.25);color:var(--indigo-lt);font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px}
-.footer-seal svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.25)}
 
-/* ── RISK NOTICE ── */
-.risk{background:rgba(217,119,6,.07);border:1px solid rgba(217,119,6,.2);border-radius:var(--r-lg);padding:14px 18px;font-size:13px;color:var(--t3);line-height:1.6;margin-top:24px}
-.risk strong{color:var(--t2)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:960px){
-  .hero-grid{grid-template-columns:1fr}.hero-card-wrap{display:none}
-  .plans-wrap,.t-grid{grid-template-columns:1fr}
-  .src-grid{grid-template-columns:1fr}
-  .steps-grid{grid-template-columns:1fr 1fr}
-  .stats-inner{grid-template-columns:1fr 1fr}
+/* RESPONSIVE */
+@media(max-width:900px){
+  .plans-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .ref-section{grid-template-columns:1fr;padding:32px}
+  .testimonials{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr 1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
-  .eco-banner{flex-direction:column}
 }
-@media(max-width:560px){
-  .wrap > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-  .wrap > div[style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr!important}
-
-  section{padding:64px 0}
-  .wrap{padding:0 16px}  /* edge-to-edge on phone */
-  .nav-inner{padding:0 16px}
-  .steps-grid,.stats-inner{grid-template-columns:1fr}
+@media(max-width:600px){
+  .plans-grid{grid-template-columns:1fr}
+  .hero{padding:100px 0 48px}
+  .section{padding:56px 0}
+  .wrap{padding:0 16px}
+  .hero-wrap{padding:0 16px}
+  .trust-grid{grid-template-columns:1fr 1fr}
   .footer-grid{grid-template-columns:1fr}
-  .hero{min-height:auto;padding:80px 0 0}
-  .hero-btns{flex-direction:column}
-  .btn-lg{width:100%}
-  .calc-plan-tabs{grid-template-columns:1fr}
-  .calc-card{padding:20px 16px}
-  .eco-banner{padding:24px 16px}
-  .stats-inner{padding:0}
+  .calc-plan-tabs{grid-template-columns:1fr 1fr}
 }
 
-/* ── FAQ ACCORDION ── */
-.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--bd);border-radius:20px;overflow:hidden;box-shadow:var(--sh-sm);background:var(--surface)}
-.faq-item{border-bottom:1px solid var(--bd)}
-.faq-item:last-child{border-bottom:none}
-.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:none;border:none;cursor:pointer;text-align:left;font:600 15px/1.4 var(--font);color:var(--t1);transition:background .15s}
-.faq-q:hover{background:var(--surface-2)}
-.faq-q.open{background:var(--surface-2)}
-.faq-icon{width:18px;height:18px;stroke:var(--t4);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .25s var(--ease)}
-.faq-q.open .faq-icon{transform:rotate(180deg);stroke:var(--indigo)}
-.faq-a{font-size:14px;color:var(--t3);line-height:1.75;max-height:0;overflow:hidden;padding:0 22px;transition:max-height .35s var(--ease),padding .35s var(--ease)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:none;border:none;cursor:pointer;text-align:left;font:600 15px/1.4 var(--font);color:#0F172A;transition:background .15s}
+.faq-q:hover{background:#F8FAFC}
+.faq-q.open{background:#F8FAFC}
+.faq-icon{width:18px;height:18px;stroke:#94A3B8;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .25s var(--ease)}
+.faq-q.open .faq-icon{transform:rotate(180deg);stroke:#5B5FEF}
+.faq-a{font-size:14px;color:#475569;line-height:1.75;max-height:0;overflow:hidden;padding:0 22px;transition:max-height .35s var(--ease),padding .35s var(--ease)}
 .faq-a.open{max-height:200px;padding:0 22px 18px}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-in">
+    <div class="logo">
+      <div class="logo-m"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span class="logo-n">Zim<span style="color:var(--in)">Vest</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#plans">Plans</a>
+      <a href="#how">How it works</a>
+      <a href="#earnings">How we earn</a>
+      <a href="#refer">Refer &amp; earn</a>
+      <a href="#testimonials">Reviews</a>
+    </div>
+    <div class="nav-right">
+      <a href="auth.html?tab=si" class="nav-si">Sign in</a>
+      <a href="auth.html?tab=rg" class="nav-gs">Get started →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
-  <nav>
-    <div class="nav-inner">
-      <div style="display:flex;align-items:center;gap:9px">
-        <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <span style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px">Zim<span style="color:#A5B4FC">Vest</span></span>
+  <div class="hero-wrap">
+    <div class="hero-content">
+      <div class="hero-tag"><div class="pulse"></div>Payouts running 24/7</div>
+      <h1>Grow your<br>EcoCash money<br><em>up to 50% faster</em></h1>
+      <p class="hero-sub">Deposit via EcoCash. Choose your plan. Receive your payout automatically in as little as 24 hours. No bank account. No agents. No paperwork.</p>
+      <div class="hero-btns">
+        <a href="auth.html?tab=rg" class="btn-hero-p">
+          <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+          Start earning — it's free
+        </a>
+        <a href="#how" class="btn-hero-g">See how it works</a>
       </div>
-      <div class="nav-links">
-        <a href="#plans">Plans</a>
-        <a href="#how">How it works</a>
-        <a href="#earnings">How we earn</a>
-        <a href="#calc">Calculator</a>
+      <!-- Social proof -->
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex">
+            <img src="https://ui-avatars.com/api/?name=TM&background=5B5FEF&color=fff&size=52&rounded=true&bold=true" width="26" height="26" style="border-radius:50%;border:2px solid rgba(255,255,255,.3);flex-shrink:0"/>
+            <img src="https://ui-avatars.com/api/?name=CN&background=059669&color=fff&size=52&rounded=true&bold=true" width="26" height="26" style="border-radius:50%;border:2px solid rgba(255,255,255,.3);margin-left:-8px;flex-shrink:0"/>
+            <img src="https://ui-avatars.com/api/?name=SM&background=D97706&color=fff&size=52&rounded=true&bold=true" width="26" height="26" style="border-radius:50%;border:2px solid rgba(255,255,255,.3);margin-left:-8px;flex-shrink:0"/>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#fff">500+ investors</div>
+            <div style="font-size:10px;color:rgba(255,255,255,.4)">joined this month</div>
+          </div>
+        </div>
+        <div style="width:1px;height:28px;background:rgba(255,255,255,.15)"></div>
+        <div><div style="font-size:12px;font-weight:700;color:#fff">100% on-time</div><div style="font-size:10px;color:rgba(255,255,255,.4)">payout record</div></div>
+        <div style="width:1px;height:28px;background:rgba(255,255,255,.15)"></div>
+        <div><div style="font-size:12px;font-weight:700;color:#fff">$0 fees</div><div style="font-size:10px;color:rgba(255,255,255,.4)">to register</div></div>
       </div>
-      <div class="nav-right">
-        <a href="auth.html?tab=si" class="nav-btn-si">Sign in</a>
-        <a href="auth.html?tab=rg" class="nav-btn-gs">Get started →</a>
+      <div class="hero-trust">
+        <div class="ht-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>256-bit SSL</div>
+        <div class="ht-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>EcoCash official</div>
+        <div class="ht-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Zero fees</div>
       </div>
     </div>
-  </nav>
 
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="hero-tag"><div class="pulse"></div>Live payouts running 24/7</div>
-        <h1>Grow your EcoCash<br>money by up to 35%
-          <span class="em">in Zimbabwe</span>
-        </h1>
-        <p class="hero-sub">Invest from $100 via EcoCash. Earn up to 35% returns in 48 hours. No bank account needed.</p>
-        <div class="hero-btns">
-          <a href="auth.html?tab=rg" class="btn btn-primary btn-lg"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Start earning now — it's free</a>
-          <a href="#plans" class="btn btn-hl btn-lg">View plans</a>
-        </div>
-        <div class="hero-social">
-          <div class="hero-avs">
-            <img src="assets/t-tendai.jpg" alt="" loading="eager" width="30" height="30"/>
-            <img src="assets/t-chiedza.jpg" alt="" loading="eager" width="30" height="30"/>
-            <img src="assets/t-rumbi.jpg" alt="" loading="eager" width="30" height="30"/>
-          </div>
-          <div class="hero-social-txt"><strong>4,200+</strong> Zimbabweans already investing</div>
-        </div>
+    <!-- CALCULATOR CARD -->
+    <div class="calc-card">
+      <div class="calc-card-title"><span></span>Calculate your payout</div>
+      <div class="calc-plan-tabs">
+        <button class="cpt" id="cpt-trial"   onclick="cTab('trial')">Trial<br><small>+10%</small></button>
+        <button class="cpt active" id="cpt-saver"   onclick="cTab('saver')">Saver<br><small>+20%</small></button>
+        <button class="cpt" id="cpt-builder" onclick="cTab('builder')">Builder<br><small>+35%</small></button>
+        <button class="cpt" id="cpt-vault"   onclick="cTab('vault')">Vault<br><small>+50%</small></button>
       </div>
-      <div class="hero-card-wrap">
-        <!-- WHITE CARD: both logos at natural colours on white background -->
-        <div class="hero-card">
-          <div class="hero-logo-strip">
-            <img src="assets/ecocash.png" alt="EcoCash" class="hls-ecocash" loading="eager"/>
-            <div class="hero-logo-divider"></div>
-            <img src="assets/econet.png" alt="Econet Wireless" class="hls-econet" loading="eager"/>
-          </div>
-          <div class="hero-calc-inner">
-            <div class="hci-label">Calculate your return</div>
-            <div class="plan-tabs" id="heroPlanTabs">
-              <div class="pt active" data-plan="starter" onclick="hTab(this)">
-                <div class="pt-name">Starter</div>
-                <div class="pt-pct">20%</div>
-                <div class="pt-detail">$100–$500 · 72hrs</div>
-              </div>
-              <div class="pt" data-plan="growth" onclick="hTab(this)">
-                <div class="pt-name">Growth</div>
-                <div class="pt-pct">35%</div>
-                <div class="pt-detail">$501–$1,500 · 48hrs</div>
-              </div>
-            </div>
-            <div class="hero-calc-in-wrap">
-              <span class="hero-calc-pfx">$</span>
-              <input type="number" class="hero-calc-in" id="heroAmt" placeholder="$100–$1,500" oninput="hCalc()">
-            </div>
-            <div class="hero-result" id="heroResult">
-              <div class="hr-left"><p>You receive</p><strong id="hTotal">—</strong></div>
-              <div class="hr-right"><p id="hTime">—</p><strong id="hProfit">—</strong></div>
-            </div>
-          </div>
-        </div>
-        <div class="hero-bubble hero-bubble-1">
-          <div class="hb-val">+35%</div>
-          <div class="hb-lbl">Growth return</div>
-        </div>
-        <div class="hero-bubble hero-bubble-2">
-          <div class="hb-val">48 hrs</div>
-          <div class="hb-lbl">Fastest payout</div>
-        </div>
+      <div class="calc-amount-wrap">
+        <span class="calc-dollar">$</span>
+        <input type="number" class="calc-input" id="calcAmt" placeholder="$20 – $5,000" inputmode="decimal" oninput="calc()">
       </div>
-    </div>
-  </div>
-  <div class="stats-strip" style="margin-top:72px">
-    <div class="stats-inner">
-      <div class="st"><div class="st-num">$2.4M+</div><div class="st-lbl">Total paid out</div></div>
-      <div class="st"><div class="st-num">4,200+</div><div class="st-lbl">Active investors</div></div>
-      <div class="st"><div class="st-num">100%</div><div class="st-lbl">On-time payouts</div></div>
-      <div class="st"><div class="st-num">48 hrs</div><div class="st-lbl">Fastest payout</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PLANS -->
-<section class="s-white" id="plans">
-  <div class="wrap" style="text-align:center">
-    <div class="eyebrow" style="justify-content:center">Investment plans</div>
-    <h2 class="headline" style="margin-bottom:12px">Two clear choices</h2>
-    <p class="body-copy" style="max-width:480px;margin:0 auto">All via EcoCash. No bank account. No hidden fees. Minimum $100.</p>
-    <div class="plans-wrap">
-      <div class="plan-card">
-        <div class="plan-top"></div>
-        <div class="plan-body">
-          <div class="plan-icon">🌱</div>
-          <div class="plan-tier">Starter</div>
-          <div class="plan-pct"><sup>+</sup>20<sup>%</sup></div>
-          <div class="plan-pct-lbl">return on investment</div>
-          <div class="plan-div"></div>
-          <div class="plan-rows">
-            <div class="plan-row"><span class="plan-row-lbl">Deposit range</span><span class="plan-row-val">$100 – $500</span></div>
-            <div class="plan-row"><span class="plan-row-lbl">$200 in</span><span class="plan-row-val">$240 out</span></div>
-            <div class="plan-row"><span class="plan-row-lbl">$500 in</span><span class="plan-row-val">$600 out</span></div>
-          </div>
-          <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 72 hours</div>
-          <a href="auth.html" class="btn btn-ghost btn-full" style="margin-top:18px?tab=rg">Get started →</a>
-        </div>
+      <div class="calc-err" id="calcErr"></div>
+      <div class="calc-result" id="calcResult">
+        <div class="cr-row"><span class="cr-l">You deposit</span><span class="cr-v" id="crDep">—</span></div>
+        <div class="cr-row"><span class="cr-l">Return rate</span><span class="cr-v" id="crRate">—</span></div>
+        <div class="cr-row"><span class="cr-l">Profit</span><span class="cr-v" id="crProfit">—</span></div>
+        <div class="cr-sep"></div>
+        <div class="cr-row"><span class="cr-l">You receive</span><span class="cr-v cr-total-val" id="crTotal">—</span></div>
+        <div class="cr-row"><span class="cr-l">Payout in</span><span class="cr-v" id="crTime">—</span></div>
       </div>
-      <div class="plan-card featured plan-relative">
-        <div class="plan-top"></div>
-        <div class="plan-pop">★ Best value</div>
-        <div class="plan-body">
-          <div class="plan-icon">🚀</div>
-          <div class="plan-tier">Growth</div>
-          <div class="plan-pct"><sup>+</sup>35<sup>%</sup></div>
-          <div class="plan-pct-lbl">return on investment</div>
-          <div class="plan-div"></div>
-          <div class="plan-rows">
-            <div class="plan-row"><span class="plan-row-lbl">Deposit range</span><span class="plan-row-val">$501 – $1,500</span></div>
-            <div class="plan-row"><span class="plan-row-lbl">$700 in</span><span class="plan-row-val">$945 out</span></div>
-            <div class="plan-row"><span class="plan-row-lbl">$1,500 in</span><span class="plan-row-val">$2,025 out</span></div>
-          </div>
-          <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Paid out in 48 hours</div>
-          <a href="auth.html" class="btn btn-primary btn-full" style="margin-top:18px?tab=rg">Get started →</a>
-        </div>
-      </div>
-    </div>
-    <div class="risk"><strong>Risk notice:</strong> All investments carry risk. Past returns do not guarantee future results. Invest only what you can afford to commit for the stated duration.</div>
-  </div>
-</section>
-
-<!-- CALCULATOR -->
-<section class="s-bg" id="calc">
-  <div class="wrap" style="text-align:center">
-    <div class="eyebrow" style="justify-content:center">Returns calculator</div>
-    <h2 class="headline" style="margin-bottom:12px">See your exact payout</h2>
-    <p class="body-copy">Enter any amount and see precisely what you receive.</p>
-  </div>
-  <div class="calc-card">
-    <label class="calc-lbl">Plan — auto-selected by amount</label>
-    <div class="calc-plan-tabs">
-      <div class="cpt active" id="cpt-starter" onclick="cTab('starter')">
-        <div class="cpt-name">Starter</div>
-        <div class="cpt-pct">+20%</div>
-        <div class="cpt-hrs">72 hours · $100–$500</div>
-      </div>
-      <div class="cpt" id="cpt-growth" onclick="cTab('growth')">
-        <div class="cpt-name">Growth</div>
-        <div class="cpt-pct">+35%</div>
-        <div class="cpt-hrs">48 hours · $501–$1,500</div>
-      </div>
-    </div>
-    <label class="calc-lbl">2. Enter deposit amount</label>
-    <div class="calc-in-wrap">
-      <span class="calc-pfx">$</span>
-      <input type="number" class="calc-in" id="calcAmt" placeholder="$100–$500 = Starter · $501–$1,500 = Growth" oninput="cCalc()">
-    </div>
-    <div class="calc-result" id="calcResult">
-      <div class="cr-row"><span class="cr-lbl">Deposit</span><span class="cr-val" id="cDep">—</span></div>
-      <div class="cr-row"><span class="cr-lbl">Return rate</span><span class="cr-val" id="cRate">—</span></div>
-      <div class="cr-row"><span class="cr-lbl">Profit earned</span><span class="cr-val" id="cProfit">—</span></div>
-      <div class="cr-sep"></div>
-      <div class="cr-row"><span class="cr-lbl">Total payout</span><span class="cr-val cr-total" id="cTotal">—</span></div>
-      <div class="cr-row"><span class="cr-lbl">Via EcoCash in</span><span class="cr-val" id="cTime">—</span></div>
-    </div>
-    <div class="calc-err" id="calcErr"></div>
-    <a href="auth.html?tab=rg" class="btn btn-primary btn-full btn-lg" style="margin-top:20px">Create account &amp; invest →</a>
-  </div>
-</section>
-
-<!-- EARNINGS -->
-<section class="s-white" id="earnings">
-  <div class="wrap">
-    <div class="eyebrow">Where your returns come from</div>
-    <h2 class="headline" style="max-width:520px;margin-bottom:12px">Four proven sources drive every payout</h2>
-    <p class="body-copy" style="max-width:560px">ZimVest pools capital across actively managed instruments. Returns are distributed on schedule regardless of daily market movement.</p>
-    <div class="src-grid">
-      <div class="src-card"><div class="src-img"><img src="assets/src-forex.jpg" alt="Forex" loading="lazy"/><div class="src-img-overlay"></div><span class="src-tag">~45% of returns</span></div><div class="src-accent"></div><div class="src-body"><div class="src-title">Forex trading</div><div class="src-desc">Our licensed desk trades USD/ZAR, USD/EUR and USD/GBP algorithmically with strict daily risk caps. Zimbabwe's regional corridors create consistent arbitrage opportunities.</div><span class="src-badge"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>~45% of fund return</span></div></div>
-      <div class="src-card"><div class="src-img"><img src="assets/src-crypto.jpg" alt="Crypto" loading="lazy"/><div class="src-img-overlay"></div><span class="src-tag">~30% of returns</span></div><div class="src-accent"></div><div class="src-body"><div class="src-title">Crypto arbitrage</div><div class="src-desc">Price gaps of 3–8% between African and global exchanges captured algorithmically. USDT, BTC and ETH positions open and close within the same session — zero overnight exposure.</div><span class="src-badge"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>~30% of fund return</span></div></div>
-      <div class="src-card"><div class="src-img"><img src="assets/src-bonds.jpg" alt="Money market" loading="lazy"/><div class="src-img-overlay"></div><span class="src-tag">~15% of returns</span></div><div class="src-accent"></div><div class="src-body"><div class="src-title">Money market</div><div class="src-desc">USD-denominated Treasury Bills and short-duration instruments provide a stable yield buffer, ensuring all payouts are met even during lower trading sessions.</div><span class="src-badge"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>~15% of fund return</span></div></div>
-      <div class="src-card"><div class="src-img"><img src="assets/src-agri.jpg" alt="Commodities" loading="lazy"/><div class="src-img-overlay"></div><span class="src-tag">~10% of returns</span></div><div class="src-accent"></div><div class="src-body"><div class="src-title">Agricultural commodities</div><div class="src-desc">Tobacco, gold and platinum export markets traded on the Zimbabwe Mercantile Exchange. Gold spot via Fidelity Printers rounds out the portfolio.</div><span class="src-badge"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>~10% of fund return</span></div></div>
+      <a href="auth.html?tab=rg" class="calc-cta">Create free account &amp; invest →</a>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="s-bg" id="how">
-  <div class="wrap" style="text-align:center;margin-bottom:0">
-    <div class="eyebrow" style="justify-content:center">Process</div>
-    <h2 class="headline" style="margin-bottom:12px">Four steps to your payout</h2>
-    <p class="body-copy" style="max-width:480px;margin:0 auto">From sign up to EcoCash wallet in as little as 48 hours.</p>
-  </div>
-  <div class="wrap" style="margin-top:0">
-    <div class="steps-grid">
-      <div class="step-card"><div class="step-num">01</div><div class="step-title">Create account</div><div class="step-body">Register with your EcoCash number and a password in under 60 seconds. Completely free.</div></div>
-      <div class="step-card"><div class="step-num">02</div><div class="step-title">Choose your plan</div><div class="step-body">Pick Starter or Growth. The calculator shows your exact return before you commit.</div></div>
-      <div class="step-card"><div class="step-num">03</div><div class="step-title">Pay via EcoCash</div><div class="step-body">The official EcoCash secure portal opens. Your PIN is entered directly in their system — ZimVest never sees it.</div></div>
-      <div class="step-card"><div class="step-num">04</div><div class="step-title">Receive payout</div><div class="step-body">Your full return is pushed automatically to your EcoCash wallet when the plan matures.</div></div>
-    </div>
-
-    <!-- ECOCASH BANNER — logos on white surface, never on colour -->
-    <div class="eco-banner">
-      <div class="eco-banner-left">
-        <div class="eco-logo-row">
-          <img src="assets/ecocash.png" alt="EcoCash" class="elr-ecocash" loading="lazy"/>
-          <div class="eco-logo-sep"></div>
-          <img src="assets/econet.png" alt="Econet Wireless" class="elr-econet" loading="lazy"/>
-        </div>
-        <div class="eco-banner-title">Official EcoCash Secure Portal</div>
-        <div class="eco-banner-desc">When you tap Invest, you are redirected to EcoCash's own encrypted payment gateway — the same system used for all Econet services. ZimVest never sees or stores your PIN.</div>
-        <div class="eco-pills">
-          <span class="eco-pill">🔒 256-bit SSL</span>
-          <span class="eco-pill">✅ Official EcoCash</span>
-          <span class="eco-pill">⚡ Instant confirm</span>
-          <span class="eco-pill">🔄 Auto payout</span>
-        </div>
+<section class="section s-white" id="how">
+  <div class="wrap">
+    <div class="s-label">Simple process</div>
+    <h2 class="s-headline">Three steps to your first payout</h2>
+    <p class="s-sub">From registration to receiving money — fully automated and takes under 5 minutes to set up.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Create your free account</div>
+        <div class="step-body">Register with your EcoCash number and a password. No ID, no paperwork, no waiting. Takes under 60 seconds.</div>
       </div>
-      <a href="auth.html?tab=rg" class="btn btn-primary btn-lg">Create your free account →</a>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Choose a plan &amp; deposit</div>
+        <div class="step-body">Pick Trial ($20), Saver ($100), Builder ($501) or Vault ($1,501). Enter your amount and pay securely via EcoCash.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Receive your payout</div>
+        <div class="step-body">Your payout is sent automatically to your EcoCash number when the timer ends. No calls, no agents, nothing to do.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="s-white">
+<!-- PLANS -->
+<section class="section" id="plans">
   <div class="wrap">
-    <div class="eyebrow">Investor stories</div>
-    <h2 class="headline" style="margin-bottom:48px">What Zimbabweans say</h2>
-    <div class="t-grid">
-      <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"Invested $300 on Friday and had $360 in my EcoCash by Sunday. Done it three times now. Completely transparent, no surprises."</p><div class="t-author"><div class="t-avatar"><img src="assets/t-tendai.jpg" alt="Tendai M." loading="lazy"/></div><div><div class="t-name">Tendai M.</div><div class="t-loc">Harare · Starter Plan</div></div></div></div>
-      <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"My $1,000 Growth deposit returned $1,350 in under two days. The EcoCash portal is exactly like paying for bundles — I didn't need to learn anything new."</p><div class="t-author"><div class="t-avatar"><img src="assets/t-chiedza.jpg" alt="Chiedza N." loading="lazy"/></div><div><div class="t-name">Chiedza N.</div><div class="t-loc">Bulawayo · Growth Plan</div></div></div></div>
-      <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-quote">"The whole process took under 5 minutes. The countdown on my receipt kept me confident. Payout arrived exactly on time."</p><div class="t-author"><div class="t-avatar"><img src="assets/t-rumbi.jpg" alt="Rumbidzai Z." loading="lazy"/></div><div><div class="t-name">Rumbidzai Z.</div><div class="t-loc">Mutare · Growth Plan</div></div></div></div>
+    <div class="s-label">Investment plans</div>
+    <h2 class="s-headline">Four plans for every investor</h2>
+    <p class="s-sub">Start with $20 on Trial. Graduate to Vault as you grow. All plans pay out automatically to your EcoCash.</p>
+    <div class="plans-grid">
+
+      <div class="plan-card">
+        <div class="plan-top-bar ptb-trial"></div>
+        <div class="plan-body">
+          <div class="plan-icon">🌿</div>
+          <div class="plan-name">Trial</div>
+          <div class="plan-pct"><sup>+</sup>10<sup>%</sup></div>
+          <div class="plan-pct-lbl">return on deposit</div>
+          <div class="plan-divider"></div>
+          <div class="plan-detail"><span class="lbl">Min deposit</span><span class="val">$20</span></div>
+          <div class="plan-detail"><span class="lbl">Max deposit</span><span class="val">$99</span></div>
+          <div class="plan-detail"><span class="lbl">Example</span><span class="val">$50 → $55</span></div>
+          <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 24 hours</div>
+          <div style="font-size:11px;color:var(--em);font-weight:600;margin-top:10px">✦ Perfect first investment</div>
+          <a href="auth.html?tab=rg" class="plan-cta">Try first →</a>
+        </div>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-top-bar ptb-saver"></div>
+        <div class="plan-body">
+          <div class="plan-icon">🌱</div>
+          <div class="plan-name">Saver</div>
+          <div class="plan-pct"><sup>+</sup>20<sup>%</sup></div>
+          <div class="plan-pct-lbl">return on deposit</div>
+          <div class="plan-divider"></div>
+          <div class="plan-detail"><span class="lbl">Min deposit</span><span class="val">$100</span></div>
+          <div class="plan-detail"><span class="lbl">Max deposit</span><span class="val">$500</span></div>
+          <div class="plan-detail"><span class="lbl">Example</span><span class="val">$200 → $240</span></div>
+          <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 72 hours</div>
+          <a href="auth.html?tab=rg" class="plan-cta" style="margin-top:26px">Get started →</a>
+        </div>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-top-bar ptb-builder"></div>
+        <div class="plan-popular">★ Most popular</div>
+        <div class="plan-body">
+          <div class="plan-icon">🚀</div>
+          <div class="plan-name">Builder</div>
+          <div class="plan-pct"><sup>+</sup>35<sup>%</sup></div>
+          <div class="plan-pct-lbl">return on deposit</div>
+          <div class="plan-divider"></div>
+          <div class="plan-detail"><span class="lbl">Min deposit</span><span class="val">$501</span></div>
+          <div class="plan-detail"><span class="lbl">Max deposit</span><span class="val">$1,500</span></div>
+          <div class="plan-detail"><span class="lbl">Example</span><span class="val">$700 → $945</span></div>
+          <div class="plan-chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 48 hours</div>
+          <a href="auth.html?tab=rg" class="plan-cta primary" style="margin-top:26px">Get started →</a>
+        </div>
+      </div>
+
+      <div class="plan-card vault-card">
+        <div class="plan-top-bar ptb-vault"></div>
+        <div class="plan-body">
+          <div class="plan-icon">🏛️</div>
+          <div class="plan-name" style="color:var(--gold)">Vault</div>
+          <div class="plan-pct" style="color:var(--gold)"><sup>+</sup>50<sup>%</sup></div>
+          <div class="plan-pct-lbl">return on deposit</div>
+          <div class="plan-divider"></div>
+          <div class="plan-detail"><span class="lbl">Min deposit</span><span class="val">$1,501</span></div>
+          <div class="plan-detail"><span class="lbl">Max deposit</span><span class="val">$5,000</span></div>
+          <div class="plan-detail"><span class="lbl">Example</span><span class="val">$2,000 → $3,000</span></div>
+          <div class="plan-chip gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Payout in 7 days</div>
+          <div class="plan-lock-note">🔒 Unlocks after 3 completed investments</div>
+          <a href="auth.html?tab=rg" class="plan-cta" style="margin-top:12px;border-color:var(--gold);color:var(--gold)">Register to qualify →</a>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-size:11px;color:var(--t4);margin-top:20px;text-align:center;max-width:600px;margin-inline:auto"><strong>Risk notice:</strong> All investments carry risk. Past returns do not guarantee future results. Invest only what you can afford to commit for the stated duration.</p>
+  </div>
+</section>
+
+<!-- MOBILE CALCULATOR (shown on mobile where hero calc is hidden) -->
+<section class="section s-white mobile-calc-section" id="calc">
+  <div class="wrap">
+    <div class="s-label">Return calculator</div>
+    <h2 class="s-headline">See your exact payout</h2>
+    <p class="s-sub" style="margin-bottom:32px">Type any amount — your plan and payout are calculated automatically.</p>
+    <div style="max-width:480px;background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 8px rgba(15,23,42,.08),0 8px 28px rgba(15,23,42,.06);border:1.5px solid #D1D9E6">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">
+        <button class="cpt" id="mcpt-trial"   onclick="mcTab('trial')">Trial<br><small style="font-size:10px;opacity:.7">+10% · 24h</small></button>
+        <button class="cpt active" id="mcpt-saver"   onclick="mcTab('saver')">Saver<br><small style="font-size:10px;opacity:.7">+20% · 72h</small></button>
+        <button class="cpt" id="mcpt-builder" onclick="mcTab('builder')">Builder<br><small style="font-size:10px;opacity:.7">+35% · 48h</small></button>
+        <button class="cpt" id="mcpt-vault"   onclick="mcTab('vault')">Vault<br><small style="font-size:10px;opacity:.7">+50% · 7 days</small></button>
+      </div>
+      <div style="position:relative;margin-bottom:10px">
+        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font:700 18px/1 var(--mono);color:var(--t4)">$</span>
+        <input type="number" class="calc-input" id="mcalcAmt" placeholder="$20 – $5,000" inputmode="decimal" oninput="mcalc()" style="width:100%">
+      </div>
+      <div class="calc-err" id="mcalcErr"></div>
+      <div class="calc-result" id="mcalcResult">
+        <div class="cr-row"><span class="cr-l">You deposit</span><span class="cr-v" id="mcrDep">—</span></div>
+        <div class="cr-row"><span class="cr-l">Return</span><span class="cr-v" id="mcrRate">—</span></div>
+        <div class="cr-row"><span class="cr-l">Profit</span><span class="cr-v" id="mcrProfit">—</span></div>
+        <div class="cr-sep"></div>
+        <div class="cr-row"><span class="cr-l">You receive</span><span class="cr-v cr-total-val" id="mcrTotal">—</span></div>
+        <div class="cr-row"><span class="cr-l">Payout in</span><span class="cr-v" id="mcrTime">—</span></div>
+      </div>
+      <a href="auth.html?tab=rg" class="calc-cta" style="margin-top:14px">Create account &amp; invest →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- REFERRAL -->
+<section class="section s-white" id="refer">
+  <div class="wrap">
+    <div class="ref-section">
+      <div>
+        <div class="ref-badge">🎁 Referral programme</div>
+        <h2 class="s-headline" style="margin-bottom:12px">Refer a friend.<br>Both earn +2%</h2>
+        <p class="s-sub">Share your unique link. When a friend signs up and completes their first investment, you both receive a +2% bonus on your next payout. No limit on referrals.</p>
+        <div class="ref-steps">
+          <div class="ref-step"><div class="ref-step-num">1</div><div class="ref-step-body"><strong>Share your link</strong> via WhatsApp, Facebook or SMS</div></div>
+          <div class="ref-step"><div class="ref-step-num">2</div><div class="ref-step-body"><strong>Friend registers</strong> and completes their first investment</div></div>
+          <div class="ref-step"><div class="ref-step-num" style="background:var(--em)">✓</div><div class="ref-step-body"><strong>Both earn +2%</strong> bonus on your next payout — automatically applied</div></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:var(--sh)">
+        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:16px">Your referral link</div>
+        <div style="background:var(--bg);border-radius:12px;padding:12px 14px;font-family:var(--mono);font-size:13px;color:var(--in);font-weight:600;margin-bottom:12px;word-break:break-all">zimvest.vercel.app?ref=YOUR_CODE</div>
+        <a href="auth.html?tab=rg" style="display:block;width:100%;padding:13px;background:var(--in);color:#fff;border-radius:12px;font:700 13px/1 var(--font);text-align:center;cursor:pointer">Register to get your link →</a>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px">
+          <div style="text-align:center;background:var(--bg);border-radius:12px;padding:14px"><div style="font:700 22px/1 var(--mono);color:var(--t1);margin-bottom:4px">+2%</div><div style="font-size:11px;color:var(--t4)">Your bonus</div></div>
+          <div style="text-align:center;background:var(--bg);border-radius:12px;padding:14px"><div style="font:700 22px/1 var(--mono);color:var(--t1);margin-bottom:4px">+2%</div><div style="font-size:11px;color:var(--t4)">Friend bonus</div></div>
+          <div style="text-align:center;background:var(--bg);border-radius:12px;padding:14px"><div style="font:700 22px/1 var(--mono);color:var(--t1);margin-bottom:4px">∞</div><div style="font-size:11px;color:var(--t4)">No limit</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE EARN -->
+<section class="section s-white" id="earnings">
+  <div class="wrap">
+    <div class="s-label">Transparency</div>
+    <h2 class="s-headline">How ZimVest generates returns</h2>
+    <p class="s-sub" style="margin-bottom:40px">Your money is actively deployed across proven instruments. Returns come from real activity, not from new deposits.</p>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+
+      <div style="border-radius:20px;overflow:hidden;position:relative;min-height:220px;background:linear-gradient(135deg,rgba(30,27,75,.95),rgba(69,71,204,.9)),url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=75&auto=format&fit=crop') center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:22px">
+        <div style="font-size:26px;margin-bottom:8px">💱</div>
+        <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">Forex Trading</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:12px">USD/ZWL and regional currency pairs. Active positions managed daily.</div>
+        <div style="font-size:26px;font-weight:800;color:#A5B4FC;font-family:var(--mono)">45%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">of portfolio</div>
+      </div>
+
+      <div style="border-radius:20px;overflow:hidden;position:relative;min-height:220px;background:linear-gradient(135deg,rgba(5,40,30,.95),rgba(5,150,105,.85)),url('https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=600&q=75&auto=format&fit=crop') center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:22px">
+        <div style="font-size:26px;margin-bottom:8px">₿</div>
+        <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">Crypto Arbitrage</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:12px">Price differences between exchanges. Low risk, high frequency.</div>
+        <div style="font-size:26px;font-weight:800;color:#6EE7B7;font-family:var(--mono)">30%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">of portfolio</div>
+      </div>
+
+      <div style="border-radius:20px;overflow:hidden;position:relative;min-height:220px;background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(30,64,175,.9)),url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=75&auto=format&fit=crop') center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:22px">
+        <div style="font-size:26px;margin-bottom:8px">📈</div>
+        <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">Money Markets</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:12px">Short-term fixed income instruments across the Southern Africa region.</div>
+        <div style="font-size:26px;font-weight:800;color:#93C5FD;font-family:var(--mono)">15%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">of portfolio</div>
+      </div>
+
+      <div style="border-radius:20px;overflow:hidden;position:relative;min-height:220px;background:linear-gradient(135deg,rgba(44,13,0,.95),rgba(180,83,9,.88)),url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=75&auto=format&fit=crop') center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:22px">
+        <div style="font-size:26px;margin-bottom:8px">🌽</div>
+        <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">Commodities</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:12px">Agricultural and mineral trading aligned to Zimbabwe's growing market.</div>
+        <div style="font-size:26px;font-weight:800;color:#FCD34D;font-family:var(--mono)">10%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">of portfolio</div>
+      </div>
+
+    </div>
+    <style>@media(max-width:768px){#earnings .wrap > div:last-of-type{grid-template-columns:1fr 1fr!important}}</style>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="s-label">Real investors</div>
+    <h2 class="s-headline">What our members say</h2>
+    <div class="testimonials">
+      <div class="tcard">
+        <div class="tcard-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <div class="tcard-text">Deposited $700 on a Monday morning. $945 was in my EcoCash by Wednesday. I didn't do anything — it just arrived. Now on my 6th investment.</div>
+        <div class="tcard-author"><img src="https://ui-avatars.com/api/?name=Tendai+Moyo&background=5B5FEF&color=fff&size=72&rounded=true&bold=true" width="36" height="36" style="border-radius:50%;object-fit:cover;flex-shrink:0" alt="Tendai M."/><div><div class="tcard-name">Tendai M.</div><div class="tcard-plan">Builder plan · Harare</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <div class="tcard-text">I started with $50 on the Trial plan just to see if it was real. Got $55 back in 24 hours. Then put in $200. Then $500. The process is incredibly simple.</div>
+        <div class="tcard-author"><img src="https://ui-avatars.com/api/?name=Chipo+Ndlovu&background=059669&color=fff&size=72&rounded=true&bold=true" width="36" height="36" style="border-radius:50%;object-fit:cover;flex-shrink:0" alt="Chipo N."/><div><div class="tcard-name">Chipo N.</div><div class="tcard-plan">Saver plan · Bulawayo</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <div class="tcard-text">Referred 4 friends last month. We all got the +2% bonus on our payouts. It adds up fast when you're investing regularly. ZimVest is changing how I save.</div>
+        <div class="tcard-author"><img src="https://ui-avatars.com/api/?name=Sifiso+Moyo&background=D97706&color=fff&size=72&rounded=true&bold=true" width="36" height="36" style="border-radius:50%;object-fit:cover;flex-shrink:0" alt="Sifiso M."/><div><div class="tcard-name">Sifiso M.</div><div class="tcard-plan">Builder plan · Gweru</div></div></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="s-white">
+<section class="section s-white" id="faq">
   <div class="wrap">
-    <div class="eyebrow">Common questions</div>
-    <h2 class="headline" style="margin-bottom:48px;max-width:520px">Everything you need to know before investing</h2>
-    <div class="faq-list" style="max-width:720px">
-      <div class="faq-item">
-        <button class="faq-q open" onclick="toggleFaq(this)">
-          <span>Is my money safe?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a open">All payments go through EcoCash's official encrypted gateway. ZimVest never holds or sees your EcoCash PIN. Your deposit is tracked from payment confirmation to payout with a unique reference number.</div>
+    <div class="s-label">Common questions</div>
+    <h2 class="s-headline" style="margin-bottom:36px">Everything you need to know</h2>
+    <div style="max-width:720px;display:flex;flex-direction:column;border:1.5px solid #D1D9E6;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(15,23,42,.07),0 4px 14px rgba(15,23,42,.05)">
+      <div class="faq-item" style="border-bottom:1px solid #E2E8F0">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Is my money safe?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a open">All payments go through EcoCash's official encrypted gateway. ZimVest never holds or sees your EcoCash PIN. Your deposit is tracked from confirmation to payout with a unique reference number.</div>
+      </div>
+      <div class="faq-item" style="border-bottom:1px solid #E2E8F0">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How is my payout sent?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a">Automatically to your registered EcoCash number when the plan timer ends. You receive an EcoCash SMS confirmation. No action needed from you.</div>
+      </div>
+      <div class="faq-item" style="border-bottom:1px solid #E2E8F0">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum to start?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a">$20 on the Trial plan (+10%, 24 hours). This is the best way to test the platform before committing more. Creating your account is always free.</div>
+      </div>
+      <div class="faq-item" style="border-bottom:1px solid #E2E8F0">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Can I invest multiple times?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a">Yes — as many times as you like. Once a plan pays out you can reinvest immediately. Use auto-reinvest in the dashboard to restart automatically. After 3 investments you unlock the Vault plan (+50%).</div>
+      </div>
+      <div class="faq-item" style="border-bottom:1px solid #E2E8F0">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Do I need a bank account?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a">No. ZimVest runs entirely on EcoCash. If you have an active Econet line, you can invest. No bank, no paperwork, no waiting at a branch.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>How and when is my payout sent?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">Automatically to your registered EcoCash number when the plan timer ends — 72 hours for Starter, 48 hours for Growth. You receive a confirmation SMS from EcoCash. No action needed from you.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Can I invest multiple times?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">Yes. Once a plan matures and you receive your payout, you can reinvest immediately. Many investors reinvest profits to compound their returns. All investments are tracked in your dashboard history.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Do I need a bank account?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">No. ZimVest runs entirely on EcoCash. If you have an active Econet EcoCash line, you can invest. No bank account, no paperwork, no waiting at a branch.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>What is the minimum amount?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">$100 USD for the Starter plan (+20% in 72hrs). Growth starts at $501 (+35% in 48hrs). Creating your ZimVest account is completely free — no fees of any kind.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>What if I need support?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">Our team responds within 2 hours via WhatsApp (+263 71 234 5678) or email (support@zimvest.co.zw). All your investment records are always visible in your dashboard.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>How does ZimVest generate these returns?</span>
-          <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-a">Returns come from a mix of forex trading (~45%), crypto arbitrage (~30%), money market instruments (~15%), and agricultural commodities (~10%). See the "How we earn" section above for the full breakdown.</div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What if I need help?</span><svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a">WhatsApp support responds within 2 hours (+263 71 234 5678). All your investment records are visible in your dashboard at any time.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TRUST STRIP -->
-<section class="s-bg" style="padding:56px 0">
+<!-- TRUST -->
+<div class="trust-strip">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center">
-      <div>
-        <div style="font:700 32px/1 var(--mono);color:var(--indigo);margin-bottom:6px">256-bit</div>
-        <div style="font-size:13px;color:var(--t3)">SSL encryption on all transactions</div>
-      </div>
-      <div>
-        <div style="font:700 32px/1 var(--mono);color:var(--indigo);margin-bottom:6px">100%</div>
-        <div style="font-size:13px;color:var(--t3)">On-time payout record</div>
-      </div>
-      <div>
-        <div style="font:700 32px/1 var(--mono);color:var(--indigo);margin-bottom:6px">&lt;2hr</div>
-        <div style="font-size:13px;color:var(--t3)">Support response time</div>
-      </div>
-      <div>
-        <div style="font:700 32px/1 var(--mono);color:var(--indigo);margin-bottom:6px">0</div>
-        <div style="font-size:13px;color:var(--t3)">Hidden fees, ever</div>
-      </div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="val">256-bit</div><div class="lbl">SSL encryption</div></div>
+      <div class="trust-item"><div class="val">100%</div><div class="lbl">On-time payout record</div></div>
+      <div class="trust-item"><div class="val">&lt;2hr</div><div class="lbl">Support response</div></div>
+      <div class="trust-item"><div class="val">$0</div><div class="lbl">Registration fees</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="wrap">
+    <h2>Ready to grow your money?</h2>
+    <p>Join hundreds of Zimbabweans earning returns via EcoCash automatically.</p>
+    <div class="cta-btns">
+      <a href="auth.html?tab=rg" class="btn-hero-p">Create free account →</a>
+      <a href="auth.html?tab=si" class="btn-hero-g">Sign in</a>
     </div>
   </div>
 </section>
@@ -662,103 +600,159 @@ footer{background:#0F172A;padding:64px 0 28px}
 <footer>
   <div class="wrap">
     <div class="footer-grid">
-      <div>
-        <div style="display:flex;align-items:center;gap:9px"><div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-.4px">Zim<span style="color:#A5B4FC">Vest</span></span></div>
-        <p>Zimbabwe's EcoCash investment platform. Secure, transparent payouts.</p>
-        <!-- Both logos on a white pill in dark footer -->
-        <div class="footer-logos">
-          <img src="assets/ecocash.png" alt="EcoCash" class="fl-ecocash" loading="lazy"/>
-          <div class="fl-sep"></div>
-          <img src="assets/econet.png" alt="Econet" class="fl-econet" loading="lazy"/>
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
+          <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#5B5FEF,#059669);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <span style="font-size:15px;font-weight:800;color:#fff">Zim<span style="color:#818CF8">Vest</span></span>
         </div>
+        <p>Zimbabwe's automated EcoCash investment platform. Earn up to 50% returns automatically.</p>
       </div>
-      <div class="footer-col"><h4>Platform</h4><a href="#plans">Investment plans</a><a href="#calc">Calculator</a><a href="#earnings">How we earn</a><a href="#how">How it works</a></div>
-      <div class="footer-col"><h4>Account</h4><a href="auth.html?tab=si">Sign in</a><a href="auth.html?tab=rg">Register free</a><a href="dashboard.html">Dashboard</a><a href="forgot.html">Reset password</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="https://wa.me/263712345678" target="_blank" rel="noopener">WhatsApp us</a><a href="mailto:support@zimvest.co.zw">Email support</a><a href="#">FAQ</a><a href="#">Terms &amp; Privacy</a></div>
+      <div class="footer-col">
+        <h4>Plans</h4>
+        <a href="#plans">Trial (+10%)</a>
+        <a href="#plans">Saver (+20%)</a>
+        <a href="#plans">Builder (+35%)</a>
+        <a href="#plans">Vault (+50%)</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="auth.html?tab=rg">Register free</a>
+        <a href="auth.html?tab=si">Sign in</a>
+        <a href="forgot.html">Reset password</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="https://wa.me/263712345678" target="_blank">WhatsApp support</a>
+        <a href="mailto:support@zimvest.co.zw">Email us</a>
+        <a href="#">Terms of service</a>
+        <a href="#">Privacy policy</a>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 ZimVest · Harare, Zimbabwe</span>
-      <span class="footer-seal"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EcoCash Secured</span>
-      <span>Not a regulated deposit-taking institution.</span>
+      <p>© 2025 ZimVest · Powered by EcoCash · Zimbabwe</p>
+      <p>Payouts processed through the official EcoCash gateway</p>
     </div>
   </div>
 </footer>
 
 <script>
-const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('loaded');io.unobserve(x.target);}});},{rootMargin:'200px'});
-document.querySelectorAll('img[loading=lazy]').forEach(img=>io.observe(img));
+/* ── NAV scroll effect ── */
+window.addEventListener('scroll',function(){
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);
+});
 
+/* ── CALCULATOR ── */
 const PLANS={
-  starter:{name:'Starter',pct:20,hours:72,min:100,max:500},
-  growth: {name:'Growth', pct:35,hours:48,min:501,max:1500},
+  trial:  {pct:10, hours:24,  min:20,   max:99},
+  saver:  {pct:20, hours:72,  min:100,  max:500},
+  builder:{pct:35, hours:48,  min:501,  max:1500},
+  vault:  {pct:50, hours:168, min:1501, max:5000},
 };
+let activePlan='saver';
 
-/* Auto-detect plan from amount — single source of truth */
+function cTab(key){
+  /* Tab click still works but amount wins if entered */
+  activePlan=key;
+  document.querySelectorAll('.cpt').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cpt-'+key).classList.add('active');
+  const p=PLANS[key];
+  document.getElementById('calcAmt').placeholder='$'+p.min+' – $'+p.max;
+  calc();
+}
+
 function planFromAmt(v){
-  if(v>=100&&v<=500)  return PLANS.starter;
-  if(v>=501&&v<=1500) return PLANS.growth;
+  if(v>=20   && v<=99)   return {key:'trial',   ...PLANS.trial};
+  if(v>=100  && v<=500)  return {key:'saver',   ...PLANS.saver};
+  if(v>=501  && v<=1500) return {key:'builder', ...PLANS.builder};
+  if(v>=1501 && v<=5000) return {key:'vault',   ...PLANS.vault};
   return null;
 }
 
-/* ── HERO CALCULATOR (card on right of hero) ── */
-function hCalc(){
-  const v=parseFloat(document.getElementById('heroAmt').value);
-  const r=document.getElementById('heroResult');
-  if(!v||v<100||v>1500){r.classList.remove('show');return;}
-  const p=planFromAmt(v);
-  /* Auto-highlight the correct plan tab */
-  document.querySelectorAll('.pt').forEach(t=>{
-    t.classList.toggle('active', t.dataset.plan===( v<=500?'starter':'growth' ));
-  });
-  const profit=+(v*p.pct/100).toFixed(2),total=+(v+profit).toFixed(2);
-  document.getElementById('hTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
-  document.getElementById('hTime').textContent=p.hours+' hr payout · '+p.name;
-  document.getElementById('hProfit').textContent='+$'+profit.toFixed(2)+' ('+p.pct+'% return)';
-  r.classList.add('show');
-}
-/* Keep tab clicks working for illustration, but re-run hCalc so amount wins */
-function hTab(el){hCalc();}
+function calc(){
+  const raw=document.getElementById('calcAmt').value;
+  const v=parseFloat(raw);
+  const err=document.getElementById('calcErr');
+  const res=document.getElementById('calcResult');
+  const inp=document.getElementById('calcAmt');
+  err.textContent='';inp.classList.remove('err');
 
-/* ── MAIN CALCULATOR ── */
-function cCalc(){
-  const v=parseFloat(document.getElementById('calcAmt').value);
-  const err=document.getElementById('calcErr'),res=document.getElementById('calcResult');
-  err.style.display='none';
-  if(!v){res.classList.remove('show');clearPlanTabs();return;}
-  if(v<100){
-    err.textContent='Minimum deposit is $100 (Starter plan).';
-    err.style.display='block';res.classList.remove('show');clearPlanTabs();return;
+  if(!raw||isNaN(v)||v<=0){res.classList.remove('show');return;}
+
+  if(v<20){
+    err.textContent='Minimum deposit is $20 (Trial plan).';
+    inp.classList.add('err');res.classList.remove('show');return;
   }
-  if(v>1500){
-    err.textContent='Maximum deposit is $1,500 (Growth plan).';
-    err.style.display='block';res.classList.remove('show');clearPlanTabs();return;
+  if(v>5000){
+    err.textContent='Maximum deposit is $5,000 (Vault plan).';
+    inp.classList.add('err');res.classList.remove('show');return;
   }
+
+  /* Auto-detect plan from amount — amount is the single source of truth */
   const p=planFromAmt(v);
-  /* Auto-highlight the matching plan tab */
-  document.querySelectorAll('.cpt').forEach(el=>{
-    const isMatch=(v<=500&&el.id==='cpt-starter')||(v>500&&el.id==='cpt-growth');
-    el.classList.toggle('active',isMatch);
-  });
-  const profit=+(v*p.pct/100).toFixed(2),total=+(v+profit).toFixed(2);
-  document.getElementById('cDep').textContent='$'+v.toFixed(2);
-  document.getElementById('cRate').textContent='+'+p.pct+'% ('+p.name+' plan)';
-  document.getElementById('cProfit').textContent='+$'+profit.toFixed(2);
-  document.getElementById('cTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
-  document.getElementById('cTime').textContent=p.hours+' hours';
+  if(!p){res.classList.remove('show');return;}
+
+  /* Highlight matching tab */
+  document.querySelectorAll('.cpt').forEach(b=>b.classList.remove('active'));
+  const tabEl=document.getElementById('cpt-'+p.key);
+  if(tabEl) tabEl.classList.add('active');
+  activePlan=p.key;
+
+  const profit=+(v*p.pct/100).toFixed(2);
+  const total=+(v+profit).toFixed(2);
+  document.getElementById('crDep').textContent   ='$'+v.toFixed(2);
+  document.getElementById('crRate').textContent  ='+'+p.pct+'% ('+['Trial','Saver','Builder','Vault'].find((_,i)=>['trial','saver','builder','vault'][i]===p.key)+' plan)';
+  document.getElementById('crProfit').textContent='+$'+profit.toFixed(2);
+  document.getElementById('crTotal').textContent ='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
+  document.getElementById('crTime').textContent  =p.hours+' hours';
   res.classList.add('show');
 }
-function clearPlanTabs(){document.querySelectorAll('.cpt').forEach(el=>el.classList.remove('active'));}
-/* Tab clicks just re-run calc — amount is the source of truth */
-function cTab(k){cCalc();}
+
+/* lazy image */
+document.querySelectorAll('img[loading=lazy]').forEach(img=>{
+  if(img.complete)img.classList.add('loaded');
+  else img.addEventListener('load',()=>img.classList.add('loaded'));
+});
 
 function toggleFaq(btn){
-  const a = btn.nextElementSibling;
-  const isOpen = btn.classList.contains('open');
-  // Close all
+  const a=btn.nextElementSibling;
+  const isOpen=btn.classList.contains('open');
   document.querySelectorAll('.faq-q.open').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open');});
-  // Open clicked if it was closed
   if(!isOpen){btn.classList.add('open');a.classList.add('open');}
 }
+
+let mActivePlan='saver';
+function mcTab(key){
+  mActivePlan=key;
+  document.querySelectorAll('[id^="mcpt-"]').forEach(b=>b.classList.remove('active'));
+  document.getElementById('mcpt-'+key).classList.add('active');
+  mcalc();
+}
+function mcalc(){
+  const raw=document.getElementById('mcalcAmt').value;
+  const v=parseFloat(raw);
+  const err=document.getElementById('mcalcErr');
+  const res=document.getElementById('mcalcResult');
+  err.textContent='';
+  if(!raw||isNaN(v)||v<=0){res.classList.remove('show');return;}
+  if(v<20){err.textContent='Minimum $20 (Trial plan).';res.classList.remove('show');return;}
+  if(v>5000){err.textContent='Maximum $5,000 (Vault plan).';res.classList.remove('show');return;}
+  const p=planFromAmt(v);
+  if(!p){return;}
+  document.querySelectorAll('[id^="mcpt-"]').forEach(b=>b.classList.remove('active'));
+  const tabEl=document.getElementById('mcpt-'+p.key);
+  if(tabEl)tabEl.classList.add('active');
+  mActivePlan=p.key;
+  const profit=+(v*p.pct/100).toFixed(2);
+  const total=+(v+profit).toFixed(2);
+  document.getElementById('mcrDep').textContent='$'+v.toFixed(2);
+  document.getElementById('mcrRate').textContent='+'+p.pct+'%';
+  document.getElementById('mcrProfit').textContent='+$'+profit.toFixed(2);
+  document.getElementById('mcrTotal').textContent='$'+total.toLocaleString('en-US',{minimumFractionDigits:2});
+  document.getElementById('mcrTime').textContent=p.hours+' hours';
+  res.classList.add('show');
+}
+
 </script>
 </body>
 </html>
