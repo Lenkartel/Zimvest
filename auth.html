@@ -268,11 +268,7 @@
 
 /* FOOTER */
 /* sticky-foot removed */
-.cta{width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:var(--bd-md);color:var(--t4);transition:all .2s var(--ease)}
-.cta.on{background:var(--primary);color:#fff;cursor:pointer;box-shadow:0 4px 18px var(--primary-ring)}
-.cta.on:hover{background:var(--primary-d);transform:translateY(-1px)}
-.cta.on:active{transform:scale(.98)}
-.cta.loading{opacity:.7;pointer-events:none;transform:none!important}
+/* .cta styles defined above */
 .f-switch{text-align:center;font-size:12px;color:var(--t3);margin-top:10px}
 .f-switch a{color:var(--primary);font-weight:700;cursor:pointer}
 .powered{text-align:center;padding:10px 0 2px;font-size:9px;color:var(--t5);letter-spacing:.5px;text-transform:uppercase}
@@ -450,7 +446,7 @@ html,body{
   </div>
 
   <div id="inlineCta" class="hidden" style="margin-top:0;padding-bottom:4px">
-    <button class="cta" id="cta" onclick="submit()" style="width:100%;padding:16px;border-radius:var(--r-xl);border:none;font:700 14px/1 var(--font);cursor:not-allowed;background:#D1D9E6;color:#94A3B8;transition:all .2s var(--ease)">Create my free account →</button>
+    <button class="cta" id="cta" onclick="submit()">Create my free account →</button>
     <div class="f-switch" id="fSwitch" style="text-align:center;font-size:12px;color:#475569;margin-top:10px">Already have an account? <a onclick="setTab('si')" style="color:#5B5FEF;font-weight:700;cursor:pointer">Sign in</a></div>
   </div>
 
